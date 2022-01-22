@@ -1,0 +1,69 @@
+help:
+  help-commands:
+    - "&a/verify &5Receive a code to verify your account."
+    - "&a/discord &5Receive an invite link to the discord server."
+    - "&a/rules &5Receive the rules of this server."
+    - "&a/info &5Receive information about this server"
+    - "&a/die &5Die immediately."
+verify:
+  image: "https://cdn.discordapp.com/attachments/882209201701650456/882926314586255381/verify.png"
+  color: "#9048ff"
+  how-to-verify:
+    - "**1.** Join `play.commandgeek.com` with your Minecraft account."
+    - "**2.** Type `/verify` to receive a __4 digit code__."
+    - "**3.** Type that 4 digit code in this channel."
+    - "**4.** If there are no errors, your account should be linked! Enjoy access to the server!"
+    - "\n*Linking your account is required to receive sub or patron roles. You may need to rejoin the SMP for the roles to update.*"
+  twitch-subs:
+    - "To receive your **Twitch Sub** role, make sure your twitch account is connected to your discord account. To connect, Go to **User Settings** then **Connections** and add your twitch account."
+relink:
+  image: "https://cdn.discordapp.com/attachments/882209201701650456/882926312505892934/relink.png"
+  color: "#9048ff"
+  relink-your-account:
+    - "**1.** Join `play.commandgeek.com` with your Minecraft account."
+    - "**2.** Type `/verify` to receive a __4 digit code__."
+    - "**3.** Type that 4 digit code in this channel."
+    - "**4.** If there are no errors, you will be linked to your new account!"
+    - "\n*You can only relink every 6 hours, so make sure you enter the code correctly on the first try!*"
+  twitch-subs:
+    - "To receive your **Twitch Sub** role, make sure your twitch account is connected to your discord account. To connect, Go to **User Settings** then **Connections** and add your twitch account."
+info:
+  image: "https://cdn.discordapp.com/attachments/882209201701650456/882926316201082890/info.png"
+  color: "#9048ff"
+  how-it-works:
+    - "Welcome to the GeekSMP! This is a place for **Twitch Subs** and **Patrons** to have fun and work together while **everyone else** can join as an undead mob!\n"
+    - "As an undead mob, your job is to do as much damage as possible to make the member's lives miserable. Make sure to follow the rules though! If you manage to kill a member of the SMP, you will be **revived** and can play along as well! Be careful though, once you die you will return back into an undead mob and __your items will not be saved upon death if you are revived__.\n"
+    - "What are you waiting for! Join now, or become a twitch sub to join the members in their defence against the undead mobs.\n"
+    - "**Become a Patron**: https://patreon.com/commandgeek\n"
+    - "**Become a Twitch Sub**: https://twitch.tv/commandgeek\n"
+    - "**GeekSMP Map**: https://commandgeek.com/geeksmp-map\n"
+    - "**Discord Invite**: https://discord.gg/Ft6YB6yjAC\n"
+    - "We hope you have a great time here, if you are having any issues or want to report a user or bug, let us know in #issues!"
+rules:
+  image: "https://cdn.discordapp.com/attachments/882209201701650456/882926318189162516/rules.png"
+  color: "#9048ff"
+  server-rules:
+    - "**1.** No Spamming, flooding,  mass-pinging or copy-pasta"
+    - "**2.** No NSFW or disturbing content"
+    - "**3.** No cursing (including acronyms)"
+    - "**4.** Respect everyone, including staff"
+    - "**6.** No self-promotion (including via DM)"
+    - "**7.** Must be 13 or older and respect the discord TOS"
+    - "**8.** Use all channels for their intended purpose"
+    - "**9.** No evading punishments (including using alts)"
+    - "**10.** Only speak English so we can moderate the chats"
+    - "**11.** Staff have the final verdict, if they feel you deserve punishment, that decision is final"
+  member-rules:
+    - "**12.** Always work towards improving the state of the server"
+    - "**13.** No griefing or mass destruction"
+    - "**14.** No stealing or altering other builds or items without permission"
+    - "**15.** Rivalry and pvp is allowed **only** if all parties agree to it and **only** if it does not bother other members"
+    - "**16.** No cheating, hacking or exploiting bugs"
+    - "**17.** Be fair to the undead players, no trapping them around spawn or stopping them from exploring the world."
+    - "**18.** Have fun! Work together to build a strong community and do your part to allow everyone to have fun"
+    - "**19.** Staff have the final verdict, if they feel you deserve punishment, that decision is final"
+  undead-rules:
+    - "**20.** Killing and griefing within the permission granted to you is allowed"
+    - "**21.** No cheating, hacking, or exploiting bugs"
+    - "**22.** Once revived, all member rules apply"
+    - "**23.** Staff have the final verdict, if they feel you deserve punishment, that decision is final"

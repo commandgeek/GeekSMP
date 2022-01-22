@@ -1,0 +1,206 @@
+# - Plugin Messages -
+reload: "&5GeekSMP Reloaded."
+purge-chat: "&8Chat Purged"
+end-disabled: "&cThe end is currently disabled!"
+
+# - Link Messages -
+link-discord: "&5Join the discord! &ahttps://discord.gg/Ft6YB6yjAC"
+link-twitch: "&5CommandGeek's Twitch! &ahttps://twitch.tv/commandgeek"
+link-map: "&5GeekSMP Map! &ahttps://commandgeek.com/geeksmp-map"
+
+# - Discord Command Responses
+discord-command-smp: "Join `play.commandgeek.com` on **Java 1.17.1** to play the GeekSMP!"
+discord-command-invite: "Invite your friends! https://discord.gg/Ft6YB6yjAC"
+discord-command-map: "The GeekSMP Map! https//commandgeek.com/geeksmp-map"
+
+# - Afk Messages -
+afk-enabled: "&7&o%player% is now afk."
+afk-disabled: "&7&o%player% is no longer afk."
+
+# - Error Messages -
+# %player% - Invalid player name
+invalid-arguments: "&cInvalid Arguments."
+invalid-player: "&cCannot find %player%."
+invalid-duration: "&cInvalid duration."
+disabled-command: "&cThis command is disabled."
+no-permission: "&cYou do not have permission to run this command."
+console-forbidden: "&cYou cannot run this command from console."
+
+# - Login / Logout Messages -
+# %player% - Player name
+join: "&a+ &7%player%"
+leave: "&c- &7%player%"
+
+# - Direct Messages -
+# %sender% - Player sender name
+# %receiver% - Player receiver name
+# %message% - Direct message content
+direct-message-send: "&6You &8to &3%receiver% &8> &b%message%"
+direct-message-receive: "&3%sender% &8to &6You &8> &b%message%"
+direct-message-blocked-receiver: "&c%receiver% has disabled direct messages."
+direct-message-blocked-sender: "&cYou have disabled direct messages. Use &4/msgtoggle &c to enable them."
+direct-message-enabled: "&5Direct messages &denabled&5."
+direct-message-disabled: "&5Direct messages &ddisabled&5."
+direct-message-reply-failed: "&cThere is no one to reply to."
+
+# - Spy Messages -
+# %sender% Player sender name
+# %receiver% - Player receiver name
+# %message% - Direct message content
+spy-message: "&x&1&d&3&0&f&9%sender% &8to &x&1&d&3&0&f&9%receiver% &8> &9%message%"
+spy-enabled: "&5Spying &denabled&5."
+spy-disabled: "&5Spying &ddisabled&5."
+
+# - Lock Messages
+# %block% - Targeted block name
+# %player% - Trusted player name
+lock-success: "&5Locked &d%block%&5."
+lock-fail: "&c%block% &4was placed by &c%player%&4."
+lock-invalid: "&cThis block cannot be locked."
+lock-again: "&cYou already locked this block."
+unlock-success: "&5Unlocked &d%block%&5."
+unlock-fail: "&c%block% &4was locked by &c%player%&4."
+unlock-invalid: "&cThis block isn't locked."
+trust-success: "&5Trusting &d%player%&5."
+trust-fail: "&c%player% is already trusted."
+trust-list-header: "&dTrusted Players"
+trust-list-item: "&8 - &5%player"
+trust-list-empty: "&8 - &5&onone"
+untrust-success: "&5No longer trusting &d%player%&5."
+untrust-fail: "&c%player% isn't trusted."
+block-locked: "&c%block% &4is locked by &c%player%&4."
+
+# - Pet Messages -
+# %player% - Pet player name
+pet-success: "&5Made &d%player%&5 your pet."
+pet-fail: "&c%player% is already your pet."
+pet-list-header: "&dYour pets"
+pet-list-item: "&8 - &5%player%"
+pet-list-empty: "&8 - &5&onone"
+pet-clear: "&5All your pets have been cleared."
+unpet-success: "&5Removed &d%player%&5 as your pet."
+unpet-fail: "&c%player% isn't your pet."
+
+# - Information Messages -
+player-information-header: "&d%player% information:"
+player-information-item: "&8 - &5%key%: &a%value%"
+
+# - Morphed Messages -
+# %morph% - Morph name
+# %player% - Morphed player name
+# %victim% - Morphed player's victim name
+morph: "&7You morphed into &5%morph%&7."
+revive: "&d%player% &5has been revived by killing &d%victim%&5!"
+revived-warning: "&4Warning! &cWhile revived, your items will NOT be saved when you die!"
+item-pickup-forbidden: "&cYou can only hold 1 item"
+
+# - Tracking Messages -
+# %player% - Tracked player name
+# %distance% - Distance to tracked player
+tracking-empty: "&5Use &d/track <player> &5to track a player"
+tracking-player: "&7Tracking Player &8- &d%player% &5%distance%m"
+tracking-invalid: "&cYou can only track revived players!"
+
+# - Punishment Messages -
+# %player% - Punished player name
+# %duration% - Duration of punishment
+mute-permanent: "&d%player% &5has been muted."
+mute-temporary: "&d%player% &5has been muted for &d%duration%&5."
+unmute-success: "&d%player% &5is no longer muted."
+unmute-fail: "&5%player% isn't muted!"
+mutelist-header: "&dMuted Players"
+mutelist-list: "&8 - &5%player%"
+mutelist-empty: "&8 - &5&onone"
+ban-permanent: "&d%player% &5has been banned."
+ban-temporary: "&d%player% &5has been banned for &d%duration%&5."
+unban-success: "&d%player% &5is no longer banned."
+unban-fail: "&5%player% isn't banned!"
+banlist-header: "&dBanned Players"
+banlist-list: "&8 - &5%player%"
+banlist-empty: "&8 - &5&onone"
+
+# - Reason Messages -
+# %player% - Punished player name
+# %reason% - Punishment reason
+reason-fail: "&c%player% isn't punished."
+reason-mute-permanent: "&5%player% is muted permanently for \"&d%reason%&5\"."
+reason-mute-temporary: "&5%player% is muted for &d%duration% &5for \"&d%reason%&5\"."
+reason-ban-permanent: "&5%player% is banned permanently for \"&d%reason%&5\"."
+reason-ban-temporary: "&5%player% is banned for &d%duration &5for \"&d%reason%&5\"."
+
+# - Discord Reason Messages -
+# %user$ - Punished discord username
+# %player% - Punished player name
+# %reason% - Punishment reason
+discord-reason-missing: "Unable to fetch linked account and punishment reasons for **%user%**."
+discord-reason-fail: "**%user%** isn't punished.\nLinked: *%player% (%uuid%)*"
+discord-reason-mute-permanent: "**%user%** was muted permanently for \"*%reason%*\"\nLinked: *%player% (%uuid%)*"
+discord-reason-mute-temporary: "**%user%** was muted for **%duration%** for \"*%reason%*\"\nLinked: *%player% (%uuid%)*"
+discord-reason-ban-permanent: "**%user%** was banned permanently for \"*%reason%*\"\nLinked: *%player% (%uuid%)*"
+discord-reason-ban-temporary: "**%user%** was banned for **%duration%** for \"*%reason%*\"\nLinked: *%player% (%uuid%)*"
+
+# - Lookup Messages -
+lookup-player: "&d%player% &5is linked to &d%user%&5."
+lookup-missing: "&c%player% is not linked to a discord user."
+
+# - Failed Chat Messages -
+# %duration% - Duration of mute
+chat-forbidden: "&cYou are unable to chat."
+chat-muted-permanent: "&cYou are permanently muted."
+chat-muted-temporary: "&cYou are muted for &4%duration%&7."
+
+# - Failed Login Messages -
+# %reason% - Reason for punishment
+# %duration% - Duration of punishment
+login-banned-permanent: "&cYou are permanently banned!\n\n&8Reason:\n&7%reason%"
+login-banned-temporary: "&cYou are banned for &4%duration%&7!\n\n&8Reason:\n&7%reason%"
+logout-kicked: "&cYou were kicked!\n\n&8Reason:\n&7%reason%"
+
+# - Linking Messages -
+# %code% - Generated linking code
+link-invalid-player: "The linked player is not online! Please join the server and try again."
+link-generate-code: "&5Your code is &d%code%&5. Send it in the discord server to verify your account."
+link-generate-code-already-linked: "&5You are already linked! Send the code &d%code% &5in the discord server to relink your account."
+link-invalid-code: "That code is invalid. Please try again!"
+link-success: "&5Your account has been successfully linked to &d%user%&5."
+unlink-success: "&5Your account has been successfully unlinked."
+unlink-other-success: "&5Successfully unlinked &d%player%&5."
+
+# - Discord SMP Chat Messages -
+# %player% - Player name
+# %message% - Message content
+smp-chat-join: "<:greenplus:884153763714174976> **%player%**"
+smp-chat-leave: "<:redminus:884154026692853781> **%player%**"
+smp-chat-death: "<:whiteskull:884157785334485064> **%message%**"
+smp-chat-message: "%player% » %message%"
+smp-chat-start: "<:greencheck:884155019530752001> **Server Started**"
+smp-chat-stop: "<:redx:884157758553866260> **Server Stopped**"
+
+# - Discord Mute Messages -
+# %user% - Discord username
+# %player% - Linked minecraft account name
+# %uuid% - Linked minecraft account uuid
+# %duration% - Duration of mute
+discord-mute-permanent: "**%user%** has been muted.\nLinked: *%player% (%uuid%)*"
+discord-mute-temporary: "**%user%** has been muted for **%duration%**.\nLinked: *%player% (%uuid%)*"
+discord-mute-fail: "Could not fetch linked account, so **%user%** was muted permanently."
+discord-invalid-duration: "Invalid Duration."
+discord-unmute: "**%user%** has been unmuted.\nLinked: *%player% (%uuid%)*"
+discord-unmute-fail: "Could not fetch linked account, so **%user%** was unmuted."
+
+# - Info Messages -
+# %header% - Info header/title
+# %item% - Info item
+info-header: "&d%header%"
+info-item: "&8- &5%item%"
+
+# - Change-Log Messages -
+# %version% - Plugin version
+# %item% - Change-log item
+change-log-create-header: "&5GeekSMP &8- &5%version%"
+change-log-create-item: "&8- &d%item%"
+change-log-publish-color: "#000000"
+change-log-publish-header: "GeekSMP - %version%"
+change-log-publish-item: "**-** `%item%`"
+change-log-publish-footer: "If you would like to report a bug or issue, let us know in the #issues channel."
+change-log-publish-success: "&5Change-log successfully published!"

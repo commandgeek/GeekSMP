@@ -1,0 +1,190 @@
+name: GeekSMP
+author: CommandGeek
+main: com.commandgeek.GeekSMP.Main
+version: 1.0.11
+api-version: 1.13
+
+commands:
+  reloadsmp:
+    aliases: [rs]
+  revive:
+    aliases: []
+  unrevive:
+    aliases: []
+  mute:
+    aliases: []
+  mutelist:
+    aliases: []
+  unmute:
+    aliases: []
+  ban:
+    aliases: []
+  banlist:
+    aliases: []
+  unban:
+    aliases: []
+  die:
+    aliases: []
+  gmc:
+    aliases: []
+  gms:
+    aliases: []
+  gma:
+    aliases: []
+  gmsp:
+    aliases: []
+  rules:
+    aliases: []
+  info:
+    aliases: []
+  help:
+    aliases: []
+  code:
+    aliases: [verify, link]
+  discord:
+    aliases: [invite]
+  twitch:
+    aliases: [stream]
+  map:
+    aliases: []
+  changelog:
+    aliases: []
+  unlink:
+    aliases: []
+  purgechat:
+    aliases: []
+  purgeteams:
+    aliases: []
+  feed:
+    aliases: []
+  heal:
+    aliases: []
+  tphere:
+    aliases: []
+  tp:
+    aliases: []
+  msg:
+    aliases: []
+  reply:
+    aliases: [r]
+  msgtoggle:
+    aliases: []
+  spy:
+    aliases: []
+  track:
+    aliases: []
+  seeinv:
+    aliaes: []
+  lookup:
+    aliases: []
+  playerinfo:
+    aliases: []
+  stats:
+    aliases: []
+  trust:
+    aliases: []
+  trustlist:
+    aliases: []
+  untrust:
+    aliases: []
+  pet:
+    aliases: []
+  inspect:
+    aliases: [i]
+  afk:
+    aliases: []
+  reason:
+    aliases: []
+
+
+permissions:
+  geeksmp.command.reloadsmp:
+    default: op
+  geeksmp.command.revive:
+    default: op
+  geeksmp.command.unrevive:
+    default: op
+  geeksmp.command.mute:
+    default: op
+  geeksmp.command.mutelist:
+    default: op
+  geeksmp.command.unmute:
+    default: op
+  geeksmp.command.ban:
+    default: op
+  geeksmp.command.banlist:
+    default: op
+  geeksmp.command.unban:
+    default: op
+  geeksmp.command.die:
+    default: true
+  geeksmp.command.gmc:
+    default: op
+  geeksmp.command.gms:
+    default: op
+  geeksmp.command.gma:
+    default: op
+  geeksmp.command.gmsp:
+    default: op
+  geeksmp.command.rules:
+    default: true
+  geeksmp.command.info:
+    default: true
+  geeksmp.command.help:
+    default: true
+  geeksmp.command.code:
+    default: true
+  geeksmp.command.discord:
+    default: true
+  geeksmp.command.twitch:
+    default: true
+  geeksmp.command.map:
+    default: true
+  geeksmp.command.changelog:
+    default: op
+  geeksmp.command.unlink:
+    default: op
+  geeksmp.command.purgechat:
+    default: op
+  geeksmp.command.purgeteams:
+    default: op
+  geeksmp.command.feed:
+    default: op
+  geeksmp.command.heal:
+    default: op
+  geeksmp.command.tphere:
+    default: op
+  geeksmp.command.tp:
+    default: op
+  geeksmp.command.msg:
+    default: true
+  geeksmp.command.reply:
+    default: true
+  geeksmp.command.msgtoggle:
+    default: true
+  geeksmp.command.spy:
+    default: op
+  geeksmp.command.track:
+    default: true
+  geeksmp.command.seeinv:
+    default: op
+  geeksmp.command.lookup:
+    default: true
+  geeksmp.command.playerinfo:
+    default: true
+  geeksmp.command.stats:
+    default: op
+  geeksmp.command.trust:
+    default: true
+  geeksmp.command.trustlist:
+    default: true
+  geeksmp.command.untrust:
+    default: true
+  geeksmp.command.pet:
+    default: op
+  geeksmp.command.inspect:
+    default: op
+  geeksmp.command.afk:
+    default: true
+  geeksmp.command.reason:
+    default: op

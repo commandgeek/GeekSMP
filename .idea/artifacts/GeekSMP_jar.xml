@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GeekSMP:jar">
+    <output-path>$PROJECT_DIR$/../../Local Host Servers/1_Spigot/plugins</output-path>
+    <root id="archive" name="GeekSMP.jar">
+      <element id="module-output" name="GeekSMP" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Libraries/javacord-3.3.2-shaded.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
