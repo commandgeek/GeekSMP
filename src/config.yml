@@ -16,13 +16,13 @@ spawn:
 # linked-role: ID of the role users should be given when linked/verified.
 discord:
   prefix: "-"
-  bot-token: "ODg2NjczNDg5MTk1NTk3ODM0.YT5BCQ.lnUtMeGP8Fk5iHGJa7SdJX-oLJc"
-  smp-chat-channel: "886673661057196042"
-  change-log-channel: "886673787922296915"
+  bot-token: "token"
+  smp-chat-channel: "000000000000000000"
+  change-log-channel: "000000000000000000"
   link-channels:
-    - "886673742690930770"
-  muted-role: "882233686446178336"
-  linked-role: "882214468518563903"
+    - "000000000000000000"
+  muted-role: "000000000000000000"
+  linked-role: "000000000000000000"
 
 #  - Tab Meta -
 # header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
