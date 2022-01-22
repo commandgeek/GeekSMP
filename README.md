@@ -4,3 +4,8 @@
 3. [Create a new Pull Request](https://github.com/commandgeek/geeksmp/compare)
 4. Name your pull request and include a description of what you changed
 5. Wait for collaborators to review (they may ask you to change certain things)
+
+## Current contributors
+- [@CommandGeek](https://github.com/commandgeek)
+- [@srnyx](https://github.com/srnyx)
+- [@ReeceTD](https://github.com/reecetd)
