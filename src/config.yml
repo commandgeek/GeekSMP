@@ -114,56 +114,56 @@ groups:
     prefix: "&b&lSPECIAL "
     chat-format: "&b&lSPECIAL &r&b%player% &8> &f%message%"
     translate: true
-    role: "883659321274155008"
+    role: "000000000000000000"
   staff:
     color: WHITE
     prefix: "&x&b&5&8&e&f&7&lSTAFF "
     chat-format: "&x&b&5&8&e&f&7&lSTAFF &r&f%player% &8> &f%message%"
     translate: true
     status: staff
-    role: "882212789215694878"
+    role: "000000000000000000"
   youtuber:
     color: GRAY
     prefix: "&x&f&f&0&0&0&0&lYT "
     chat-format: "&x&f&f&0&0&0&0&lYT &r&7%player% &8> &f%message%"
-    role: "886666568220700762"
+    role: "000000000000000000"
   mvp:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lMVP "
     chat-format: "&x&f&f&5&c&6&3&lMVP &r&7%player% &8> &f%message%"
     translate: true
-    role: "882214036245209098"
+    role: "000000000000000000"
   vip+:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lVIP+ "
     chat-format: "&x&f&f&5&c&6&3&lVIP+ &r&7%player% &8> &f%message%"
-    role: "882214074593722388"
+    role: "000000000000000000"
   vip:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lVIP "
     chat-format: "&x&f&f&5&c&6&3&lVIP &r&7%player% &8> &f%message%"
-    role: "882214219498545172"
+    role: "000000000000000000"
   tier3:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 3 "
     chat-format: "&x&9&0&4&8&f&f&lTIER 3 &r&7%player% &8> &f%message%"
     translate: true
-    role: "882212937668894733"
+    role: "000000000000000000"
   tier2:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 2 "
     chat-format: "&x&9&0&4&8&f&f&lTIER 2 &r&7%player% &8> &f%message%"
-    role: "882212937668894732"
+    role: "000000000000000000"
   tier1:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 1 "
     chat-format: "&x&9&0&4&8&f&f&lTIER 1 &r&7%player% &8> &f%message%"
-    role: "882212937668894731"
+    role: "000000000000000000"
   guest:
     color: GRAY
     prefix: "&3&lGUEST "
     chat-format: "&3&lGUEST &r&7%player% &8> &f%message%"
-    role: "882212874464944198"
+    role: "000000000000000000"
   revived:
     color: GRAY
     chat-format: "&7%player% &8> &7%message%"
