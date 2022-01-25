@@ -1,3 +1,8 @@
+# ⚠️ WARNING ⚠️
+If you use this repository to find vulnerabilities in the plugin, you will be super-banned from **all** Venox servers.
+This includes (but is not limited to): GeekSMP, CommandGeek Labs, Bapplause Gang, CommandFreak's Freak Show, Event Alerts, and more
+**DO NOT ABUSE THE PRIVILEGE OF OPEN-SOURCE CODE**
+
 # How to contribute
 1. [Fork the repository](https://github.com/commandgeek/geeksmp/fork)
 2. Make any changes inside of your fork
