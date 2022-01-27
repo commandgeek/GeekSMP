@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'gradle'
+group = 'com.commandgeek'
 version = '1.0.0'
 description = "GeekSMP"
 
