@@ -17,3 +17,4 @@ If you use this repository to find vulnerabilities in the plugin, you will be ba
 - [@CommandGeek](https://github.com/commandgeek)
 - [@srnyx](https://github.com/srnyx)
 - [@ReeceTD](https://github.com/reecetd)
+- [@DWAA1660](https://github.com/DWAA1660)
