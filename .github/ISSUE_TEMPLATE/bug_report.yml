@@ -1,0 +1,57 @@
+name: 🐛 Report a bug
+description: Let us know that something clearly doesn't work as expected / described.
+labels: 
+  - bug
+assignees:
+  - CommandGeek
+  - srnyx
+  - ReeceTD
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before reporting a bug here, please make sure you search to see if the issue has already been reported.
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What behavior of the server/plugin do you expect?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual behavior
+      description: How does the server/plugin actually react?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Can the behavior be reproduced consistently? If yes, how? Please also attach media (screenshots/videos) if they could help to understand the problem.
+    validations:
+      required: true
+  - type: input
+    id: version-os
+    attributes:
+      label: Minecraft version and OS
+      description: Unless the problem is a completely different one, please specify the version of your Minecraft and type of OS here.
+      placeholder: "ex. 1.17.1, Windows 10"
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Checks
+      description: "To help us avoid \"solving\" the same problems over and over, please check the following points before submitting:"
+      options:
+        - label: I am __not__ using an outdated version of Minecraft.
+          required: true
+        - label: I am __not__ using any modifications (mods, resourcepacks, etc...).
+          required: true
+        - label: I asked in the Discord to see whether this issue is in fact a bug that needs to be fixed.
+          required: true
+  - type: textarea
+    attributes:
+      label: Anything else
+      description: |
+        If you can think of anything else that might help us, there's plenty of room for it here. 😉
+    validations:
+      required: false
