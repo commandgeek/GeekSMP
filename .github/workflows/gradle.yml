@@ -4,11 +4,10 @@
 name: Java CI with Gradle
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'src/**'
 #  pull_request:
-#    branches: [ main ]
 #    paths:
 #      - 'src/**'
   workflow_dispatch:
