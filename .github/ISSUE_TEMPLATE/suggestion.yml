@@ -8,14 +8,14 @@ assignees:
 body:
   - type: textarea
     attributes:
-      label: Why?
-      description: Please tell us a little bit about why you want to change or add something. You can also paste images here.
+      label: What and How?
+      description: How should the server/plugin behave after the change / what should it do differently than before? If you already have a concrete solution in mind, what does it look like?
     validations:
       required: true
   - type: textarea
     attributes:
-      label: What and How?
-      description: How should the server/plugin behave after the change / what should it do differently than before? If you already have a concrete solution in mind, what does it look like?
+      label: Why?
+      description: Please tell us a little bit about why you want to change or add something. You can also paste images here.
     validations:
       required: true
   - type: textarea
