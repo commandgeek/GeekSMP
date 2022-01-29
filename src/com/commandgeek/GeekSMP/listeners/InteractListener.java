@@ -132,7 +132,7 @@ public class InteractListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onBoneMealCovert(PlayerInteractEvent e) {
-        ItemStack bonemeal = new ItemStack(Material.INK_SACK, 1, (short) 15);
+        ItemStack bonemeal = new ItemStack(Material.BONE_MEAL, 1;
         Player p = e.getPlayer();
         Block b = p.getTargetBlock(null, 5);
         if (TeamManager.isUndead(p)) {
