@@ -1,0 +1,1 @@
+If you're looking for support with GeekSMP, please open a ticket in the [Discord server](https://discord.gg/Ft6YB6yjAC).
