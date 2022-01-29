@@ -130,16 +130,19 @@ public class InteractListener implements Listener {
     //Will prevent Undead from bonemealing moss, preventing moss griefing
     
     @SuppressWarnings("deprecation")
+    @EventHandler
     public void onBoneMealCovert(PlayerInteractEvent e) {
         ItemStack bonemeal = new ItemStack(Material.INK_SACK, 1, (short) 15);
         Player p = e.getPlayer();
         Block b = p.getTargetBlock(null, 5);
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (p.getInventory().getItemInHand().isSimilar(bonemeal)) {
-                if (if(b.getType().equals(Material.MOSS)) {//I was having some trouble with this part, so if it doesn't work, it's supposed to check if b (block) == moss
-                     e.setCancelled(true);
+        if (TeamManager.isUndead(p)) {
+            if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (p.getInventory().getItemInHand().isSimilar(bonemeal)) {
+                    if (if(b.getType().equals(Material.MOSS)) {//I was having some trouble with this part, so if it doesn't work, it's supposed to check if b (block) == moss
+                         e.setCancelled(true);
+                    }
                 }
+                return;
             }
-            return;
         }
 }
