@@ -136,8 +136,8 @@ public class InteractListener implements Listener {
         Block b = p.getTargetBlock(null, 5);
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInHand().isSimilar(bonemeal)) {
-                if (b.getType() == Material.MOSS) {//THIS IS SHADY CODE, i'm like 70% sure it will work though.
-                    e.setCancelled(true);
+                if (b.getType() == Material.MOSS) {//I was having some trouble with this part, so if it doesn't work, it's supposed to check if b (block) == moss
+                     e.setCancelled(true);
                 }
             }
             return;
