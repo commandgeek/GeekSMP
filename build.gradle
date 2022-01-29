@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.commandgeek'
-version = '1.0.0'
+version = '1.0.11'
 description = "GeekSMP"
 
 repositories {
