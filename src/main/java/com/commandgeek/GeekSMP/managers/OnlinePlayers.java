@@ -15,7 +15,7 @@ public class OnlinePlayers {
             } else {
                 Collections.addAll(onlinePlayers, ((Player[]) onlinePlayerMethod.invoke(Bukkit.getServer())));
             }
-			return onlinePlayers;
+            return onlinePlayers;
         }
     }
 }
