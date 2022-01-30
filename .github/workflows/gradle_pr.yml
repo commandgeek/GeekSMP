@@ -30,7 +30,7 @@ jobs:
       run: chmod +x gradlew
     - name: Test with Gradle
       run: ./gradlew test
-    - name: Build with Gradle
+    - name: Build jar with Gradle
       run: ./gradlew build
     - name: Upload artifacts
       uses: "actions/upload-artifact@v2.2.3"
