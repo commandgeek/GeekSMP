@@ -9,9 +9,8 @@ description = "GeekSMP"
 
 repositories {
     maven {
-        name = 'papermc-repo'
-        url = 'https://papermc.io/repo/repository/maven-public/'
-    }
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+	}
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
@@ -28,11 +27,12 @@ dependencies {
     compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
     compileOnly 'com.mojang:authlib:1.5.21'
     implementation 'org.javacord:javacord:3.4.0'
+    compileOnly 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
 }
 
 shadowJar {
     dependencies {
-        exclude(dependency('org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'))
+        exclude(dependency('org.spigotmc<:spigot:728421352721088542>1.17.1-R0.1-SNAPSHOT'))
         exclude(dependency('com.mojang:authlib:1.5.21'))
     }
 }
