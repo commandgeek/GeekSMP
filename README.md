@@ -18,3 +18,4 @@ If you use this repository to find vulnerabilities in the plugin, you will be ba
 - [@srnyx](https://github.com/srnyx)
 - [@ReeceTD](https://github.com/reecetd)
 - [@DWAA1660](https://github.com/DWAA1660)
+- [@Lianecx](https://github.com/Lianecx)
