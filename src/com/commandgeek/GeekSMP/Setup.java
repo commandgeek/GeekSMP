@@ -160,7 +160,7 @@ public class Setup {
     }
 
     public static void updateAllRoles() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())) {
             updatePlayerRole(player);
         }
     }
@@ -191,8 +191,8 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(Lag.getTPSString()));
-                item = item.replaceAll("%online%", String.valueOf(OnlinePlayers.getOnlinePlayers().size()));
+                item = item.replaceAll("%tps%", notNull(Lag.getTPSString()));
+                item = item.replaceAll("%online%", notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 header.append(item).append("\n");
             }
@@ -202,8 +202,8 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(Lag.getTPSString()));
-                item = item.replaceAll("%online%", String.valueOf(OnlinePlayers.getOnlinePlayers().size()));
+                item = item.replaceAll("%tps%", notNull(Lag.getTPSString()));
+                item = item.replaceAll("%online%", notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 footer.append(item).append("\n");
             }
@@ -212,7 +212,7 @@ public class Setup {
     }
 
     public static void updateTabMetaForAll() {
-        for (Player online : OnlinePlayers.getOnlinePlayers()) {
+        for (Player online : notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())) {
             updateTabMeta(online);
         }
     }
@@ -222,7 +222,7 @@ public class Setup {
         long time = new Timestamp(System.currentTimeMillis()).getTime();
         if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300) {
             if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
-                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + OnlinePlayers.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())) + "/" + Bukkit.getMaxPlayers());
                 lastDiscordChannelTopicUpdate = time;
             }
         }
@@ -231,7 +231,7 @@ public class Setup {
     public static void initializeMovementCheck() {
         new BukkitRunnable() {
             public void run() {
-                for (Player online : Bukkit.getOnlinePlayers()) {
+                for (Player online : notNull(Integer.toString(OnlinePlayers.getOnlinePlayers().size())) {
                     AfkManager.update(online);
                 }
             }
