@@ -181,6 +181,7 @@ public class Main extends JavaPlugin {
 
         // Unregister Discord Bot
         if (discordAPI != null) {
+            new MessageManager("smp-chat-stop").sendDiscord(DiscordManager.smpChatChannel);
             discordAPI = null;
         }
 
@@ -190,8 +191,7 @@ public class Main extends JavaPlugin {
             online.kickPlayer("Server Restarting");
         }
 
-        new MessageManager("smp-chat-stop").sendDiscord(DiscordManager.smpChatChannel);
-        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DO NOT RELOAD THIS THE GEEKSMP PLUGIN. ALWAYS RESTART THE SERVER. SHUTTING DOWN");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DO NOT RELOAD THE GEEKSMP PLUGIN. ALWAYS RESTART THE SERVER. SHUTTING DOWN");
         getServer().shutdown();
     }
 }
