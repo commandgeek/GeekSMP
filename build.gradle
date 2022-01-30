@@ -32,7 +32,7 @@ dependencies {
 
 shadowJar {
     dependencies {
-        exclude(dependency('org.spigotmc<:spigot:728421352721088542>1.17.1-R0.1-SNAPSHOT'))
+        exclude(dependency('org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'))
         exclude(dependency('com.mojang:authlib:1.5.21'))
     }
 }
