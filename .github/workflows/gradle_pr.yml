@@ -31,7 +31,7 @@ jobs:
     - name: Test with Gradle
       run: ./gradlew test
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew shadowJar
     - name: Upload artifacts
       uses: "actions/upload-artifact@v2.2.3"
       with:
