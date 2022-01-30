@@ -1,15 +1,17 @@
 package com.commandgeek.GeekSMP.managers;
 
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.PacketPlayOutAnimation;
-import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
-import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
+import com.commandgeek.GeekSMP.Main;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,27 +28,55 @@ public class PacketManager {
     }
 
     public void hideEntity(Entity entity) {
-        sendPacket(new PacketPlayOutEntityDestroy(entity.getEntityId()));
+        int[] entityArray = { entity.getEntityId() };
+
+        PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
+        packet.getIntegers().write(0, 1);
+        packet.getIntegerArrays().write(0, entityArray);
+
+        sendPacket(packet);
     }
 
     public void animateEntity(Entity entity, int id) {
-        sendPacket(new PacketPlayOutAnimation(((CraftEntity)entity).getHandle(), id));
-    }
+        PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.ANIMATION);
+        packet.getIntegers().write(0, entity.getEntityId());
+        packet.getIntegers().write(1, id);
 
-    public void addPlayer(Player entity) {
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, ((CraftPlayer)entity).getHandle());
         sendPacket(packet);
     }
 
-    public void removePlayer(Player entity) {
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, ((CraftPlayer)entity).getHandle());
+    public void addPlayer(Player player) {
+        PacketContainer packet = createPlayerInfoPacket(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
         sendPacket(packet);
+    }
+
+    public void removePlayer(Player player) {
+        PacketContainer packet = createPlayerInfoPacket(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+        sendPacket(packet);
+    }
+
+    public PacketContainer createPlayerInfoPacket(Player player, EnumWrappers.PlayerInfoAction action) {
+        WrappedGameProfile playerProfile = WrappedGameProfile.fromPlayer(player);
+        WrappedChatComponent playerDisplayName = WrappedChatComponent.fromText(player.getDisplayName());
+        PlayerInfoData playerData = new PlayerInfoData(playerProfile, player.getPing(), EnumWrappers.NativeGameMode.NOT_SET, playerDisplayName);
+        List<PlayerInfoData> playerArray = List.of(playerData);
+
+        PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
+        packet.getPlayerInfoAction().write(0, action);
+        packet.getIntegers().write(0, 1);
+        packet.getPlayerInfoDataLists().write(0, playerArray);
+
+        return packet;
     }
 
     @SuppressWarnings({"all"})
-    public void sendPacket(Packet packet) {
+    public void sendPacket(PacketContainer packet) {
         for (Player player : players) {
-            ((CraftPlayer)player).getHandle().b.sendPacket(packet);
+            try {
+                Main.protocolManager.sendServerPacket(player, packet);
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

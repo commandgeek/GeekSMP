@@ -4,6 +4,8 @@ import com.commandgeek.GeekSMP.commands.*;
 import com.commandgeek.GeekSMP.listeners.*;
 import com.commandgeek.GeekSMP.listeners.discord.DiscordMessageCreateListener;
 import com.commandgeek.GeekSMP.managers.*;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,12 +38,14 @@ public class Main extends JavaPlugin {
     public static List<String> bannedWords;
 
     public static DiscordApi discordAPI;
+    public static ProtocolManager protocolManager;
     public static String botPrefix;
 
     @Override
     public void onEnable() {
 
         instance = this;
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         // Print
         getServer().getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "==================");
