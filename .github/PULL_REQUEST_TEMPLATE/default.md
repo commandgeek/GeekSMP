@@ -1,3 +1,11 @@
+---
+name: "Open a pull request"
+about: Fix / add something for us
+title: Add a descriptive title
+assignees: srnyx, ReeceTD, CommandGeek
+
+---
+
 <!--- Provide a general summary of your changes in the Title above -->
 
 ## Description
