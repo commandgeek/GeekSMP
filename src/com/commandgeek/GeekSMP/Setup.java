@@ -191,8 +191,8 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(ServerManager.getTPS()));
-                item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
+                item = item.replaceAll("%tps%", String.valueOf(Lag.getTPSString()));
+                item = item.replaceAll("%online%", String.valueOf(OnlinePlayers.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 header.append(item).append("\n");
             }
@@ -202,8 +202,8 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(ServerManager.getTPS()));
-                item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
+                item = item.replaceAll("%tps%", String.valueOf(Lag.getTPSString()));
+                item = item.replaceAll("%online%", String.valueOf(OnlinePlayers.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 footer.append(item).append("\n");
             }
@@ -212,7 +212,7 @@ public class Setup {
     }
 
     public static void updateTabMetaForAll() {
-        for (Player online : Bukkit.getOnlinePlayers()) {
+        for (Player online : OnlinePlayers.getOnlinePlayers()) {
             updateTabMeta(online);
         }
     }
@@ -222,7 +222,7 @@ public class Setup {
         long time = new Timestamp(System.currentTimeMillis()).getTime();
         if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300) {
             if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
-                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("Online Players: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + OnlinePlayers.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 lastDiscordChannelTopicUpdate = time;
             }
         }
