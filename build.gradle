@@ -16,12 +16,18 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven {
+        name = 'protocollib'
+        url = "https://repo.dmulloy2.net/repository/public/"
+    }
+
     mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot:1.17.1-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
     implementation 'org.javacord:javacord:3.4.0'
 }
 
