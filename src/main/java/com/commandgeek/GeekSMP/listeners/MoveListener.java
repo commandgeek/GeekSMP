@@ -16,8 +16,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 @SuppressWarnings({"unused"})
 public class MoveListener implements Listener {
 
-    private boolean isGliding;
-
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -62,18 +60,9 @@ public class MoveListener implements Listener {
 
     @EventHandler
     public void onToggle(EntityToggleGlideEvent event) {
-        Entity e = event.getEntity();
-        if (e instanceof Player) {
-            Player player = (Player) event.getEntity();
-            boolean isGliding = event.isGliding();
-
-            if (TeamManager.isUndead(player)) {
+        if (event.getEntity() instanceof Player player) {
+            if (TeamManager.isUndead(player) && event.isGliding()) {
                 event.setCancelled(true);
-                // THIS IS JUST TO TEST COMMIT
-                if (this.isGliding == true) {
-                    event.setCancelled(true);
-                }
-
             }
         }
     }
