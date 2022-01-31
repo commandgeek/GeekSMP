@@ -220,9 +220,9 @@ public class Main extends JavaPlugin {
     }
 
     public ShapedRecipe getHeartOfSea() {
-        ItemStack item = new ItemStack(Material.CONDUIT);
+        ItemStack item = new ItemStack(Material.HEART_OF_THE_SEA);
 
-        NamespacedKey key = new NamespacedKey(this, "Conduit");
+        NamespacedKey key = new NamespacedKey(this, "Heart Of The Sea");
 
         ShapedRecipe recipe = new ShapedRecipe(key, item);
 
