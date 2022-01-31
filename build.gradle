@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
     compileOnly 'com.mojang:authlib:1.5.21'
     implementation 'org.javacord:javacord:3.4.0'
@@ -39,6 +39,9 @@ shadowJar {
     dependencies {
         exclude(dependency('com.mojang:authlib:1.5.21'))
         exclude(dependency('org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'))
+        exclude(dependency {
+            it.moduleGroup == 'com.comphenix.protocol'
+        })
     }
 }
 
