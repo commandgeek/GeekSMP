@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,11 +29,8 @@ public class PacketManager {
     }
 
     public void hideEntity(Entity entity) {
-        int[] entityArray = { entity.getEntityId() };
-
         PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
-        packet.getIntegers().write(0, 1);
-        packet.getIntegerArrays().write(0, entityArray);
+        packet.getIntLists().write(0, List.of(entity.getEntityId()));
 
         sendPacket(packet);
     }
@@ -58,12 +56,14 @@ public class PacketManager {
     public PacketContainer createPlayerInfoPacket(Player player, EnumWrappers.PlayerInfoAction action) {
         WrappedGameProfile playerProfile = WrappedGameProfile.fromPlayer(player);
         WrappedChatComponent playerDisplayName = WrappedChatComponent.fromText(player.getDisplayName());
-        PlayerInfoData playerData = new PlayerInfoData(playerProfile, player.getPing(), EnumWrappers.NativeGameMode.NOT_SET, playerDisplayName);
-        List<PlayerInfoData> playerArray = List.of(playerData);
+        EnumWrappers.NativeGameMode playerGameMode = EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode());
+
+        PlayerInfoData playerData = new PlayerInfoData(playerProfile, player.getPing(), playerGameMode, playerDisplayName);
+        List<PlayerInfoData> playerArray = new ArrayList<>();
+        playerArray.add(playerData);
 
         PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
         packet.getPlayerInfoAction().write(0, action);
-        packet.getIntegers().write(0, 1);
         packet.getPlayerInfoDataLists().write(0, playerArray);
 
         return packet;
