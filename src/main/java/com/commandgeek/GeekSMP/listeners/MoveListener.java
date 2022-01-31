@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.potion.PotionEffect;
@@ -14,6 +15,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 @SuppressWarnings({"unused"})
 public class MoveListener implements Listener {
+
+    private boolean isGliding;
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
@@ -54,6 +57,23 @@ public class MoveListener implements Listener {
                     }
                 }
             }.runTaskTimer(Main.instance, 1, 5);
+        }
+    }
+
+    @EventHandler
+    public void onToggle(EntityToggleGlideEvent event) {
+        Entity e = event.getEntity();
+        if (e instanceof Player) {
+            Player player = (Player) event.getEntity();
+            boolean isGliding = event.isGliding();
+
+            if (TeamManager.isUndead(player)) {
+                event.setCancelled(true);
+                if (this.isGliding == true) {
+                    event.setCancelled(true);
+                }
+
+            }
         }
     }
 }

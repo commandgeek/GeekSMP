@@ -3,14 +3,17 @@ package com.commandgeek.GeekSMP.listeners;
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
 import org.bukkit.*;
-import org.bukkit.block.Chest;
+
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -124,5 +127,22 @@ public class InteractListener implements Listener {
         if (LockManager.isPlaced(event.getBlock())) {
             LockManager.unplace(event.getBlock());
         }
+    }
+
+    @EventHandler
+    public void EntityDamageByEntityEvent (EntityDamageByEntityEvent event) {
+        Entity e = event.getEntity(); //gets what is getting damaged
+        Entity en = event.getDamager(); //gets who damaged the entity
+        if (e instanceof ItemFrame) { //makes sure its an item frame
+            if (en instanceof Player) { //converts it to player
+                Player player = (Player) event.getDamager();
+
+                if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+                    event.setCancelled(true);
+
+                }
+            }
+        }
+
     }
 }
