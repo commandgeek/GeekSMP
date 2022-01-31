@@ -8,8 +8,12 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.javacord.api.DiscordApi;
@@ -143,7 +147,7 @@ public class Main extends JavaPlugin {
 
         // Register Recipes
         LockManager.registerRecipe();
-
+        Bukkit.addRecipe(getRecipe());
         // Discord
         botPrefix = config.getString("discord.prefix");
 
@@ -195,7 +199,23 @@ public class Main extends JavaPlugin {
             online.kickPlayer("Server Restarting");
         }
 
+
         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DO NOT RELOAD THE GEEKSMP PLUGIN. ALWAYS RESTART THE SERVER. SHUTTING DOWN");
         getServer().shutdown();
     }
+    public ShapedRecipe getRecipe() {
+        ItemStack item = new ItemStack(Material.GLOW_BERRIES);
+
+        NamespacedKey key = new NamespacedKey(this, "GLOW_BERRIES");
+
+        ShapedRecipe recipe = new ShapedRecipe(key, item);
+
+        recipe.shape(" G ", "GBG", " G ");
+
+        recipe.setIngredient('G', Material.GLOWSTONE_DUST);
+        recipe.setIngredient('B', Material.SWEET_BERRIES);
+
+        return recipe;
+    }
+
 }
