@@ -220,7 +220,7 @@ public class Setup {
     public static long lastDiscordChannelTopicUpdate = 0;
     public static void discordChannelTopicUpdate() {
         long time = new Timestamp(System.currentTimeMillis()).getTime();
-        if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300) {
+        if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300000) { // 300,000 milliseconds (5 minutes)
             if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
                 DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 lastDiscordChannelTopicUpdate = time;
