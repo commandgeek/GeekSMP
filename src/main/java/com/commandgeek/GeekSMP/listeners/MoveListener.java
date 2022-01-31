@@ -69,6 +69,7 @@ public class MoveListener implements Listener {
 
             if (TeamManager.isUndead(player)) {
                 event.setCancelled(true);
+                // THIS IS JUST TO TEST COMMIT
                 if (this.isGliding == true) {
                     event.setCancelled(true);
                 }
