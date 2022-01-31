@@ -45,6 +45,11 @@ shadowJar {
     }
 }
 
+jar {
+    dependsOn("shadowJar")
+    enabled = false
+}
+
 def targetJavaVersion = 16
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
