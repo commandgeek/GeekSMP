@@ -147,7 +147,8 @@ public class Main extends JavaPlugin {
 
         // Register Recipes
         LockManager.registerRecipe();
-        Bukkit.addRecipe(getRecipe());
+        Bukkit.addRecipe(getGlowBerries());
+        Bukkit.addRecipe(getHeartOfSea());
         // Discord
         botPrefix = config.getString("discord.prefix");
 
@@ -203,7 +204,7 @@ public class Main extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DO NOT RELOAD THE GEEKSMP PLUGIN. ALWAYS RESTART THE SERVER. SHUTTING DOWN");
         getServer().shutdown();
     }
-    public ShapedRecipe getRecipe() {
+    public ShapedRecipe getGlowBerries() {
         ItemStack item = new ItemStack(Material.GLOW_BERRIES);
 
         NamespacedKey key = new NamespacedKey(this, "GLOW_BERRIES");
@@ -214,6 +215,22 @@ public class Main extends JavaPlugin {
 
         recipe.setIngredient('G', Material.GLOWSTONE_DUST);
         recipe.setIngredient('B', Material.SWEET_BERRIES);
+
+        return recipe;
+    }
+
+    public ShapedRecipe getHeartOfSea() {
+        ItemStack item = new ItemStack(Material.CONDUIT);
+
+        NamespacedKey key = new NamespacedKey(this, "Conduit");
+
+        ShapedRecipe recipe = new ShapedRecipe(key, item);
+
+        recipe.shape("SCS", "CNC", "SCS");
+
+        recipe.setIngredient('S', Material.SEA_LANTERN);
+        recipe.setIngredient('C', Material.PRISMARINE_CRYSTALS);
+        recipe.setIngredient('N', Material.NETHER_STAR);
 
         return recipe;
     }
