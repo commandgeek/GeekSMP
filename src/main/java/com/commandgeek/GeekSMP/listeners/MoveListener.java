@@ -63,12 +63,13 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onToggle(EntityToggleGlideEvent event) {
         Entity e = event.getEntity();
-        if (e instanceof Player) {//checks if player
-            Player player = (Player) event.getEntity();//gets the player of event
-            boolean isGliding = event.isGliding(); //detects if player is gliding
+        if (e instanceof Player) {
+            Player player = (Player) event.getEntity();
+            boolean isGliding = event.isGliding();
 
-            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {//checks if the player is undead and isnt near pet owner
-                if (this.isGliding == true) {//if player is gliding it stops them
+            if (TeamManager.isUndead(player)) {
+                event.setCancelled(true);
+                if (this.isGliding == true) {
                     event.setCancelled(true);
                 }
 
