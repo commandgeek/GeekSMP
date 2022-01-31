@@ -131,18 +131,10 @@ public class InteractListener implements Listener {
 
     @EventHandler
     public void EntityDamageByEntityEvent (EntityDamageByEntityEvent event) {
-        Entity e = event.getEntity(); //gets what is getting damaged
-        Entity en = event.getDamager(); //gets who damaged the entity
-        if (e instanceof ItemFrame) { //makes sure its an item frame
-            if (en instanceof Player) { //converts it to player
-                Player player = (Player) event.getDamager();
-
-                if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-                    event.setCancelled(true);
-
-                }
+        if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
+            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+                event.setCancelled(true);
             }
         }
-
     }
 }
