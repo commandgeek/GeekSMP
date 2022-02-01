@@ -37,7 +37,26 @@ public class LockManager {
     }
 
     public static boolean isLockable(Block block) {
-        Material[] allowed = {Material.CHEST, Material.TRAPPED_CHEST, Material.BARREL, Material.ENDER_CHEST, Material.STONE_BUTTON, Material.OAK_BUTTON, Material.BIRCH_BUTTON, Material.SPRUCE_BUTTON, Material.JUNGLE_BUTTON, Material.DARK_OAK_BUTTON, Material.ACACIA_BUTTON, Material.WARPED_BUTTON, Material.CRIMSON_BUTTON, Material.POLISHED_BLACKSTONE_BUTTON, Material.LEVER, Material.DROPPER, Material.DISPENSER, Material.HOPPER};
+        Material[] allowed = {
+                Material.CHEST,
+                Material.TRAPPED_CHEST,
+                Material.BARREL,
+                Material.ENDER_CHEST,
+                Material.STONE_BUTTON,
+                Material.OAK_BUTTON,
+                Material.BIRCH_BUTTON,
+                Material.SPRUCE_BUTTON,
+                Material.JUNGLE_BUTTON,
+                Material.DARK_OAK_BUTTON,
+                Material.ACACIA_BUTTON,
+                Material.WARPED_BUTTON,
+                Material.CRIMSON_BUTTON,
+                Material.POLISHED_BLACKSTONE_BUTTON,
+                Material.LEVER,
+                Material.DROPPER,
+                Material.DISPENSER,
+                Material.HOPPER
+        };
         for (Material material : allowed) {
             if (block.getType() == material) {
                 return true;
