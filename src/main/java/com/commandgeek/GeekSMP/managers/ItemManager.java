@@ -71,8 +71,8 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.addEnchant(enchantment, level, true);
+            item.setItemMeta(meta);
         }
-        item.setItemMeta(meta);
         return this;
     }
 
@@ -80,8 +80,8 @@ public class ItemManager {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.addItemFlags(flag);
+            item.setItemMeta(meta);
         }
-        item.setItemMeta(meta);
         return this;
     }
 

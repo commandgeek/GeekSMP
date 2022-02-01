@@ -191,7 +191,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", Lag.getTPSString());
+                item = item.replaceAll("%tps%", ServerManager.getTPSString());
                 item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 header.append(item).append("\n");
@@ -202,7 +202,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", Lag.getTPSString());
+                item = item.replaceAll("%tps%", ServerManager.getTPSString());
                 item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 footer.append(item).append("\n");

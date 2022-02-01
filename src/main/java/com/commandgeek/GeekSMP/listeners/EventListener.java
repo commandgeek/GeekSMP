@@ -7,13 +7,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.player.*;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,7 +36,14 @@ public class EventListener implements Listener {
     public void onShootBow(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player player) {
             Entity entity = MorphManager.getEntity(player);
+
             if (entity instanceof Skeleton) {
+                Entity arrow = event.getProjectile();
+
+                if(arrow instanceof Arrow) {
+                    ((Arrow) arrow).setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
+                }
+
                 new PacketManager().animateEntity(entity, 0);
                 player.getInventory().remove(Material.ARROW);
                 new BukkitRunnable() {
@@ -44,17 +52,6 @@ public class EventListener implements Listener {
                         player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                     }
                 }.runTaskLater(Main.instance, 20);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPickUpArrow(PlayerPickupArrowEvent event) {
-        Player player = event.getPlayer();
-        if (TeamManager.isUndead(player)) {
-            event.setCancelled(true);
-            if (!event.getArrow().isInBlock()) {
-                event.getArrow().remove();
             }
         }
     }

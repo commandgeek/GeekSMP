@@ -1,6 +1,11 @@
 package com.commandgeek.GeekSMP.managers;
 
-public class Lag implements Runnable {
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ShapedRecipe;
+
+public class ServerManager implements Runnable {
 
     private static final long[] TICKS = new long[600];
     private static int TICK_COUNT = 0;
@@ -31,5 +36,4 @@ public class Lag implements Runnable {
         TICKS[(TICK_COUNT % TICKS.length)] = System.currentTimeMillis();
         TICK_COUNT += 1;
     }
-
 }

@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.javacord.api.entity.channel.TextChannel;
 
+import java.util.regex.Matcher;
+
 public class MessageManager {
     private String message;
 
@@ -14,6 +16,16 @@ public class MessageManager {
     }
 
     public MessageManager replace(String regex, String replacement) {
+        message = message.replaceAll(regex, replacement);
+        return this;
+    }
+
+    public MessageManager replace(String regex, String replacement, boolean escapeMarkdown) {
+        if(escapeMarkdown) {
+            String mdRegex = "[*_`~>|]";
+            replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
+        }
+
         message = message.replaceAll(regex, replacement);
         return this;
     }

@@ -31,16 +31,11 @@ public class ChatManager {
                 event.setMessage(ChatManager.censor(event.getMessage()));
 
                 event.setFormat(format);
-                String strippedMessage = event.getMessage()
-                        .replace("*", "\\\\*")
-                        .replace("_", "\\\\_")
-                        .replace("~", "\\\\~")
-                        .replace("|", "\\\\|")
-                        .replace("`", "\\\\`");
+
                 try {
                     new MessageManager("smp-chat-message")
-                            .replace("%player%", player.getName())
-                            .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', strippedMessage)))
+                            .replace("%player%", player.getName(), true)
+                            .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())))
                             .sendDiscord(DiscordManager.smpChatChannel);
                     return true;
                 } catch (IllegalArgumentException ignored) {}
