@@ -34,9 +34,8 @@ public class ChatManager {
 
                 try {
                     new MessageManager("smp-chat-message")
-                            .replace("%player%", player.getName())
+                            .replace("%player%", player.getName(), true)
                             .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())))
-                            .escapeMarkdown()
                             .sendDiscord(DiscordManager.smpChatChannel);
                     return true;
                 } catch (IllegalArgumentException ignored) {}

@@ -51,8 +51,7 @@ public class JoinListener implements Listener {
         }
         event.setJoinMessage(new MessageManager("join").replace("%player%", player.getName()).string());
         new MessageManager("smp-chat-join")
-                .replace("%player%", player.getName())
-                .escapeMarkdown()
+                .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
     }
 

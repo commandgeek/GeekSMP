@@ -25,6 +25,7 @@ public class MessageManager {
             String mdRegex = "[*_`~>|]";
             replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
         }
+
         message = message.replaceAll(regex, replacement);
         return this;
     }
