@@ -191,7 +191,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(ServerManager.getTPS()));
+                item = item.replaceAll("%tps%", Lag.getTPSString());
                 item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 header.append(item).append("\n");
@@ -202,7 +202,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", String.valueOf(ServerManager.getTPS()));
+                item = item.replaceAll("%tps%", Lag.getTPSString());
                 item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
                 item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
                 footer.append(item).append("\n");
@@ -220,9 +220,9 @@ public class Setup {
     public static long lastDiscordChannelTopicUpdate = 0;
     public static void discordChannelTopicUpdate() {
         long time = new Timestamp(System.currentTimeMillis()).getTime();
-        if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300) {
+        if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300000) { // 300,000 milliseconds (5 minutes)
             if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
-                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("Online Players: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
                 lastDiscordChannelTopicUpdate = time;
             }
         }
