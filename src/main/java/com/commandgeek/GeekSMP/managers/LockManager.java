@@ -41,7 +41,6 @@ public class LockManager {
                 Material.CHEST,
                 Material.TRAPPED_CHEST,
                 Material.BARREL,
-                Material.ENDER_CHEST,
                 Material.STONE_BUTTON,
                 Material.OAK_BUTTON,
                 Material.BIRCH_BUTTON,
@@ -55,7 +54,18 @@ public class LockManager {
                 Material.LEVER,
                 Material.DROPPER,
                 Material.DISPENSER,
-                Material.HOPPER
+                Material.HOPPER,
+                Material.ACACIA_PRESSURE_PLATE,
+                Material.BIRCH_PRESSURE_PLATE,
+                Material.DARK_OAK_PRESSURE_PLATE,
+                Material.HEAVY_WEIGHTED_PRESSURE_PLATE,
+                Material.JUNGLE_PRESSURE_PLATE,
+                Material.LIGHT_WEIGHTED_PRESSURE_PLATE,
+                Material.OAK_PRESSURE_PLATE,
+                Material.POLISHED_BLACKSTONE_PRESSURE_PLATE,
+                Material.SPRUCE_PRESSURE_PLATE,
+                Material.STONE_PRESSURE_PLATE,
+                Material.WARPED_PRESSURE_PLATE
         };
         for (Material material : allowed) {
             if (block.getType() == material) {
