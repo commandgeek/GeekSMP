@@ -20,27 +20,6 @@ public class ItemListener implements Listener {
             if (TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
                 event.setCancelled(true);
             }
-
-            /*
-            if (TeamManager.isUndead(player)) {
-                if (InventoryManager.getContentAmount(player) > InventoryManager.getEquipmentAmount(player)) {
-                    if (!(event.getItem().getItemStack().getType() == Material.ARROW && MorphManager.getEntity(player) instanceof Skeleton)) {
-                        player.sendTitle(" ", new MessageManager("item-pickup-forbidden").string(), 0, 5, 5);
-                        event.setCancelled(true);
-                        return;
-                    }
-                }
-                if (event.getItem().getItemStack().getAmount() > 1) {
-                    event.setCancelled(true);
-                    ItemStack item = event.getItem().getItemStack();
-                    item.setAmount(item.getAmount() - 1);
-                    event.getItem().setItemStack(item);
-                    item.setAmount(1);
-                    player.getInventory().addItem(item);
-                } else {
-                    new PacketManager().hideEntity(event.getItem());
-                }
-            } */
         }
     }
 

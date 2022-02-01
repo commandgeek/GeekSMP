@@ -37,15 +37,19 @@ public class EventListener implements Listener {
         if (event.getEntity() instanceof Player player) {
             Entity entity = MorphManager.getEntity(player);
 
+            // Check If Morph Is Skeleton
             if (entity instanceof Skeleton) {
-                Entity arrow = event.getProjectile();
 
-                if(arrow instanceof Arrow) {
-                    ((Arrow) arrow).setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
+                // Set Arrow Pickup Status
+                if (event.getProjectile() instanceof Arrow arrow) {
+                    arrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
                 }
 
+                // Animate Shooting
                 new PacketManager().animateEntity(entity, 0);
                 player.getInventory().remove(Material.ARROW);
+
+                // Give New Arrow
                 new BukkitRunnable() {
                     public void run() {
                         player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
