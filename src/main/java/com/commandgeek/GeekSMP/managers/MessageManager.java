@@ -29,12 +29,6 @@ public class MessageManager {
         return this;
     }
 
-    public MessageManager escapeMarkdown() {
-        String mdRegex = "[*_`~>|]";
-        message = message.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
-        return this;
-    }
-
     public String send(CommandSender sender) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
         return string();
