@@ -352,15 +352,6 @@ public class LockManager {
         return player.getInventory().getItemInMainHand().isSimilar(lockTool);
     }
 
-    public static void registerRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft("lock_tool"), lockTool);
-        recipe.shape("  B", " A ", "A  ");
-        recipe.setIngredient('A', Material.STICK);
-        recipe.setIngredient('B', Material.AMETHYST_SHARD);
-        Bukkit.getServer().addRecipe(recipe);
-
-    }
-
     public static void check() {
         for (String key : Main.locked.getKeys(false)) {
             String[] c = key.split("=");
