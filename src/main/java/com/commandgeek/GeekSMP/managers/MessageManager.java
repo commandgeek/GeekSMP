@@ -22,9 +22,7 @@ public class MessageManager {
 
     public MessageManager escapeMarkdown() {
         String mdRegex = "[*_`~>]";
-        System.out.println("Escaping " + message);
         message = message.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
-        System.out.println("Escaped " + message);
         return this;
     }
 
