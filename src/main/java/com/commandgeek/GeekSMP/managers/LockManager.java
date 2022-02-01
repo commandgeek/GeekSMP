@@ -57,6 +57,7 @@ public class LockManager {
                 Material.HOPPER,
                 Material.ACACIA_PRESSURE_PLATE,
                 Material.BIRCH_PRESSURE_PLATE,
+                Material.CRIMSON_PRESSURE_PLATE,
                 Material.DARK_OAK_PRESSURE_PLATE,
                 Material.HEAVY_WEIGHTED_PRESSURE_PLATE,
                 Material.JUNGLE_PRESSURE_PLATE,
