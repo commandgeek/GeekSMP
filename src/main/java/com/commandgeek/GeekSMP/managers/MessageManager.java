@@ -20,6 +20,15 @@ public class MessageManager {
         return this;
     }
 
+    public MessageManager replace(String regex, String replacement, boolean escapeMarkdown) {
+        if(escapeMarkdown) {
+            String mdRegex = "[*_`~>|]";
+            replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
+        }
+        message = message.replaceAll(regex, replacement);
+        return this;
+    }
+
     public MessageManager escapeMarkdown() {
         String mdRegex = "[*_`~>|]";
         message = message.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
