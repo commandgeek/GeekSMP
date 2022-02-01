@@ -7,15 +7,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.Serial;
 
 @SuppressWarnings({"unused"})
 public class EventListener implements Listener {
@@ -35,7 +35,14 @@ public class EventListener implements Listener {
     public void onShootBow(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player player) {
             Entity entity = MorphManager.getEntity(player);
+
             if (entity instanceof Skeleton) {
+                Entity arrow = event.getProjectile();
+
+                if(arrow instanceof Arrow) {
+                    ((Arrow) arrow).setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
+                }
+
                 new PacketManager().animateEntity(entity, 0);
                 player.getInventory().remove(Material.ARROW);
                 new BukkitRunnable() {
