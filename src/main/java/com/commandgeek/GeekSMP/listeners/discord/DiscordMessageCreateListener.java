@@ -91,6 +91,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                             .replace("%user%", user.getMentionTag())
                             .replace("%player%", player.getName())
                             .replace("%uuid%", player.getUniqueId().toString())
+                            .escapeMarkdown()
                             .sendDiscord(channel);
                     return true;
                 }
@@ -102,6 +103,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                 .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
                                 .replace("%player%", player.getName())
                                 .replace("%uuid%", player.getUniqueId().toString())
+                                .escapeMarkdown()
                                 .sendDiscord(channel);
                         return true;
                     }
@@ -111,6 +113,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                 .replace("%user%", user.getMentionTag())
                                 .replace("%player%", player.getName())
                                 .replace("%uuid%", player.getUniqueId().toString())
+                                .escapeMarkdown()
                                 .sendDiscord(channel);
                         return true;
                     }
@@ -130,6 +133,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                 .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
                                 .replace("%player%", player.getName())
                                 .replace("%uuid%", player.getUniqueId().toString())
+                                .escapeMarkdown()
                                 .sendDiscord(channel);
                         return true;
                     }
@@ -139,6 +143,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                 .replace("%user%", user.getMentionTag())
                                 .replace("%player%", player.getName())
                                 .replace("%uuid%", player.getUniqueId().toString())
+                                .escapeMarkdown()
                                 .sendDiscord(channel);
                         return true;
                     }
@@ -169,6 +174,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                             .replace("%user%", user.getMentionTag() )
                             .replace("%player%", player.getName())
                             .replace("%uuid%", player.getUniqueId().toString())
+                            .escapeMarkdown()
                             .sendDiscord(channel);
                     return true;
                 }
@@ -270,6 +276,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                             .replace("%user%", user.getDiscriminatedName())
                             .replace("%player%", target.getName())
                             .replace("%uuid%", target.getUniqueId().toString())
+                            .escapeMarkdown()
                             .sendDiscord(channel);
                 } else {
                     if (MuteManager.isMuted(target.getUniqueId())) {
@@ -279,6 +286,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                     .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
                                     .replace("%player%", target.getName())
                                     .replace("%uuid%", target.getUniqueId().toString())
+                                    .escapeMarkdown()
                                     .sendDiscord(channel);
                         } else {
                             new MessageManager("discord-reason-mute-temporary")
@@ -287,6 +295,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                     .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
                                     .replace("%player%", target.getName())
                                     .replace("%uuid%", target.getUniqueId().toString())
+                                    .escapeMarkdown()
                                     .sendDiscord(channel);
                         }
                     }
@@ -297,6 +306,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                     .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
                                     .replace("%player%", target.getName())
                                     .replace("%uuid%", target.getUniqueId().toString())
+                                    .escapeMarkdown()
                                     .sendDiscord(channel);
                         } else {
                             new MessageManager("discord-reason-ban-temporary")
@@ -305,6 +315,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                     .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
                                     .replace("%player%", target.getName())
                                     .replace("%uuid%", target.getUniqueId().toString())
+                                    .escapeMarkdown()
                                     .sendDiscord(channel);
                         }
                     }
