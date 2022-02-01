@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.javacord.api.entity.channel.TextChannel;
 
+import java.util.regex.Matcher;
+
 public class MessageManager {
     private String message;
 
@@ -15,6 +17,14 @@ public class MessageManager {
 
     public MessageManager replace(String regex, String replacement) {
         message = message.replaceAll(regex, replacement);
+        return this;
+    }
+
+    public MessageManager escapeMarkdown() {
+        String mdRegex = "[*_`~>]";
+        System.out.println("Escaping " + message);
+        message = message.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
+        System.out.println("Escaped " + message);
         return this;
     }
 
