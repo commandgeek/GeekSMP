@@ -56,17 +56,6 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onPickUpArrow(PlayerPickupArrowEvent event) {
-        Player player = event.getPlayer();
-        if (TeamManager.isUndead(player)) {
-            event.setCancelled(true);
-            if (!event.getArrow().isInBlock()) {
-                event.getArrow().remove();
-            }
-        }
-    }
-
-    @EventHandler
     public void onTargetEntity(EntityTargetLivingEntityEvent event) {
         if (event.getTarget() instanceof Player player && TeamManager.isUndead(player)) {
             event.setCancelled(true);
