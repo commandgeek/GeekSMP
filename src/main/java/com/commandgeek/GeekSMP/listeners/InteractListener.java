@@ -2,8 +2,10 @@ package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
-import org.bukkit.*;
-
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -13,7 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,11 +29,19 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        Material material = event.getMaterial();
+        Action action = event.getAction();
+
+        //Prevent undeads from placing blocks
+        if(TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+            if(action == Action.RIGHT_CLICK_BLOCK && !event.getClickedBlock().getType().isInteractable()) event.setCancelled(true);
+            else if(action == Action.LEFT_CLICK_BLOCK) event.setCancelled(true);
+        }
 
         // Animate Morphed Entity if Exists
         Entity entity = MorphManager.getEntity(player);
         if (entity != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getItem().getType() == Material.BOW)) {
+            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && material == Material.BOW)) {
                 new PacketManager().animateEntity(entity, 0);
             }
         }
@@ -79,12 +88,6 @@ public class InteractListener implements Listener {
 
         // Check Holding Lock Tool
         if (LockManager.holdingLockTool(player)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        // Check Undead Not Near Owner
-        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
             return;
         }
