@@ -46,6 +46,7 @@ public class Setup {
         DiscordManager.smpChatChannel = DiscordManager.channelFromConfig(Main.config, "discord.smp-chat-channel");
 
         Main.bannedWords = Main.config.getStringList("settings.banned-words");
+        Main.lockableBlocks = Main.config.getStringList("settings.lockable-blocks");
 
         LockManager.check();
 

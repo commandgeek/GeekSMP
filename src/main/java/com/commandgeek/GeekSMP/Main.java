@@ -38,6 +38,7 @@ public class Main extends JavaPlugin {
     public static FileConfiguration pets;
 
     public static List<String> bannedWords;
+    public static List<String> lockableBlocks;
 
     public static DiscordApi discordAPI;
     public static ProtocolManager protocolManager;
