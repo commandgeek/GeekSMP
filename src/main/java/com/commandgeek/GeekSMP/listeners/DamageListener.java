@@ -5,10 +5,7 @@ import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.PacketManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -43,18 +40,17 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player || event.getDamager() instanceof Arrow || event.getDamager() instanceof IronGolem) {
+        if (event.getDamager() instanceof Player || event.getDamager() instanceof Arrow || event.getDamager() instanceof Trident || event.getDamager() instanceof IronGolem) {
             if (event.getDamager() instanceof Arrow arrow) {
                 arrow.remove();
             }
-            try {
-                Entity entity = event.getEntity();
-                Player victim = MorphManager.getPlayer(entity);
-                if (victim != null) {
-                    victim.damage(event.getDamage(), event.getDamager());
-                    event.setCancelled(true);
-                }
-            } catch (ClassCastException ignored) {}
+
+            Entity entity = event.getEntity();
+            Player victim = MorphManager.getPlayer(entity);
+            if (victim != null) {
+                victim.damage(event.getDamage(), event.getDamager());
+                event.setCancelled(true);
+            }
         }
     }
 }
