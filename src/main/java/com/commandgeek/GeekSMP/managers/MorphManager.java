@@ -60,6 +60,7 @@ public class MorphManager {
         for (PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
+        player.setGameMode(GameMode.SURVIVAL);
     }
 
     public static Entity getEntity(Player player) {
