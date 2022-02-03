@@ -32,11 +32,6 @@ public class InteractListener implements Listener {
         Material material = event.getMaterial();
         Action action = event.getAction();
 
-        //Prevent undeads from placing blocks
-        if(MorphManager.isMorphedPlayer(player) && !MorphManager.isPetNearOwner(player) && action == Action.LEFT_CLICK_BLOCK) {
-            event.setCancelled(true);
-        }
-
         // Animate Morphed Entity if Exists
         Entity entity = MorphManager.getEntity(player);
         if (entity != null) {
