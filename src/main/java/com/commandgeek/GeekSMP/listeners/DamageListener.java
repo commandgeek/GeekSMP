@@ -3,6 +3,7 @@ package com.commandgeek.GeekSMP.listeners;
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.PacketManager;
+import com.commandgeek.GeekSMP.managers.TeamManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
@@ -51,6 +52,12 @@ public class DamageListener implements Listener {
             Player victim = MorphManager.getPlayer(entity);
             if (victim != null) {
                 victim.damage(event.getDamage(), damager);
+                event.setCancelled(true);
+            }
+        }
+
+        if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
+            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
                 event.setCancelled(true);
             }
         }
