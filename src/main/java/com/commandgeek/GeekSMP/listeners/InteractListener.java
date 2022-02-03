@@ -32,8 +32,8 @@ public class InteractListener implements Listener {
         Material material = event.getMaterial();
         Action action = event.getAction();
 
-        //Prevent undeads from placing blocks
-        if(TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+        //Prevent undeads from placing and breaking blocks
+        if(MorphManager.isMorphedPlayer(player) && !MorphManager.isPetNearOwner(player)) {
             if(action == Action.RIGHT_CLICK_BLOCK && !event.getClickedBlock().getType().isInteractable()) event.setCancelled(true);
             else if(action == Action.LEFT_CLICK_BLOCK) event.setCancelled(true);
         }
