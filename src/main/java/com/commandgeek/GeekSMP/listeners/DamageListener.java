@@ -40,15 +40,17 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player || event.getDamager() instanceof Arrow || event.getDamager() instanceof Trident || event.getDamager() instanceof IronGolem) {
-            if (event.getDamager() instanceof Arrow arrow) {
+        Entity damager = event.getDamager();
+
+        if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem) {
+            if (damager instanceof Arrow arrow) {
                 arrow.remove();
             }
 
             Entity entity = event.getEntity();
             Player victim = MorphManager.getPlayer(entity);
             if (victim != null) {
-                victim.damage(event.getDamage(), event.getDamager());
+                victim.damage(event.getDamage(), damager);
                 event.setCancelled(true);
             }
         }
