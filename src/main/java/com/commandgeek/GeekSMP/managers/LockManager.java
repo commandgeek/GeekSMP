@@ -37,38 +37,10 @@ public class LockManager {
     }
 
     public static boolean isLockable(Block block) {
-        Material[] allowed = {
-                Material.CHEST,
-                Material.TRAPPED_CHEST,
-                Material.BARREL,
-                Material.STONE_BUTTON,
-                Material.OAK_BUTTON,
-                Material.BIRCH_BUTTON,
-                Material.SPRUCE_BUTTON,
-                Material.JUNGLE_BUTTON,
-                Material.DARK_OAK_BUTTON,
-                Material.ACACIA_BUTTON,
-                Material.WARPED_BUTTON,
-                Material.CRIMSON_BUTTON,
-                Material.POLISHED_BLACKSTONE_BUTTON,
-                Material.LEVER,
-                Material.DROPPER,
-                Material.DISPENSER,
-                Material.HOPPER,
-                Material.ACACIA_PRESSURE_PLATE,
-                Material.BIRCH_PRESSURE_PLATE,
-                Material.CRIMSON_PRESSURE_PLATE,
-                Material.DARK_OAK_PRESSURE_PLATE,
-                Material.HEAVY_WEIGHTED_PRESSURE_PLATE,
-                Material.JUNGLE_PRESSURE_PLATE,
-                Material.LIGHT_WEIGHTED_PRESSURE_PLATE,
-                Material.OAK_PRESSURE_PLATE,
-                Material.POLISHED_BLACKSTONE_PRESSURE_PLATE,
-                Material.SPRUCE_PRESSURE_PLATE,
-                Material.STONE_PRESSURE_PLATE,
-                Material.WARPED_PRESSURE_PLATE
-        };
-        for (Material material : allowed) {
+        for (String lockableBlock : Main.lockableBlocks) {
+            Material material = Material.getMaterial(lockableBlock.toUpperCase(Locale.ROOT));
+
+            if(material == null) continue;
             if (block.getType() == material) {
                 return true;
             }
