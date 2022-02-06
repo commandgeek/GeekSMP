@@ -37,7 +37,7 @@ public class Setup {
         Main.linked = ConfigManager.loadData("linked.yml");
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
-        Main.pets = ConfigManager.loadData("pets.yml");
+//        Main.pets = ConfigManager.loadData("pets.yml");
 
         DiscordManager.mutedRole = DiscordManager.roleFromConfig(Main.config, "discord.muted-role");
         DiscordManager.linkedRole = DiscordManager.roleFromConfig(Main.config, "discord.linked-role");
