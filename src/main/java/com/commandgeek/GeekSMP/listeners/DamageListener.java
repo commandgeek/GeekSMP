@@ -57,9 +57,7 @@ public class DamageListener implements Listener {
         }
 
         if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
-            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-                event.setCancelled(true);
-            }
+            if(TeamManager.isUndead(player)) event.setCancelled(true);
         }
     }
 }
