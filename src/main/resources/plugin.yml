@@ -7,7 +7,7 @@ depend: [ProtocolLib]
 
 commands:
   reloadsmp:
-    aliases: [rs]
+    aliases: [rs, rsmp]
   revive:
     aliases: []
   unrevive:
@@ -25,7 +25,7 @@ commands:
   unban:
     aliases: []
   die:
-    aliases: []
+    aliases: [suicide]
   gmc:
     aliases: []
   gms:
@@ -47,21 +47,21 @@ commands:
   twitch:
     aliases: [stream]
   map:
-    aliases: []
+    aliases: [webmap]
   changelog:
     aliases: []
   unlink:
     aliases: []
   purgechat:
-    aliases: []
+    aliases: [clearchat]
   purgeteams:
-    aliases: []
+    aliases: [clearteams]
   feed:
     aliases: []
   heal:
     aliases: []
   tphere:
-    aliases: []
+    aliases: [tph]
   tp:
     aliases: []
   msg:
@@ -75,9 +75,9 @@ commands:
   track:
     aliases: []
   seeinv:
-    aliaes: []
+    aliaes: [invsee]
   lookup:
-    aliases: []
+    aliases: [linked]
   playerinfo:
     aliases: []
   stats:
@@ -88,8 +88,8 @@ commands:
     aliases: []
   untrust:
     aliases: []
-  pet:
-    aliases: []
+#  pet:
+#    aliases: []
   inspect:
     aliases: [i]
   afk:

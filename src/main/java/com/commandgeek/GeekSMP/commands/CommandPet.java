@@ -1,4 +1,4 @@
-package com.commandgeek.GeekSMP.commands;
+/*package com.commandgeek.GeekSMP.commands;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
@@ -89,3 +89,4 @@ public class CommandPet implements CommandExecutor {
         return true;
     }
 }
+*/

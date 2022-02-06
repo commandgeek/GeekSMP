@@ -2,18 +2,17 @@ package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
-import org.bukkit.*;
-
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,11 +27,13 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        Material material = event.getMaterial();
+        Action action = event.getAction();
 
         // Animate Morphed Entity if Exists
         Entity entity = MorphManager.getEntity(player);
         if (entity != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getItem().getType() == Material.BOW)) {
+            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && material == Material.BOW)) {
                 new PacketManager().animateEntity(entity, 0);
             }
         }
@@ -84,11 +85,11 @@ public class InteractListener implements Listener {
         }
 
         // Check Undead Not Near Owner
-        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
             return;
         }
-
+*/
         // Check if Locked Double Chest
         new BukkitRunnable() {
             public void run() {
@@ -108,11 +109,11 @@ public class InteractListener implements Listener {
         }
 
         // Check Undead Not Near Owner
-        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
             return;
         }
-
+*/
         // Check Locked Block
         if (LockManager.isLocked(event.getBlock())) {
             if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
@@ -126,15 +127,6 @@ public class InteractListener implements Listener {
         // Check if Should Remove Placer
         if (LockManager.isPlaced(event.getBlock())) {
             LockManager.unplace(event.getBlock());
-        }
-    }
-
-    @EventHandler
-    public void EntityDamageByEntityEvent (EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
-            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-                event.setCancelled(true);
-            }
         }
     }
 }

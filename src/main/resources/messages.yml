@@ -70,16 +70,16 @@ untrust-success: "&5No longer trusting &d%player%&5."
 untrust-fail: "&c%player% isn't trusted."
 block-locked: "&c%block% &4is locked by &c%player%&4."
 
-# - Pet Messages -
-# %player% - Pet player name
-pet-success: "&5Made &d%player%&5 your pet."
-pet-fail: "&c%player% is already your pet."
-pet-list-header: "&dYour pets"
-pet-list-item: "&8 - &5%player%"
-pet-list-empty: "&8 - &5&onone"
-pet-clear: "&5All your pets have been cleared."
-unpet-success: "&5Removed &d%player%&5 as your pet."
-unpet-fail: "&c%player% isn't your pet."
+## - Pet Messages -
+## %player% - Pet player name
+#pet-success: "&5Made &d%player%&5 your pet."
+#pet-fail: "&c%player% is already your pet."
+#pet-list-header: "&dYour pets"
+#pet-list-item: "&8 - &5%player%"
+#pet-list-empty: "&8 - &5&onone"
+#pet-clear: "&5All your pets have been cleared."
+#unpet-success: "&5Removed &d%player%&5 as your pet."
+#unpet-fail: "&c%player% isn't your pet."
 
 # - Information Messages -
 player-information-header: "&d%player% information:"

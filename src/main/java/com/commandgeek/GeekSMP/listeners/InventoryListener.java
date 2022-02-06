@@ -1,23 +1,16 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
-import com.commandgeek.GeekSMP.managers.InventoryManager;
 import com.commandgeek.GeekSMP.managers.MessageManager;
 import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.TeamManager;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.Arrays;
 
 @SuppressWarnings({"unused"})
 public class InventoryListener implements Listener {
