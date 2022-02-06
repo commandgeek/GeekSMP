@@ -1,14 +1,13 @@
 package com.commandgeek.GeekSMP.listeners;
 
-import com.commandgeek.GeekSMP.managers.*;
+import com.commandgeek.GeekSMP.managers.MorphManager;
+import com.commandgeek.GeekSMP.managers.TeamManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 
 @SuppressWarnings({"unused"})
 public class ItemListener implements Listener {

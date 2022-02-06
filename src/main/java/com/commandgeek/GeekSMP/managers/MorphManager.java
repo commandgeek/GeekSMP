@@ -4,10 +4,7 @@ import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.Morph;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Difficulty;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
@@ -40,6 +37,7 @@ public class MorphManager {
         entity.setCustomNameVisible(true);
         entity.setRemoveWhenFarAway(false);
 
+        player.setGameMode(GameMode.ADVENTURE);
         EntityManager.hideEntity(entity, player);
         player.setFoodLevel(20);
         Main.morphs.set(player.getUniqueId().toString(), entity.getUniqueId().toString());
@@ -62,6 +60,7 @@ public class MorphManager {
         for (PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
+        player.setGameMode(GameMode.SURVIVAL);
     }
 
     public static Entity getEntity(Player player) {
