@@ -157,7 +157,7 @@ public class MorphManager {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
     }
 
-    public static void pet(OfflinePlayer op, Player player) {
+/*    public static void pet(OfflinePlayer op, Player player) {
         List<String> owners = Main.pets.getStringList(op.getUniqueId().toString());
         if (!owners.contains(player.getUniqueId().toString()) && player.getUniqueId() != op.getUniqueId()) {
             owners.add(player.getUniqueId().toString());
@@ -203,4 +203,5 @@ public class MorphManager {
         }
         return false;
     }
+*/
 }
