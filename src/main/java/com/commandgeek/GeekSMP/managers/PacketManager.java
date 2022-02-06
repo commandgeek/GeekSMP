@@ -30,7 +30,8 @@ public class PacketManager {
 
     public void hideEntity(Entity entity) {
         PacketContainer packet = Main.protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
-        packet.getIntLists().write(0, List.of(entity.getEntityId()));
+        int[] entityArray = { entity.getEntityId() };
+        packet.getIntegerArrays().write(0, entityArray);
 
         sendPacket(packet);
     }
