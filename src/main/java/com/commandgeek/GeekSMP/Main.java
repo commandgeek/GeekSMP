@@ -98,7 +98,6 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("trust", new CommandTrust(), new TabTrust());
         Setup.registerCommand("trustlist", new CommandTrustList(), new TabEmpty());
         Setup.registerCommand("untrust", new CommandUntrust(), new TabUntrust());
-        Setup.registerCommand("pet", new CommandPet(), new TabPet());
         Setup.registerCommand("inspect", new CommandInspect(), new TabEmpty());
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
         Setup.registerCommand("reason", new CommandReason(), new TabOfflinePlayer());
