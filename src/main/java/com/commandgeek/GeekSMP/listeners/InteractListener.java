@@ -84,11 +84,11 @@ public class InteractListener implements Listener {
         }
 
         // Check Undead Not Near Owner
-        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
             return;
         }
-
+*/
         // Check if Locked Double Chest
         new BukkitRunnable() {
             public void run() {
@@ -108,11 +108,11 @@ public class InteractListener implements Listener {
         }
 
         // Check Undead Not Near Owner
-        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
             return;
         }
-
+*/
         // Check Locked Block
         if (LockManager.isLocked(event.getBlock())) {
             if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
@@ -132,7 +132,7 @@ public class InteractListener implements Listener {
     @EventHandler
     public void EntityDamageByEntityEvent (EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
-            if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+            if (TeamManager.isUndead(player)) { // USING PETS: if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
                 event.setCancelled(true);
             }
         }
