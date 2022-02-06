@@ -88,6 +88,8 @@ commands:
     aliases: []
   untrust:
     aliases: []
+  pet:
+    aliases: []
   inspect:
     aliases: [i]
   afk:
