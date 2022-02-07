@@ -8,8 +8,10 @@ import com.comphenix.protocol.wrappers.PlayerInfoData;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -55,8 +57,19 @@ public class PacketManager {
 
     public PacketContainer createPlayerInfoPacket(Player player, EnumWrappers.PlayerInfoAction action) {
         WrappedGameProfile playerProfile = WrappedGameProfile.fromPlayer(player);
-        WrappedChatComponent playerDisplayName = WrappedChatComponent.fromText(player.getDisplayName());
         EnumWrappers.NativeGameMode playerGameMode = EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode());
+        WrappedChatComponent playerDisplayName;
+
+        Team team = TeamManager.getPlayerTeam(player);
+        if (team != null) {
+            String teamName = team.getName().replaceAll("^[0-9]+_", "");
+            String color = Main.config.getString("groups." + teamName + ".color");
+
+            playerDisplayName = WrappedChatComponent.fromText(ChatColor.valueOf(color) + player.getName());
+            System.out.println(teamName + " " + color);
+        } else {
+            playerDisplayName = WrappedChatComponent.fromText(player.getDisplayName());
+        }
 
         PlayerInfoData playerData = new PlayerInfoData(playerProfile, player.getPing(), playerGameMode, playerDisplayName);
         List<PlayerInfoData> playerArray = new ArrayList<>();
