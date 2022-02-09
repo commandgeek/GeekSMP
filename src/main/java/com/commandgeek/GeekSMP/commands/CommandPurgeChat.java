@@ -16,7 +16,7 @@ public class CommandPurgeChat implements CommandExecutor {
         }
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            online.sendMessage("\n ".repeat(105) + new MessageManager("purge-chat").string());
+            online.sendMessage("\n ".repeat(500) + new MessageManager("purge-chat").string());
         }
         return true;
     }
