@@ -66,7 +66,6 @@ public class PacketManager {
             String color = Main.config.getString("groups." + teamName + ".color");
 
             playerDisplayName = WrappedChatComponent.fromText(ChatColor.valueOf(color) + player.getName());
-            System.out.println(teamName + " " + color);
         } else {
             playerDisplayName = WrappedChatComponent.fromText(player.getDisplayName());
         }
