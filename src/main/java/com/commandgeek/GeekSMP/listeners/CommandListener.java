@@ -22,7 +22,26 @@ public class CommandListener implements Listener {
         }
 
         String[] args = event.getMessage().split(" ");
-        String[] disabled = {"/minecraft:help", "/minecraft:list", "/list", "/minecraft:me", "/me", "/minecraft:msg", "/minecraft:teammsg", "/teammsg", "/minecraft:tell", "/tell", "/minecraft:tm", "/tm", "/minecraft:trigger", "/trigger", "/minecraft:w", "/w"};
+        String[] disabled = {
+            "/minecraft:help",
+            "/minecraft:list",
+            "/list",
+            "/minecraft:me",
+            "/me",
+            "/minecraft:msg",
+            "/minecraft:teammsg",
+            "/teammsg",
+            "/minecraft:tell",
+            "/tell",
+            "/minecraft:tm",
+            "/tm",
+            "/minecraft:trigger",
+            "/trigger",
+            "/minecraft:w",
+            "/w",
+            "/plugins",
+            "/bukkit:plugins"
+        };
 
 
         if (Arrays.asList(disabled).contains(args[0].toLowerCase())) {
