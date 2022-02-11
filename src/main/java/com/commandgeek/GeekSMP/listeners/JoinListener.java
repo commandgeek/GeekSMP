@@ -44,7 +44,7 @@ public class JoinListener implements Listener {
                 Main.morphs.set(player.getUniqueId().toString(), null);
                 ConfigManager.saveData("morphs.yml", Main.morphs);
             }
-            player.setGameMode(GameMode.SURVIVAL);
+            player.setGameMode(GameMode.ADVENTURE);
             event.setJoinMessage(null);
             Setup.join(player);
             return;

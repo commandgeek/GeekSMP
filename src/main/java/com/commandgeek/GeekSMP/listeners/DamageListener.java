@@ -56,8 +56,14 @@ public class DamageListener implements Listener {
             }
         }
 
+        // Prevent undeads from destroying item frames
         if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
-            if(TeamManager.isUndead(player)) event.setCancelled(true); // USING PETS: if(TeamManager.isUndead(player) && MorphManager.isPetNearOwner(player)) {
+            if(TeamManager.isUndead(player)) event.setCancelled(true);
+        }
+        
+        // Prevent undeads from destroying armor stands
+        if (event.getEntity() instanceof ArmorStand entity && event.getDamager() instanceof Player player) {
+            if(TeamManager.isUndead(player)) event.setCancelled(true);
         }
     }
 }
