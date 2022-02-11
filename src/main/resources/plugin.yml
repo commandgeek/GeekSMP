@@ -1,8 +1,11 @@
 name: GeekSMP
 author: CommandGeek
 main: com.commandgeek.GeekSMP.Main
+
 version: '${version}'
 api-version: 1.13
+
+softdepend: [PlaceholderAPI]
 depend: [ProtocolLib]
 
 commands:
