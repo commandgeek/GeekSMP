@@ -10,7 +10,12 @@ on:
   pull_request:
 #    branches: [ master ]
     paths:
+      - 'gradle/**'
       - 'src/**'
+      - '/build.gradle'
+      - '/gradlew'
+      - '/gradlew.bat'
+      - '/settings.gradle'
   workflow_dispatch:
 
 jobs:
