@@ -54,18 +54,11 @@ public class Main extends JavaPlugin {
 
         instance = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
-		
-		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            Bukkit.getPluginManager().registerEvents(this, this);
-        } else {
-            getLogger().warn("Could not find PlaceholderAPI! This plugin is required.");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
 
         // Print
         getServer().getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "==================");
-        getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " Geek SMP Plugin");
-        getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " by CommandGeek");
+        getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " GeekSMP Plugin");
+//        getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " by CommandGeek");
         getServer().getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "==================");
 
         // Register Commands
