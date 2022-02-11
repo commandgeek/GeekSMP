@@ -22,7 +22,7 @@ public class CommandAfk implements CommandExecutor {
             return true;
         }
 
-        int cooldownTime = 60; // Get number of seconds from wherever you want
+        int cooldownTime = 5; // Get number of seconds from wherever you want
         if(cooldowns.containsKey(sender.getName())) {
             long secondsLeft = ((cooldowns.get(sender.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
             if(secondsLeft>0) {
