@@ -10,7 +10,6 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

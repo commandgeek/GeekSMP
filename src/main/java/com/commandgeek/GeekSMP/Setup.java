@@ -52,12 +52,12 @@ public class Setup {
 
         LockManager.check();
 
+        updateTasks();
         updateTabMetaForAll();
         updateTeams();
         updateAllRoles();
 
         Bukkit.getScheduler().cancelTasks(Main.instance);
-        updateTasks();
         initializeMovementCheck();
     }
 
