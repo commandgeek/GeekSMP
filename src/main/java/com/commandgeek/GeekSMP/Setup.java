@@ -2,9 +2,7 @@ package com.commandgeek.GeekSMP;
 
 import com.commandgeek.GeekSMP.managers.*;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
-
 import me.clip.placeholderapi.PlaceholderAPI;
-
 import org.javacord.api.entity.user.User;
 
 import org.bukkit.*;
@@ -19,7 +17,6 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -28,7 +25,7 @@ public class Setup {
 
     public static void reload() {
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "GeekSMP Reload / Setup");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "GeekSMP setup");
 
         Main.config = ConfigManager.loadConfig("config.yml");
         Main.messages = ConfigManager.loadConfig("messages.yml");
@@ -219,15 +216,24 @@ public class Setup {
         }
     }
 
-    public static long lastDiscordChannelTopicUpdate = 0;
-    public static void discordChannelTopicUpdate() {
-        long time = new Timestamp(System.currentTimeMillis()).getTime();
-        if (Math.abs(lastDiscordChannelTopicUpdate - time) > 300000) { // 300,000 milliseconds (5 minutes)
-            if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
-                DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
-                lastDiscordChannelTopicUpdate = time;
+    public static void tabUpdate() {
+        new BukkitRunnable() {
+            public void run() {
+                updateTabMetaForAll();
             }
-        }
+        }.runTaskTimer(Main.instance, 0, 20); // 20 ticks (1 second)
+    }
+
+    public static void updateSetupTimer() {
+        new BukkitRunnable() {
+            public void run() {
+                updateTeams();
+                updateAllRoles();
+                if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent()) {
+                    DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic("**Online Players:** " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
+                }
+            }
+        }.runTaskTimer(Main.instance, 0, 6000); // 6000 ticks (5 minutes)
     }
 
     public static void initializeMovementCheck() {
