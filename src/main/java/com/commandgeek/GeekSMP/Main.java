@@ -38,10 +38,11 @@ public class Main extends JavaPlugin {
     public static FileConfiguration linked;
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
-//    public static FileConfiguration pets;
+//  public static FileConfiguration pets;
 
     public static List<String> bannedWords;
     public static List<String> lockableBlocks;
+    public static List<String> disabledCommands;
 
     public static DiscordApi discordAPI;
     public static ProtocolManager protocolManager;
@@ -101,8 +102,9 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("trust", new CommandTrust(), new TabTrust());
         Setup.registerCommand("trustlist", new CommandTrustList(), new TabEmpty());
         Setup.registerCommand("untrust", new CommandUntrust(), new TabUntrust());
-//        Setup.registerCommand("pet", new CommandPet(), new TabPet());
+//      Setup.registerCommand("pet", new CommandPet(), new TabPet());
         Setup.registerCommand("inspect", new CommandInspect(), new TabEmpty());
+        Setup.registerCommand("ip", new CommandIP(), new TabPlayer());
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
         Setup.registerCommand("reason", new CommandReason(), new TabOfflinePlayer());
 
@@ -118,7 +120,7 @@ public class Main extends JavaPlugin {
         ConfigManager.createData("linked.yml");
         ConfigManager.createData("locked.yml");
         ConfigManager.createData("trusted.yml");
-//        ConfigManager.createData("pets.yml");
+//      ConfigManager.createData("pets.yml");
 
         Main.config = ConfigManager.loadConfig("config.yml");
         Main.messages = ConfigManager.loadConfig("messages.yml");
@@ -131,7 +133,7 @@ public class Main extends JavaPlugin {
         Main.linked = ConfigManager.loadData("linked.yml");
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
-//        Main.pets = ConfigManager.loadData("pets.yml");
+//      Main.pets = ConfigManager.loadData("pets.yml");
 
         // Register Events
         Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);

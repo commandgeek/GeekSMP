@@ -42,27 +42,22 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
+        Entity entity = event.getEntity();
 
         if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem) {
             if (damager instanceof Arrow arrow) {
                 arrow.remove();
             }
 
-            Entity entity = event.getEntity();
             Player victim = MorphManager.getPlayer(entity);
-            if (victim != null) {
+            if (victim != null && damager.getUniqueId() != victim.getUniqueId()) {
                 victim.damage(event.getDamage(), damager);
                 event.setCancelled(true);
             }
         }
 
-        // Prevent undeads from destroying item frames
-        if (event.getEntity() instanceof ItemFrame entity && event.getDamager() instanceof Player player) {
-            if(TeamManager.isUndead(player)) event.setCancelled(true);
-        }
-        
-        // Prevent undeads from destroying armor stands
-        if (event.getEntity() instanceof ArmorStand entity && event.getDamager() instanceof Player player) {
+        // Prevent undeads from destroying item frames or armorstands
+        if ((entity instanceof ItemFrame || entity instanceof ArmorStand) && damager instanceof Player player) {
             if(TeamManager.isUndead(player)) event.setCancelled(true);
         }
     }

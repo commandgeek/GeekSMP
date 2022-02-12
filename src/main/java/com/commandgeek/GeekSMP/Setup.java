@@ -51,6 +51,7 @@ public class Setup {
 
         Main.bannedWords = Main.config.getStringList("settings.banned-words");
         Main.lockableBlocks = Main.config.getStringList("settings.lockable-blocks");
+        Main.disabledCommands = Main.config.getStringList("settings.disabled-commands");
 
         LockManager.check();
 

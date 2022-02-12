@@ -83,7 +83,14 @@ block-locked: "&c%block% &4is locked by &c%player%&4."
 
 # - Information Messages -
 player-information-header: "&d%player% information:"
-player-information-item: "&8 - &5%key%: &a%value%"
+player-information-item: "&8 - &5%key%: &a%value%"-
+ip-player: "The IP of %player% is %ip%"
+
+# - Info Messages -
+# %header% - Info header/title
+# %item% - Info item
+info-header: "&d%header%"
+info-item: "&8- &5%item%"
 
 # - Morphed Messages -
 # %morph% - Morph name
@@ -187,12 +194,6 @@ discord-mute-fail: "Could not fetch linked account, so **%user%** was muted perm
 discord-invalid-duration: "Invalid Duration."
 discord-unmute: "**%user%** has been unmuted.\nLinked: *%player% (%uuid%)*"
 discord-unmute-fail: "Could not fetch linked account, so **%user%** was unmuted."
-
-# - Info Messages -
-# %header% - Info header/title
-# %item% - Info item
-info-header: "&d%header%"
-info-item: "&8- &5%item%"
 
 # - Change-Log Messages -
 # %version% - Plugin version
