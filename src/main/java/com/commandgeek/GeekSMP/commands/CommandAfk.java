@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CommandAfk implements CommandExecutor {
-    public HashMap<String, Long> cooldowns = new HashMap<String, Long>();
+    public HashMap<String, Long> cooldowns = new HashMap<>();
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
             new MessageManager("console-forbidden").send(sender);
@@ -33,15 +33,6 @@ public class CommandAfk implements CommandExecutor {
         }
         // No cooldown found or cooldown has expired, save new cooldown
         cooldowns.put(sender.getName(), System.currentTimeMillis());
-        if (!(sender instanceof Player)) {
-            new MessageManager("console-forbidden").send(sender);
-            return true;
-        }
-
-        if (!player.hasPermission("geeksmp.command.afk")) {
-            new MessageManager("no-permission").send(player);
-            return true;
-        }
 
         AfkManager.toggle(player);
         return true;
