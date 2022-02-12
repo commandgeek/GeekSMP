@@ -2,6 +2,11 @@ package com.commandgeek.GeekSMP;
 
 import com.commandgeek.GeekSMP.managers.*;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
+
+import me.clip.placeholderapi.PlaceholderAPI;
+
+import org.javacord.api.entity.user.User;
+
 import org.bukkit.*;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -13,7 +18,6 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
-import org.javacord.api.entity.user.User;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -193,9 +197,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", ServerManager.getTPSString());
-                item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-                item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
+                item = PlaceholderAPI.setPlaceholders(player, item);
                 header.append(item).append("\n");
             }
             player.setPlayerListHeader(ChatColor.translateAlternateColorCodes('&', header.toString().replaceAll("\n$", "")));
@@ -204,9 +206,7 @@ public class Setup {
             List<String> items = Main.config.getStringList("tab-meta.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
-                item = item.replaceAll("%tps%", ServerManager.getTPSString());
-                item = item.replaceAll("%online%", String.valueOf(Bukkit.getOnlinePlayers().size()));
-                item = item.replaceAll("%max%", String.valueOf(Bukkit.getMaxPlayers()));
+                item = PlaceholderAPI.setPlaceholders(player, item);
                 footer.append(item).append("\n");
             }
             player.setPlayerListFooter(ChatColor.translateAlternateColorCodes('&', footer.toString().replaceAll("\n$", "")));
