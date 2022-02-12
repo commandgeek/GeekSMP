@@ -143,6 +143,9 @@ discord-reason-ban-temporary: "**%user%** was banned for **%duration%** for \"*%
 lookup-player: "&d%player% &5is linked to &d%user%&5."
 lookup-missing: "&c%player% is not linked to a discord user."
 
+# IP Messages -
+ip-player: "The IP of %player% is %ip%"
+
 # - Failed Chat Messages -
 # %duration% - Duration of mute
 chat-forbidden: "&cYou are unable to chat."

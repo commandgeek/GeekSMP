@@ -28,11 +28,19 @@ public class CommandIP implements CommandExecutor {
             }
 
             String IP = target.getAddress().getHostString();
-            sender.sendMessage("The IP of " + target.getName() + " is " + ChatColor.BOLD + IP);
+            new MessageManager("ip-player")
+                    .replace("%player%", target.getName())
+                    .replace("%ip%", IP)
+                    .send(target);
+
             return true;
         } else if(sender instanceof Player player && args.length == 0) {
             String IP = player.getAddress().getHostString();
-            sender.sendMessage("Your IP is " + ChatColor.BOLD + IP);
+            new MessageManager("ip-player")
+                .replace("%player%", player.getName())
+                .replace("%ip%", IP)
+                .send(player);
+
             return true;
         }
 
