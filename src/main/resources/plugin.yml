@@ -91,10 +91,12 @@ commands:
     aliases: []
   untrust:
     aliases: []
-#  pet:
-#    aliases: []
+# pet:
+#   aliases: []
   inspect:
     aliases: [i]
+  ip:
+    aliases: []
   afk:
     aliases: []
   reason:
@@ -184,9 +186,11 @@ permissions:
     default: true
   geeksmp.command.untrust:
     default: true
-  geeksmp.command.pet:
-    default: op
+# geeksmp.command.pet:
+#   default: op
   geeksmp.command.inspect:
+    default: op
+  geeksmp.command.ip:
     default: op
   geeksmp.command.afk:
     default: true

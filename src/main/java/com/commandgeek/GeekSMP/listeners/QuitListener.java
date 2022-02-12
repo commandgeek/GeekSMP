@@ -15,11 +15,11 @@ public class QuitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        Setup.discordChannelTopicUpdate();
+        Setup.updateSetupTimer();
         Player player = event.getPlayer();
         new BukkitRunnable() {
             public void run() {
-                Setup.updateTabMetaForAll();
+                Setup.tabUpdate();
             }
         }.runTaskLater(Main.instance, 1);
 
@@ -27,7 +27,7 @@ public class QuitListener implements Listener {
         new MorphManager(player).unmorph();
 
         if (TeamManager.isUndead(player)) {
-            event.setQuitMessage(null);
+            event.setQuitMessage(new MessageManager("undead-leave").replace("%player%", player.getName()).string());
             return;
         }
         event.setQuitMessage(new MessageManager("leave").replace("%player%", player.getName()).string());
