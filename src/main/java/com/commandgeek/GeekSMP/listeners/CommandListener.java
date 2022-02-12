@@ -3,6 +3,7 @@ package com.commandgeek.GeekSMP.listeners;
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.AfkManager;
 import com.commandgeek.GeekSMP.managers.MessageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,8 +28,8 @@ public class CommandListener implements Listener {
         String[] args = event.getMessage().split(" ");
         List<String> disabled = Main.disabledCommands;
 
-        String commandName = args[0].toLowerCase(Locale.ROOT).replace("/", "").replace("minecraft:", "");
-        if (disabled.contains(commandName)) {
+        String commandName = args[0].toLowerCase(Locale.ROOT).replace("minecraft:", "");
+        if (disabled.contains(commandName.replace("/", "")) || disabled.contains(commandName)) {
             new MessageManager("disabled-command").send(event.getPlayer());
             event.setCancelled(true);
         }
