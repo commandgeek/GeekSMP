@@ -93,6 +93,7 @@ settings:
     - "w"
     - "plugins"
     - "bukkit:plugins"
+    - "plwhere "
 
 # - Groups -
 # All groups on the server.
