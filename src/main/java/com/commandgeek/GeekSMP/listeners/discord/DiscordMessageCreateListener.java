@@ -223,7 +223,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         }
 
         if (args[0].equalsIgnoreCase(Main.botPrefix + "online") && args.length == 1) {
-            Setup.discordChannelTopicUpdate();
+            Setup.updateSetupTimer();
             TextChannel channel = message.getChannel();
             StringBuilder result = new StringBuilder("**" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + " Online Players:** ```");
 
