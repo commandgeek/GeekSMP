@@ -83,7 +83,7 @@ block-locked: "&c%block% &4is locked by &c%player%&4."
 
 # - Information Messages -
 player-information-header: "&d%player% information:"
-player-information-item: "&8 - &5%key%: &a%value%"-
+player-information-item: "&8 - &5%key%: &a%value%"
 ip-player: "The IP of %player% is %ip%"
 
 # - Info Messages -
