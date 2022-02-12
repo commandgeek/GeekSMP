@@ -1,5 +1,6 @@
 package com.commandgeek.GeekSMP.listeners;
 
+import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.AfkManager;
 import com.commandgeek.GeekSMP.managers.MessageManager;
 import org.bukkit.entity.Player;
@@ -8,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 @SuppressWarnings({"unused"})
 public class CommandListener implements Listener {
@@ -22,29 +25,10 @@ public class CommandListener implements Listener {
         }
 
         String[] args = event.getMessage().split(" ");
-        String[] disabled = {
-            "/minecraft:help",
-            "/minecraft:list",
-            "/list",
-            "/minecraft:me",
-            "/me",
-            "/minecraft:msg",
-            "/minecraft:teammsg",
-            "/teammsg",
-            "/minecraft:tell",
-            "/tell",
-            "/minecraft:tm",
-            "/tm",
-            "/minecraft:trigger",
-            "/trigger",
-            "/minecraft:w",
-            "/w",
-            "/plugins",
-            "/bukkit:plugins"
-        };
+        List<String> disabled = Main.disabledCommands;
 
-
-        if (Arrays.asList(disabled).contains(args[0].toLowerCase())) {
+        String commandName = args[0].toLowerCase(Locale.ROOT).replace("/", "").replace("minecraft:", "");
+        if (disabled.contains(commandName)) {
             new MessageManager("disabled-command").send(event.getPlayer());
             event.setCancelled(true);
         }
