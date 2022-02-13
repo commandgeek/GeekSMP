@@ -2,8 +2,8 @@ package com.commandgeek.GeekSMP.commands;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
+
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

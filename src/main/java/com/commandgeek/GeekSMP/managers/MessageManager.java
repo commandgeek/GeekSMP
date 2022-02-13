@@ -1,10 +1,12 @@
 package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.Main;
+
+import org.javacord.api.entity.channel.TextChannel;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.javacord.api.entity.channel.TextChannel;
 
 import java.util.regex.Matcher;
 

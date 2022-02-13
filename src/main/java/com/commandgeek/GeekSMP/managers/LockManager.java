@@ -1,7 +1,9 @@
 package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.Main;
+
 import org.apache.commons.lang.WordUtils;
+
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;

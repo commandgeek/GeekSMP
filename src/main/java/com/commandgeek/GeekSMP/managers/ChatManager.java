@@ -1,6 +1,7 @@
 package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.Main;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

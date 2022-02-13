@@ -1,6 +1,7 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.managers.LockManager;
+
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

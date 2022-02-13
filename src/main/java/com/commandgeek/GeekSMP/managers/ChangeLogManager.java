@@ -1,8 +1,10 @@
 package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.ChangeLog;
-import org.bukkit.command.CommandSender;
+
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+
+import org.bukkit.command.CommandSender;
 
 import java.awt.*;
 import java.util.HashMap;

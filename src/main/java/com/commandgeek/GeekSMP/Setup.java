@@ -2,7 +2,9 @@ package com.commandgeek.GeekSMP;
 
 import com.commandgeek.GeekSMP.managers.*;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
+
 import me.clip.placeholderapi.PlaceholderAPI;
+
 import org.javacord.api.entity.user.User;
 
 import org.bukkit.*;
