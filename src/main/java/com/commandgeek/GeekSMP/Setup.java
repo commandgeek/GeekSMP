@@ -2,7 +2,9 @@ package com.commandgeek.GeekSMP;
 
 import com.commandgeek.GeekSMP.managers.*;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
+
 import me.clip.placeholderapi.PlaceholderAPI;
+
 import org.javacord.api.entity.user.User;
 
 import org.bukkit.*;
@@ -50,15 +52,18 @@ public class Setup {
         Main.lockableBlocks = Main.config.getStringList("settings.lockable-blocks");
         Main.disabledCommands = Main.config.getStringList("settings.disabled-commands");
 
-        LockManager.check();
+        Bukkit.getScheduler().cancelTasks(Main.instance);
 
+        LockManager.check();
+        initializeMovementCheck();
+
+        updateTasks();
         updateTabMetaForAll();
         updateTeams();
         updateAllRoles();
 
-        Bukkit.getScheduler().cancelTasks(Main.instance);
-        updateTasks();
-        initializeMovementCheck();
+        tabUpdate();
+        updateSetupTimer();
     }
 
     public static void updateTeams() {

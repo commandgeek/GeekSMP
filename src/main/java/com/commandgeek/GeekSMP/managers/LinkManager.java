@@ -2,10 +2,12 @@ package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.Setup;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;

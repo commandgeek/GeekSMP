@@ -5,6 +5,7 @@ import com.commandgeek.GeekSMP.managers.MessageManager;
 import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.TeamManager;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

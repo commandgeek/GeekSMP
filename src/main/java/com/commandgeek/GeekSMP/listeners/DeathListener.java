@@ -2,6 +2,7 @@ package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Setup;
 import com.commandgeek.GeekSMP.managers.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -29,7 +30,8 @@ public class DeathListener implements Listener {
 
                 Bukkit.broadcastMessage(new MessageManager("revive").replace("%player%", killer.getName()).replace("%victim%", player.getName()).string());
                 event.setDeathMessage(null);
-                for (Player online : Bukkit.getOnlinePlayers()) online.playSound(online.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 2);
+                player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 1);
+                killer.playSound(killer.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 1);
                 return;
             }
         }

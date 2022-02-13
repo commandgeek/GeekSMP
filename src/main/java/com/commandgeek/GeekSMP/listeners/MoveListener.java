@@ -2,6 +2,7 @@ package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.managers.*;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,8 +29,8 @@ public class MoveListener implements Listener {
         if (TeamManager.isUndead(player)) {
             if (!MorphManager.isMorphedPlayer(player)) {
                 event.setCancelled(true);
-            } else if (!EntityManager.isPlayerNear(player.getLocation(), 100)) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 4, true, false, false));
+            } else if (!EntityManager.isPlayerNear(player.getLocation(), 50)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, true, false, false));
             } else {
                 player.removePotionEffect(PotionEffectType.SPEED);
             }
