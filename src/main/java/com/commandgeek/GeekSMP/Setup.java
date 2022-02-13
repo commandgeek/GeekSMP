@@ -50,15 +50,18 @@ public class Setup {
         Main.lockableBlocks = Main.config.getStringList("settings.lockable-blocks");
         Main.disabledCommands = Main.config.getStringList("settings.disabled-commands");
 
+        Bukkit.getScheduler().cancelTasks(Main.instance);
+
         LockManager.check();
+        initializeMovementCheck();
 
         updateTasks();
         updateTabMetaForAll();
         updateTeams();
         updateAllRoles();
 
-        Bukkit.getScheduler().cancelTasks(Main.instance);
-        initializeMovementCheck();
+        tabUpdate();
+        updateSetupTimer();
     }
 
     public static void updateTeams() {
