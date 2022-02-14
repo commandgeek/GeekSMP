@@ -21,6 +21,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.commandgeek.GeekSMP.managers.BypassManager.bypass;
+
 
 @SuppressWarnings({"unused"})
 public class InteractListener implements Listener {
@@ -51,20 +53,21 @@ public class InteractListener implements Listener {
         }
 
         // Check if Locked
-        if ((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking())
-        if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
-            String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
+        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !bypass.contains(player)) {
+            if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
+                String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
 
-            if (owner != null) {
-                OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(owner));
+                if (owner != null) {
+                    OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(owner));
 
-                if (!LockManager.isTrustedBy(player, op)) {
-                    event.setCancelled(true);
-                    new MessageManager("block-locked")
-                            .replace("%block%", LockManager.getName(event.getClickedBlock()))
-                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
-                            .send(player);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
+                    if (!LockManager.isTrustedBy(player, op)) {
+                        event.setCancelled(true);
+                        new MessageManager("block-locked")
+                                .replace("%block%", LockManager.getName(event.getClickedBlock()))
+                                .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
+                                .send(player);
+                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
+                    }
                 }
             }
         }

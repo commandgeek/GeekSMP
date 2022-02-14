@@ -27,7 +27,7 @@ public class CommandListener implements Listener {
         String[] args = event.getMessage().split(" ");
         List<String> disabled = Main.disabledCommands;
 
-        String commandName = args[0].toLowerCase(Locale.ROOT).replace("minecraft:", "");
+        String commandName = args[0].toLowerCase(Locale.ROOT);
         if (disabled.contains(commandName.replace("/", "")) || disabled.contains(commandName)) {
             new MessageManager("disabled-command").send(event.getPlayer());
             event.setCancelled(true);

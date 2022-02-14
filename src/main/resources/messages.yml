@@ -53,7 +53,7 @@ spy-message: "&x&1&d&3&0&f&9%sender% &8to &x&1&d&3&0&f&9%receiver% &8> &9%messag
 spy-enabled: "&5Spying &denabled&5."
 spy-disabled: "&5Spying &ddisabled&5."
 
-# - Lock Messages
+# - Lock Messages -
 # %block% - Targeted block name
 # %player% - Trusted player name
 lock-success: "&5Locked &d%block%&5."
@@ -71,6 +71,10 @@ trust-list-empty: "&8 - &5&onone"
 untrust-success: "&5No longer trusting &d%player%&5."
 untrust-fail: "&c%player% isn't trusted."
 block-locked: "&c%block% &4is locked by &c%player%&4."
+
+# - Bypass Messages -
+bypass-enable: "&aLock bypass &2enabled&5."
+bypass-disable: "&cLock bypass &4disabled&5."
 
 ## - Pet Messages -
 ## %player% - Pet player name
