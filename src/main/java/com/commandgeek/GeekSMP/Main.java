@@ -107,6 +107,7 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("ip", new CommandIP(), new TabPlayer());
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
         Setup.registerCommand("reason", new CommandReason(), new TabOfflinePlayer());
+        Setup.registerCommand("bypass", new CommandBypass(), new TabEmpty());
 
         // Create Files
         ConfigManager.createDefaultConfig("config.yml");

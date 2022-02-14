@@ -101,6 +101,8 @@ commands:
     aliases: []
   reason:
     aliases: []
+  bypass:
+    aliases: []
 
 
 permissions:
@@ -195,4 +197,6 @@ permissions:
   geeksmp.command.afk:
     default: true
   geeksmp.command.reason:
+    default: op
+  geeksmp.command.bypass:
     default: op
