@@ -28,7 +28,7 @@ public class MessageManager {
             replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
         }
 
-        message = message.replaceAll(regex, replacement);
+        message = message.replaceAll(regex, Matcher.quoteReplacement(replacement));
         return this;
     }
 
