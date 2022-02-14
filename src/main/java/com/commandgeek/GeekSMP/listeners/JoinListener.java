@@ -3,6 +3,7 @@ package com.commandgeek.GeekSMP.listeners;
 import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.Setup;
 import com.commandgeek.GeekSMP.managers.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -21,9 +22,9 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Setup.discordChannelTopicUpdate();
+        Setup.tabUpdate();
+        Setup.updateSetupTimer();
         Player player = event.getPlayer();
-        Setup.updateTabMetaForAll();
 
         StatsManager.add("joins");
         if (!player.hasPlayedBefore()) StatsManager.add("unique-joins");
@@ -45,7 +46,7 @@ public class JoinListener implements Listener {
                 ConfigManager.saveData("morphs.yml", Main.morphs);
             }
             player.setGameMode(GameMode.ADVENTURE);
-            event.setJoinMessage(null);
+            event.setJoinMessage(new MessageManager("undead-join").replace("%player%", player.getName()).string());
             Setup.join(player);
             return;
         }

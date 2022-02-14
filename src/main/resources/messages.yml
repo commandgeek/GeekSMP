@@ -28,8 +28,10 @@ console-forbidden: "&cYou cannot run this command from console."
 
 # - Login / Logout Messages -
 # %player% - Player name
-join: "&a+ &7%player%"
-leave: "&c- &7%player%"
+join: "&a&l+ &a%player%"
+leave: "&c&l- &c%player%"
+undead-join: "&2&l+ &2%player%"
+undead-leave: "&4&l- &4%player%"
 
 # - Direct Messages -
 # %sender% - Player sender name
@@ -83,7 +85,7 @@ block-locked: "&c%block% &4is locked by &c%player%&4."
 
 # - Information Messages -
 player-information-header: "&d%player% information:"
-player-information-item: "&8 - &5%key%: &a%value%"-
+player-information-item: "&8 - &5%key%: &a%value%"
 ip-player: "The IP of %player% is %ip%"
 
 # - Info Messages -
