@@ -32,7 +32,7 @@ public class QuitListener implements Listener {
         }
         event.setQuitMessage(new MessageManager("leave").replace("%player%", player.getName()).string());
         new MessageManager("smp-chat-leave")
-                .replace("%player%", player.getName())
+                .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
     }
 
