@@ -18,6 +18,9 @@ discord:
   prefix: "-"
   bot-token: "token"
   smp-chat-channel: "000000000000000000"
+  smp-chat-topic:
+    - "**Online:** %server_online%/%server_max_players%"
+    - "**IP:** play.commandgeek.com"
   change-log-channel: "000000000000000000"
   link-channels:
     - "000000000000000000"
