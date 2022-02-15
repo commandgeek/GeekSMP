@@ -238,14 +238,16 @@ public class Setup {
                     List<String> items = Main.config.getStringList("discord.smp-chat-topic");
                     StringBuilder topic = new StringBuilder();
                     for (String item : items) {
-                        item = PlaceholderAPI.setPlaceholders(null, item).replaceAll("§[a-fklmnor0-9]", "");
+                        item = PlaceholderAPI.setPlaceholders(null, item);
+                        item = ChatColor.stripColor(item);
+                        item = item.replaceAll("[*_~]", "");
                         topic.append(item).append("\n");
                     }
                     DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic(topic.toString().replaceAll("\n$", "")
                     );
                 }
             }
-        }.runTaskTimer(Main.instance, 0, 6000); // 6000 ticks (5 minutes)
+        }.runTaskTimer(Main.instance, 0, 12000); // 12000 ticks (10 minutes)
     }
 
     public static void initializeMovementCheck() {
