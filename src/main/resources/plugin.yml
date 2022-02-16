@@ -10,7 +10,7 @@ depend: [ProtocolLib]
 
 commands:
   reloadsmp:
-    aliases: [rs, rsmp]
+    aliases: [rsmp]
   revive:
     aliases: []
   unrevive:
@@ -18,13 +18,13 @@ commands:
   mute:
     aliases: []
   mutelist:
-    aliases: []
+    aliases: [mlist]
   unmute:
     aliases: []
   ban:
     aliases: []
   banlist:
-    aliases: []
+    aliases: [blist]
   unban:
     aliases: []
   die:
@@ -38,11 +38,11 @@ commands:
   gmsp:
     aliases: []
   rules:
-    aliases: []
+    aliases: [rule]
   info:
     aliases: []
   help:
-    aliases: []
+    aliases: [?]
   code:
     aliases: [verify, link]
   discord:
@@ -68,11 +68,11 @@ commands:
   tp:
     aliases: []
   msg:
-    aliases: []
+    aliases: [message]
   reply:
     aliases: [r]
   msgtoggle:
-    aliases: []
+    aliases: [messagetoggle]
   spy:
     aliases: []
   track:
@@ -82,13 +82,13 @@ commands:
   lookup:
     aliases: [linked]
   playerinfo:
-    aliases: []
+    aliases: [pinfo]
   stats:
     aliases: []
   trust:
     aliases: []
   trustlist:
-    aliases: []
+    aliases: [tlist]
   untrust:
     aliases: []
 # pet:
@@ -103,6 +103,10 @@ commands:
     aliases: []
   bypass:
     aliases: []
+  broadcast:
+    aliases: [alert]
+  locktool:
+    aliases: [getlocktool, givelocktool, tool, givetool, gettool]
 
 
 permissions:
@@ -199,4 +203,8 @@ permissions:
   geeksmp.command.reason:
     default: op
   geeksmp.command.bypass:
+    default: op
+  geeksmp.command.broadcast:
+    default: op
+  geeksmp.command.locktool:
     default: op
