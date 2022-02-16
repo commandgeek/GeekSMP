@@ -204,9 +204,8 @@ public class Main extends JavaPlugin {
             new MorphManager(online).unmorph();
             online.kickPlayer("Server Restarting");
         }
-
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
+        
+//        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
         getServer().shutdown();
     }
 
