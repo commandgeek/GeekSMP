@@ -1,6 +1,6 @@
 # - Plugin Messages -
-reload: "&5GeekSMP Reloaded."
-purge-chat: "&8Chat Purged"
+reload: "&5GeekSMP reloaded."
+purge-chat: "&c&l- CHAT CLEARED -"
 end-disabled: "&cThe end is currently disabled!"
 
 # - Link Messages -
@@ -13,7 +13,7 @@ discord-command-smp: "Join `play.commandgeek.com` on **Java 1.17.1** to play the
 discord-command-invite: "Invite your friends! https://discord.gg/Ft6YB6yjAC"
 discord-command-map: "The GeekSMP Map! https//commandgeek.com/geeksmp-map"
 
-# - Afk Messages -
+# - AFK Messages -
 afk-enabled: "&7&o%player% is now afk."
 afk-disabled: "&7&o%player% is no longer afk."
 
@@ -66,15 +66,21 @@ unlock-invalid: "&cThis block isn't locked."
 trust-success: "&5Trusting &d%player%&5."
 trust-fail: "&c%player% is already trusted."
 trust-list-header: "&dTrusted Players"
-trust-list-item: "&8 - &5%player"
+trust-list-item: "&8 - &5%player%"
 trust-list-empty: "&8 - &5&onone"
 untrust-success: "&5No longer trusting &d%player%&5."
 untrust-fail: "&c%player% isn't trusted."
 block-locked: "&c%block% &4is locked by &c%player%&4."
 
 # - Bypass Messages -
-bypass-enable: "&aLock bypass &2enabled&5."
-bypass-disable: "&cLock bypass &4disabled&5."
+bypass-enabled: "&5Lock bypass &denabled"
+bypass-disabled: "&5Lock bypass &ddisabled"
+
+# - Lock Tool Messages -
+# %player% - Command sender
+get-lock-tool: "&5You've been given a lock tool by &d%player%"
+# %player% - Player specified
+give-lock-tool: "&5You've given &d%player% %5a lock tool"
 
 ## - Pet Messages -
 ## %player% - Pet player name
@@ -139,7 +145,7 @@ reason-fail: "&c%player% isn't punished."
 reason-mute-permanent: "&5%player% is muted permanently for \"&d%reason%&5\"."
 reason-mute-temporary: "&5%player% is muted for &d%duration% &5for \"&d%reason%&5\"."
 reason-ban-permanent: "&5%player% is banned permanently for \"&d%reason%&5\"."
-reason-ban-temporary: "&5%player% is banned for &d%duration &5for \"&d%reason%&5\"."
+reason-ban-temporary: "&5%player% is banned for &d%duration% &5for \"&d%reason%&5\"."
 
 # - Discord Reason Messages -
 # %user$ - Punished discord username
@@ -182,12 +188,12 @@ unlink-other-success: "&5Successfully unlinked &d%player%&5."
 # - Discord SMP Chat Messages -
 # %player% - Player name
 # %message% - Message content
-smp-chat-join: "<:greenplus:884153763714174976> **%player%**"
-smp-chat-leave: "<:redminus:884154026692853781> **%player%**"
-smp-chat-death: "<:whiteskull:884157785334485064> **%message%**"
+smp-chat-join: ":arrow_right: **%player%**"
+smp-chat-leave: ":arrow_left: **%player%**"
+smp-chat-death: ":skull: **%message%**"
 smp-chat-message: "%player% » %message%"
-smp-chat-start: "<:greencheck:884155019530752001> **Server Started**"
-smp-chat-stop: "<:redx:884157758553866260> **Server Stopped**"
+smp-chat-start: ":white_check_mark: **Server started**"
+smp-chat-stop: ":x: **Server stopped**"
 
 # - Discord Mute Messages -
 # %user% - Discord username
