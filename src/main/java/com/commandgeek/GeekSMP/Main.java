@@ -108,6 +108,8 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
         Setup.registerCommand("reason", new CommandReason(), new TabOfflinePlayer());
         Setup.registerCommand("bypass", new CommandBypass(), new TabEmpty());
+        Setup.registerCommand("broadcast", new CommandBroadcast(), new TabEmpty());
+        Setup.registerCommand("locktool", new CommandLockTool(), new TabPlayer());
 
         // Create Files
         ConfigManager.createDefaultConfig("config.yml");
@@ -204,8 +206,7 @@ public class Main extends JavaPlugin {
             online.kickPlayer("Server Restarting");
         }
 
-
-        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DO NOT RELOAD THE GEEKSMP PLUGIN. ALWAYS RESTART THE SERVER. SHUTTING DOWN");
+//        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
         getServer().shutdown();
     }
 
