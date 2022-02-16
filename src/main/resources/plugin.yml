@@ -105,6 +105,8 @@ commands:
     aliases: []
   broadcast:
     aliases: [alert]
+  locktool:
+    aliases: [getlocktool, givelocktool, tool, givetool, gettool]
 
 
 permissions:
@@ -203,4 +205,6 @@ permissions:
   geeksmp.command.bypass:
     default: op
   geeksmp.command.broadcast:
+    default: op
+  geeksmp.command.locktool:
     default: op
