@@ -1,6 +1,7 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
+import com.commandgeek.GeekSMP.Morph;
 import com.commandgeek.GeekSMP.Setup;
 import com.commandgeek.GeekSMP.managers.*;
 
@@ -45,9 +46,13 @@ public class JoinListener implements Listener {
                 Main.morphs.set(player.getUniqueId().toString(), null);
                 ConfigManager.saveData("morphs.yml", Main.morphs);
             }
+            if (!MorphManager.isMorphedPersistent(player)) {
+                Setup.join(player);
+            } else {
+                Morph.morph(player, MorphManager.getEntityTypePersistent(player));
+            }
             player.setGameMode(GameMode.ADVENTURE);
             event.setJoinMessage(new MessageManager("undead-join").replace("%player%", player.getName()).string());
-            Setup.join(player);
             return;
         }
         event.setJoinMessage(new MessageManager("join").replace("%player%", player.getName()).string());

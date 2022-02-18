@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 
 import java.util.Objects;
 
-@SuppressWarnings({"unused"})
+
 public class BlockListener implements Listener {
 
     @EventHandler

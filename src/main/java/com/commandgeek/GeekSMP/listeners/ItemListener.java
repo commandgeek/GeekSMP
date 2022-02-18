@@ -16,7 +16,6 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onPickUpItem(EntityPickupItemEvent event) {
         if (event.getEntity() instanceof Player player) {
-
             if (TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
                 event.setCancelled(true);
             }

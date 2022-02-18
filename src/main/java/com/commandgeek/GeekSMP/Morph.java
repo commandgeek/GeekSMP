@@ -3,7 +3,9 @@ package com.commandgeek.GeekSMP;
 import com.commandgeek.GeekSMP.managers.*;
 
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -12,9 +14,11 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import static com.commandgeek.GeekSMP.Main.morphed;
 
 public class Morph {
-
     public static Map<Player, BukkitTask> morphTasks = new HashMap<>();
 
     public static void effect(Player player) {
@@ -23,45 +27,50 @@ public class Morph {
         player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
     }
 
-    public static void zombie(Player player) {
-
-        new MessageManager("morph").replace("%morph%", "Zombie").send(player);
+    public static void morph(Player player, EntityType type) {
+        new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
         EntityManager.hidePlayerForAll(player);
-        player.getInventory().setHeldItemSlot(4);
-
         effect(player);
+        universalMorphTask(player);
+        ConfigManager.saveData("morphed.yml", morphed);
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2, true, false, false));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1, true, false, false));
+        if (Objects.equals(type.toString(), "ZOMBIE")) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2, true, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1, true, false, false));
+            Zombie zombie = (Zombie) new MorphManager(player).morph(EntityType.ZOMBIE);
+            zombie.setAdult();
+        }
 
-        Zombie zombie = (Zombie) new MorphManager(player).morph(EntityType.ZOMBIE);
-        zombie.setAdult();
-        zombieTask(player);
-    }
-    public static void zombieTask(Player player) {
-        BukkitTask task = new BukkitRunnable() {
-            public void run() {
-                MorphManager.burnInSunlight(player);
-                MorphManager.copyDataToMorph(player);
-                MorphManager.trackNearestPlayer(player);
-            }
-        }.runTaskTimer(Main.instance, 0, 1);
-        morphTasks.put(player, task);
+        if (Objects.equals(type.toString(), "SKELETON")) {
+            player.getInventory().setItem(0, skeletonBow());
+            player.getInventory().setItem(27, skeletonArrow());
+            new MorphManager(player).morph(EntityType.SKELETON);
+        }
     }
 
-    public static void skeleton(Player player) {
-
-        new MessageManager("morph").replace("%morph%", "Skeleton").send(player);
-        EntityManager.hidePlayerForAll(player);
-        player.getInventory().setHeldItemSlot(4);
-
-        effect(player);
-        player.getInventory().addItem(new ItemStack(Material.BOW), new ItemStack(Material.ARROW));
-
-        new MorphManager(player).morph(EntityType.SKELETON);
-        skeletonTask(player);
+    public static ItemStack skeletonBow() {
+        return new ItemManager(Material.BOW)
+                .name("&dSkeleton Bow")
+                .lore("&5Power of the skeleton...")
+                .lore("&5Infinite arrows!")
+                .enchant(Enchantment.ARROW_INFINITE,1)
+                .enchant(Enchantment.VANISHING_CURSE,1)
+                .unbreakable(true)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .flag(ItemFlag.HIDE_UNBREAKABLE)
+                .get();
     }
-    public static void skeletonTask(Player player) {
+    public static ItemStack skeletonArrow() {
+        return new ItemManager(Material.ARROW)
+                .name("&dSkeleton Arrow")
+                .lore("&5Power of the skeleton...")
+                .lore("&5Infinite arrows!")
+                .enchant(Enchantment.VANISHING_CURSE,1)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .get();
+    }
+
+    public static void universalMorphTask(Player player) {
         BukkitTask task = new BukkitRunnable() {
             public void run() {
                 MorphManager.burnInSunlight(player);

@@ -21,17 +21,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.commandgeek.GeekSMP.managers.BypassManager.bypass;
 
-
-@SuppressWarnings({"unused"})
 public class InteractListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Material material = event.getMaterial();
-        Action action = event.getAction();
 
         // Animate Morphed Entity if Exists
         Entity entity = MorphManager.getEntity(player);
@@ -53,13 +49,11 @@ public class InteractListener implements Listener {
         }
 
         // Check if Locked
-        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !bypass.contains(player)) {
+        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !BypassManager.bypass.contains(player)) {
             if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
                 String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
-
                 if (owner != null) {
                     OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(owner));
-
                     if (!LockManager.isTrustedBy(player, op)) {
                         event.setCancelled(true);
                         new MessageManager("block-locked")

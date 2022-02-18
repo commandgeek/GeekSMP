@@ -1,5 +1,6 @@
 package com.commandgeek.GeekSMP.listeners;
 
+import com.commandgeek.GeekSMP.Main;
 import com.commandgeek.GeekSMP.Setup;
 import com.commandgeek.GeekSMP.managers.*;
 
@@ -10,19 +11,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
-@SuppressWarnings({"unused"})
+
 public class DeathListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-
         if (!TeamManager.isUndead(player) && !TeamManager.isRevived(player)) {
             Player killer = player.getKiller();
             if (killer != null && TeamManager.isUndead(killer)) {
 
-                new MorphManager(killer).unmorph();
+                new MorphManager(killer).unmorph(true);
                 EntityManager.showPlayerForAll(killer);
                 TeamManager.revive(killer);
                 Setup.updatePlayerRole(killer);
@@ -38,7 +39,7 @@ public class DeathListener implements Listener {
 
         if (TeamManager.isRevived(player)) {
             TeamManager.unrevive(player);
-            new MorphManager(player).unmorph();
+            new MorphManager(player).unmorph(true);
             new MessageManager("smp-chat-death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
             Setup.updatePlayerRole(player);
             return;
@@ -46,7 +47,7 @@ public class DeathListener implements Listener {
 
         if (TeamManager.isUndead(player)) {
             event.setDeathMessage(null);
-            new MorphManager(player).unmorph();
+            new MorphManager(player).unmorph(true);
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
         }
 
@@ -56,5 +57,16 @@ public class DeathListener implements Listener {
                     .sendDiscord(DiscordManager.smpChatChannel);
         }
         Setup.updatePlayerRole(player);
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+
+        if (TeamManager.isUndead(player)) {
+            if (player.getBedSpawnLocation() == null)
+                event.setRespawnLocation(ConfigManager.getDefaultWorldLocation(Main.config, "spawn"));
+            Setup.join(player);
+        }
     }
 }

@@ -27,7 +27,7 @@ public class MoveListener implements Listener {
         }
 
         if (TeamManager.isUndead(player)) {
-            if (!MorphManager.isMorphedPlayer(player)) {
+            if (!MorphManager.isMorphedPersistent(player)) {
                 event.setCancelled(true);
             } else if (!EntityManager.isPlayerNear(player.getLocation(), 50)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, true, false, false));

@@ -108,7 +108,7 @@ info-item: "&8- &5%item%"
 # %morph% - Morph name
 # %player% - Morphed player name
 # %victim% - Morphed player's victim name
-morph: "&7You morphed into &5%morph%&7."
+morph: "&7You morphed into a &5%morph%&7."
 revive: "&d%player% &5has been revived by killing &d%victim%&5!"
 revived-warning: "&4Warning! &cWhile revived, your items will NOT be saved when you die!"
 item-pickup-forbidden: "&cYou can only hold 1 item"

@@ -12,10 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
@@ -34,6 +31,7 @@ public class Setup {
         Main.info = ConfigManager.loadConfig("info.yml");
         Main.stats = ConfigManager.loadData("stats.yml");
         Main.morphs = ConfigManager.loadData("morphs.yml");
+        Main.morphed = ConfigManager.loadData("morphed.yml");
         Main.alive = ConfigManager.loadData("alive.yml");
         Main.muted = ConfigManager.loadData("muted.yml");
         Main.banned = ConfigManager.loadData("banned.yml");
@@ -94,12 +92,7 @@ public class Setup {
             if (player != null) {
                 String value = Main.morphs.getString(key);
                 if (value != null) {
-                    UUID uuid = UUID.fromString(value);
-                    Entity entity = Bukkit.getEntity(uuid);
-                    if (entity instanceof Zombie)
-                        Morph.zombieTask(player);
-                    if (entity instanceof Skeleton)
-                        Morph.skeletonTask(player);
+                    Morph.universalMorphTask(player);
                 }
             }
         }
@@ -137,7 +130,7 @@ public class Setup {
                         if (MorphManager.isMorphedPlayer(player)) {
                             new BukkitRunnable() {
                                 public void run() {
-                                    new MorphManager(player).unmorph();
+                                    new MorphManager(player).unmorph(true);
                                 }
                             }.runTaskLater(Main.instance, 0);
                         }
@@ -181,7 +174,9 @@ public class Setup {
         player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 2);
         if (player.getLocation().getBlock().getType() == Material.NETHER_PORTAL)
             player.teleport(ConfigManager.getDefaultWorldLocation(Main.config, "spawn"));
-        JoinMenu.open(player);
+        if (TeamManager.isUndead(player) && !MorphManager.isMorphedPersistent(player)) {
+            JoinMenu.open(player);
+        }
     }
 
     public static void registerCommand(String name, CommandExecutor executor, TabCompleter completer) {

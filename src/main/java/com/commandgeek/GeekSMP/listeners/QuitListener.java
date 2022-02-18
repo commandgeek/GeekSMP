@@ -16,16 +16,16 @@ public class QuitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        Setup.updateSetupTimer();
         Player player = event.getPlayer();
         new BukkitRunnable() {
             public void run() {
                 Setup.tabUpdate();
+                Setup.updateSetupTimer();
             }
         }.runTaskLater(Main.instance, 1);
 
         new PacketManager().removePlayer(player);
-        new MorphManager(player).unmorph();
+        new MorphManager(player).unmorph(false);
 
         if (TeamManager.isUndead(player)) {
             event.setQuitMessage(new MessageManager("undead-leave").replace("%player%", player.getName()).string());

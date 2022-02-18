@@ -19,7 +19,7 @@ public class CommandRevive implements CommandExecutor {
 
         if (sender instanceof Player player && args.length == 0) {
             TeamManager.revive(player);
-            new MorphManager(player).unmorph();
+            new MorphManager(player).unmorph(true);
             EntityManager.showPlayerForAll(player);
             Setup.updatePlayerRole(player);
             return true;
@@ -33,7 +33,7 @@ public class CommandRevive implements CommandExecutor {
                 return true;
             }
             TeamManager.revive(target);
-            new MorphManager(target).unmorph();
+            new MorphManager(target).unmorph(true);
             EntityManager.showPlayerForAll(target);
             Setup.updatePlayerRole(target);
             return true;

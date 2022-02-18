@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
     public static FileConfiguration info;
     public static FileConfiguration stats;
     public static FileConfiguration morphs;
+    public static FileConfiguration morphed;
     public static FileConfiguration alive;
     public static FileConfiguration muted;
     public static FileConfiguration banned;
@@ -117,6 +118,7 @@ public class Main extends JavaPlugin {
         ConfigManager.createDefaultConfig("info.yml");
         ConfigManager.createData("stats.yml");
         ConfigManager.createData("morphs.yml");
+        ConfigManager.createData("morphed.yml");
         ConfigManager.createData("alive.yml");
         ConfigManager.createData("muted.yml");
         ConfigManager.createData("banned.yml");
@@ -130,6 +132,7 @@ public class Main extends JavaPlugin {
         Main.info = ConfigManager.loadConfig("info.yml");
         Main.stats = ConfigManager.loadData("stats.yml");
         Main.morphs = ConfigManager.loadData("morphs.yml");
+        Main.morphed = ConfigManager.loadData("morphed.yml");
         Main.alive = ConfigManager.loadData("alive.yml");
         Main.muted = ConfigManager.loadData("muted.yml");
         Main.banned = ConfigManager.loadData("banned.yml");
@@ -202,7 +205,7 @@ public class Main extends JavaPlugin {
 
         // Delete all Morphs
         for (Player online : Bukkit.getOnlinePlayers()) {
-            new MorphManager(online).unmorph();
+            new MorphManager(online).unmorph(false);
             online.kickPlayer("Server Restarting");
         }
 

@@ -6,6 +6,7 @@ import com.commandgeek.GeekSMP.managers.InventoryManager;
 import com.commandgeek.GeekSMP.managers.ItemManager;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -46,12 +47,12 @@ public class JoinMenu {
 
     public static void select(Player player, int slot) {
         if (slot == 2) {
-            Morph.zombie(player);
+            Morph.morph(player, EntityType.ZOMBIE);
             player.closeInventory();
         }
 
         if (slot == 6) {
-            Morph.skeleton(player);
+            Morph.morph(player, EntityType.SKELETON);
             player.closeInventory();
         }
     }
