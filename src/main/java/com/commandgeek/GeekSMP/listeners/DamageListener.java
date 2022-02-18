@@ -1,6 +1,7 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
+import com.commandgeek.GeekSMP.managers.AfkManager;
 import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.PacketManager;
 import com.commandgeek.GeekSMP.managers.TeamManager;
@@ -13,7 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-@SuppressWarnings({"unused"})
+
 public class DamageListener implements Listener {
 
     public static int spawnRadius = Main.config.getInt("settings.spawn-radius");
@@ -30,6 +31,12 @@ public class DamageListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+
+            if (AfkManager.afk.contains(player)) {
+                event.setCancelled(true);
+                return;
+            }
+
             if (MorphManager.isMorphedPlayer(player)) {
                 Entity entity = MorphManager.getEntity(player);
                 if (entity != null) {
@@ -57,7 +64,7 @@ public class DamageListener implements Listener {
             }
         }
 
-        // Prevent undeads from destroying item frames or armorstands
+        // Prevent undeads from destroying item frames or armor stands
         if ((entity instanceof ItemFrame || entity instanceof ArmorStand) && damager instanceof Player player) {
             if(TeamManager.isUndead(player)) event.setCancelled(true);
         }
