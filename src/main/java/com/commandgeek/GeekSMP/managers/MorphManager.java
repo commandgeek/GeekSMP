@@ -9,14 +9,16 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
-public class MorphManager {
+import static com.commandgeek.GeekSMP.Main.morphed;
 
+public class MorphManager {
     public static Map<Player, Player> trackedPlayers = new Hashtable<>();
 
     Player player;
@@ -41,27 +43,55 @@ public class MorphManager {
         player.setGameMode(GameMode.ADVENTURE);
         EntityManager.hideEntity(entity, player);
         player.setFoodLevel(20);
+
         Main.morphs.set(player.getUniqueId().toString(), entity.getUniqueId().toString());
         ConfigManager.saveData("morphs.yml", Main.morphs);
+
+        Main.morphed.set(player.getUniqueId().toString(), entity.getType().toString());
+        ConfigManager.saveData("morphed.yml", Main.morphed);
+
         return entity;
     }
 
-    public void unmorph() {
-        trackedPlayers.remove(player);
+    public void unmorph(boolean persistent) {
         Entity entity = getEntity(player);
+        trackedPlayers.remove(player);
+        player.setGameMode(GameMode.SURVIVAL);
         if (entity != null) {
             entity.remove();
             Main.morphs.set(player.getUniqueId().toString(), null);
             ConfigManager.saveData("morphs.yml", Main.morphs);
+            if (persistent) {
+                Main.morphed.set(player.getUniqueId().toString(), null);
+                ConfigManager.saveData("morphed.yml", morphed);
+            }
+
+            if (entity.getType() == EntityType.SKELETON) {
+                player.getInventory().setItem(0, new ItemStack(Material.AIR));
+                player.getInventory().setItem(27, new ItemStack(Material.AIR));
+            }
         }
+
         if (Morph.morphTasks.containsKey(player)) {
             Bukkit.getScheduler().cancelTask(Morph.morphTasks.get(player).getTaskId());
             Morph.morphTasks.remove(player);
         }
+
         for (PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
-        player.setGameMode(GameMode.SURVIVAL);
+    }
+
+    public static boolean isMorphedPersistent(Player player) {
+        return Main.morphed.getKeys(false).contains(player.getUniqueId().toString());
+    }
+
+    public static EntityType getEntityTypePersistent(Player player) {
+        EntityType entity = null;
+        if (Main.morphed.contains(player.getUniqueId().toString())) {
+            entity = EntityType.valueOf(Main.morphed.getString(player.getUniqueId().toString()));
+        }
+        return entity;
     }
 
     public static Entity getEntity(Player player) {

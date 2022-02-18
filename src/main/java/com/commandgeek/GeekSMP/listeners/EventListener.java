@@ -1,37 +1,20 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
-import com.commandgeek.GeekSMP.Setup;
 import com.commandgeek.GeekSMP.managers.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
-@SuppressWarnings({"unused"})
+
 public class EventListener implements Listener {
-
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-
-        if (TeamManager.isUndead(player)) {
-            if (player.getBedSpawnLocation() == null)
-                event.setRespawnLocation(ConfigManager.getDefaultWorldLocation(Main.config, "spawn"));
-            Setup.join(player);
-        }
-    }
 
     @EventHandler
     public void onShootBow(EntityShootBowEvent event) {
@@ -41,14 +24,14 @@ public class EventListener implements Listener {
             // Check If Morph Is Skeleton
             if (entity instanceof Skeleton) {
 
+                // Animate Shooting
+                new PacketManager().animateEntity(entity, 0);
+/*                player.getInventory().remove(Material.ARROW);
+
                 // Set Arrow Pickup Status
                 if (event.getProjectile() instanceof Arrow arrow) {
                     arrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
                 }
-
-                // Animate Shooting
-                new PacketManager().animateEntity(entity, 0);
-                player.getInventory().remove(Material.ARROW);
 
                 // Give New Arrow
                 new BukkitRunnable() {
@@ -56,7 +39,7 @@ public class EventListener implements Listener {
                         player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
                         player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                     }
-                }.runTaskLater(Main.instance, 20);
+                }.runTaskLater(Main.instance, 20);*/
             }
         }
     }

@@ -86,6 +86,15 @@ public class ItemManager {
         return this;
     }
 
+    public ItemManager unbreakable(boolean unbreakable) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setUnbreakable(unbreakable);
+            item.setItemMeta(meta);
+        }
+        return this;
+    }
+
     public void head(String value) {
 
         ItemMeta meta = item.getItemMeta();

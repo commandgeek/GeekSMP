@@ -1,10 +1,6 @@
 package com.commandgeek.GeekSMP.managers;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,7 +21,7 @@ public class InventoryManager {
         return gui;
     }
 
-    public static int getContentAmount(Player player) {
+/*    public static int getContentAmount(Player player) {
         int result = getContentAmount(player.getInventory());
         if (player.getItemOnCursor().getType() != Material.AIR)
             result++;
@@ -61,5 +57,5 @@ public class InventoryManager {
         if (equipment.getBoots() != null)
             result++;
         return result;
-    }
+    }*/
 }
