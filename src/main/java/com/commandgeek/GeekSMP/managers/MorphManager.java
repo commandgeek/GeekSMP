@@ -144,8 +144,6 @@ public class MorphManager {
     public static ItemStack skeletonArrow() {
         return new ItemManager(Material.ARROW)
                 .name("&dSkeleton Arrow")
-                .lore("&5Power of the skeleton...")
-                .lore("&5Infinite arrows!")
                 .enchant(Enchantment.VANISHING_CURSE,1)
                 .flag(ItemFlag.HIDE_ENCHANTS)
                 .get();
