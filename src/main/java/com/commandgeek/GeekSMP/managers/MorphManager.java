@@ -1,36 +1,45 @@
 package com.commandgeek.GeekSMP.managers;
 
 import com.commandgeek.GeekSMP.Main;
-import com.commandgeek.GeekSMP.Morph;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.commandgeek.GeekSMP.Main.morphed;
 
 public class MorphManager {
     public static Map<Player, Player> trackedPlayers = new Hashtable<>();
+    public static Map<Player, BukkitTask> morphTasks = new HashMap<>();
 
     Player player;
     public MorphManager(Player player) {
         this.player = player;
     }
 
-    public LivingEntity morph(EntityType type) {
+    public void morph(EntityType type) {
+        PlayerInventory inventory = player.getInventory();
+
         if (player.getWorld().getDifficulty() == Difficulty.PEACEFUL) {
             player.getWorld().setDifficulty(Difficulty.EASY);
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "DIFFICULTY CANNOT BE PEACEFUL. DIFFICULTY SET TO EASY.");
         }
+
         LivingEntity entity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), type);
         entity.setAI(false);
         entity.setCanPickupItems(false);
@@ -42,44 +51,121 @@ public class MorphManager {
 
         player.setGameMode(GameMode.ADVENTURE);
         EntityManager.hideEntity(entity, player);
-        player.setFoodLevel(20);
+        EntityManager.hidePlayerForAll(player);
+        universalMorphTask(player);
+
+        if (!MorphManager.isMorphedPersistent(player)) {
+            new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
+            player.setFoodLevel(20);
+            effect(player);
+        }
+
+        if (entity.getType() == EntityType.ZOMBIE) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2, true, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1, true, false, false));
+            Zombie zombie = (Zombie) entity;
+            zombie.setAdult();
+        }
+
+        if (entity.getType() == EntityType.SKELETON) {
+            if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
+                inventory.addItem(inventory.getItem(0));
+            }
+            if (inventory.getItem(27) != null && !inventory.getItem(27).isSimilar(skeletonArrow())) {
+                inventory.addItem(inventory.getItem(27));
+            }
+
+            inventory.setItem(0,skeletonBow());
+            inventory.setItem(27, skeletonArrow());
+        }
 
         Main.morphs.set(player.getUniqueId().toString(), entity.getUniqueId().toString());
         ConfigManager.saveData("morphs.yml", Main.morphs);
-
         Main.morphed.set(player.getUniqueId().toString(), entity.getType().toString());
         ConfigManager.saveData("morphed.yml", Main.morphed);
-
-        return entity;
     }
 
     public void unmorph(boolean persistent) {
+        PlayerInventory inventory = player.getInventory();
         Entity entity = getEntity(player);
+
         trackedPlayers.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
         if (entity != null) {
             entity.remove();
+            player.removePotionEffect(PotionEffectType.SPEED);
+
             Main.morphs.set(player.getUniqueId().toString(), null);
             ConfigManager.saveData("morphs.yml", Main.morphs);
             if (persistent) {
                 Main.morphed.set(player.getUniqueId().toString(), null);
-                ConfigManager.saveData("morphed.yml", morphed);
+                ConfigManager.saveData("morphed.yml", Main.morphed);
             }
 
             if (entity.getType() == EntityType.SKELETON) {
-                player.getInventory().setItem(0, new ItemStack(Material.AIR));
-                player.getInventory().setItem(27, new ItemStack(Material.AIR));
+                if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
+                    inventory.addItem(inventory.getItem(0));
+                }
+                if (inventory.getItem(27) != null && !inventory.getItem(27).isSimilar(skeletonArrow())) {
+                    inventory.addItem(inventory.getItem(27));
+                }
+
+                inventory.setItem(0, new ItemStack(Material.AIR));
+                inventory.setItem(27, new ItemStack(Material.AIR));
+
+                player.removePotionEffect(PotionEffectType.SPEED);
+            }
+
+            if (entity.getType() == EntityType.ZOMBIE) {
+                player.removePotionEffect(PotionEffectType.SLOW);
+                player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
             }
         }
 
-        if (Morph.morphTasks.containsKey(player)) {
-            Bukkit.getScheduler().cancelTask(Morph.morphTasks.get(player).getTaskId());
-            Morph.morphTasks.remove(player);
+        if (MorphManager.morphTasks.containsKey(player)) {
+            Bukkit.getScheduler().cancelTask(MorphManager.morphTasks.get(player).getTaskId());
+            MorphManager.morphTasks.remove(player);
         }
+    }
 
-        for (PotionEffect effect : player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
-        }
+    public static ItemStack skeletonBow() {
+        return new ItemManager(Material.BOW)
+                .name("&dSkeleton Bow")
+                .lore("&7Power I")
+                .lore("&7Infinity")
+                .enchant(Enchantment.ARROW_DAMAGE,1)
+                .enchant(Enchantment.ARROW_INFINITE,1)
+                .enchant(Enchantment.VANISHING_CURSE,1)
+                .unbreakable(true)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .flag(ItemFlag.HIDE_UNBREAKABLE)
+                .get();
+    }
+    public static ItemStack skeletonArrow() {
+        return new ItemManager(Material.ARROW)
+                .name("&dSkeleton Arrow")
+                .lore("&5Power of the skeleton...")
+                .lore("&5Infinite arrows!")
+                .enchant(Enchantment.VANISHING_CURSE,1)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .get();
+    }
+
+    public static void universalMorphTask(Player player) {
+        BukkitTask task = new BukkitRunnable() {
+            public void run() {
+                MorphManager.burnInSunlight(player);
+                MorphManager.copyDataToMorph(player);
+                MorphManager.trackNearestPlayer(player);
+            }
+        }.runTaskTimer(Main.instance, 0, 1);
+        morphTasks.put(player, task);
+    }
+
+    public static void effect(Player player) {
+        player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1,2);
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+        player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
     }
 
     public static boolean isMorphedPersistent(Player player) {

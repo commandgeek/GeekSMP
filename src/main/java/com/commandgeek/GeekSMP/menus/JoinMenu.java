@@ -1,10 +1,10 @@
 package com.commandgeek.GeekSMP.menus;
 
 import com.commandgeek.GeekSMP.Main;
-import com.commandgeek.GeekSMP.Morph;
 import com.commandgeek.GeekSMP.managers.InventoryManager;
 import com.commandgeek.GeekSMP.managers.ItemManager;
 
+import com.commandgeek.GeekSMP.managers.MorphManager;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -47,12 +47,12 @@ public class JoinMenu {
 
     public static void select(Player player, int slot) {
         if (slot == 2) {
-            Morph.morph(player, EntityType.ZOMBIE);
+            new MorphManager(player).morph(EntityType.ZOMBIE);
             player.closeInventory();
         }
 
         if (slot == 6) {
-            Morph.morph(player, EntityType.SKELETON);
+            new MorphManager(player).morph(EntityType.SKELETON);
             player.closeInventory();
         }
     }

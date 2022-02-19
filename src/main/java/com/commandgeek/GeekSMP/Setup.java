@@ -92,7 +92,7 @@ public class Setup {
             if (player != null) {
                 String value = Main.morphs.getString(key);
                 if (value != null) {
-                    Morph.universalMorphTask(player);
+                    MorphManager.universalMorphTask(player);
                 }
             }
         }

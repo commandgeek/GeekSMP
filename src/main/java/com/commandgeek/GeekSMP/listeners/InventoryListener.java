@@ -1,7 +1,6 @@
 package com.commandgeek.GeekSMP.listeners;
 
 import com.commandgeek.GeekSMP.Main;
-import com.commandgeek.GeekSMP.Morph;
 import com.commandgeek.GeekSMP.managers.MorphManager;
 import com.commandgeek.GeekSMP.managers.TeamManager;
 import com.commandgeek.GeekSMP.menus.JoinMenu;
@@ -12,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -37,15 +37,21 @@ public class InventoryListener implements Listener {
             }
 
             // If morphed and skeleton, don't let them move bow/arrow
-            if (MorphManager.isMorphedPlayer(player) && event.getCurrentItem() != null && event.getCurrentItem().getItemMeta() != null) {
-                ItemStack item = event.getCurrentItem();
-                if ((item.isSimilar(Morph.skeletonBow()) && slot == 0) || (item.isSimilar(Morph.skeletonArrow()) && slot == 27)) {
-                   for (String key : Main.morphs.getKeys(false)) {
-                        String value = Main.morphs.getString(key);
-                        assert value != null;
-                        UUID uuid = UUID.fromString(value);
-                        Entity entity = Bukkit.getEntity(uuid);
-                        if (entity instanceof Skeleton) {
+            if (MorphManager.isMorphedPlayer(player)) {
+                for (String key : Main.morphs.getKeys(false)) {
+                    String value = Main.morphs.getString(key);
+                    assert value != null;
+                    UUID uuid = UUID.fromString(value);
+                    Entity entity = Bukkit.getEntity(uuid);
+                    if (entity instanceof Skeleton) {
+                        if (event.getCurrentItem() != null && event.getCurrentItem().getItemMeta() != null) {
+                            boolean skeletonBow = event.getCurrentItem().isSimilar(MorphManager.skeletonBow());
+                            boolean skeletonArrow = event.getCurrentItem().isSimilar(MorphManager.skeletonArrow());
+                            if ((skeletonBow && slot == 0) || (skeletonArrow && (slot == 27 || event.getClick() == ClickType.NUMBER_KEY))) {
+                                event.setCancelled(true);
+                            }
+                        }
+                        if (event.getHotbarButton() == 0) {
                             event.setCancelled(true);
                         }
                     }
@@ -70,7 +76,7 @@ public class InventoryListener implements Listener {
         ItemStack item = event.getItemDrop().getItemStack();
 
         // If morphed and skeleton, don't let them drop bow/arrow
-        if (TeamManager.isUndead(player) && MorphManager.isMorphedPlayer(player) && (item.isSimilar(Morph.skeletonBow()) || item.isSimilar(Morph.skeletonArrow()))) {
+        if (TeamManager.isUndead(player) && MorphManager.isMorphedPlayer(player) && (item.isSimilar(MorphManager.skeletonBow()) || item.isSimilar(MorphManager.skeletonArrow()))) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
                 assert value != null;
