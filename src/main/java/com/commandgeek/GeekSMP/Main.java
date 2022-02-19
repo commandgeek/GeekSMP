@@ -111,6 +111,8 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("bypass", new CommandBypass(), new TabEmpty());
         Setup.registerCommand("broadcast", new CommandBroadcast(), new TabEmpty());
         Setup.registerCommand("locktool", new CommandLockTool(), new TabPlayer());
+        Setup.registerCommand("debug", new CommandDebug(), new TabDebug());
+        Setup.registerCommand("trash", new CommandTrash(), new TabEmpty());
 
         // Create Files
         ConfigManager.createDefaultConfig("config.yml");

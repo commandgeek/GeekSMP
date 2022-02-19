@@ -78,7 +78,7 @@ commands:
   track:
     aliases: []
   seeinv:
-    aliaes: [invsee]
+    aliases: [invsee]
   lookup:
     aliases: [linked]
   playerinfo:
@@ -107,6 +107,10 @@ commands:
     aliases: [alert]
   locktool:
     aliases: [getlocktool, givelocktool, tool, givetool, gettool]
+  debug:
+    aliases: []
+  trash:
+    aliases: [disposal]
 
 
 permissions:
@@ -207,4 +211,8 @@ permissions:
   geeksmp.command.broadcast:
     default: op
   geeksmp.command.locktool:
+    default: op
+  geeksmp.command.debug:
+    default: op
+  geeksmp.command.trash:
     default: op
