@@ -32,11 +32,6 @@ public class DamageListener implements Listener {
                 return;
             }
 
-            if (AfkManager.afk.contains(player)) {
-                event.setCancelled(true);
-                return;
-            }
-
             if (MorphManager.isMorphedPlayer(player)) {
                 Entity entity = MorphManager.getEntity(player);
                 if (entity != null) {
@@ -55,6 +50,10 @@ public class DamageListener implements Listener {
         if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem) {
             if (damager instanceof Arrow arrow) {
                 arrow.remove();
+            }
+
+            if (damager instanceof Player && entity instanceof Player && AfkManager.afk.contains(entity)) {
+                event.setCancelled(true);
             }
 
             Player victim = MorphManager.getPlayer(entity);
