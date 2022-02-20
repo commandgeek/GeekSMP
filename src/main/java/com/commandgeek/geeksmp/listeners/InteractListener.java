@@ -49,7 +49,7 @@ public class InteractListener implements Listener {
         }
 
         // Check if Locked
-        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !BypassManager.bypass.contains(player)) {
+        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !BypassManager.check(player)) {
             if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
                 String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
                 if (owner != null) {

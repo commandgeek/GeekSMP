@@ -61,6 +61,11 @@ public class JoinListener implements Listener {
             return;
         }
 
+        // Enable lock bypass
+        if (BypassManager.check(player)) {
+            BypassManager.enable(player, false);
+        }
+
         StatsManager.add("joins");
         Setup.updatePlayerRole(player);
         EntityManager.checkHiddenPlayers(player);

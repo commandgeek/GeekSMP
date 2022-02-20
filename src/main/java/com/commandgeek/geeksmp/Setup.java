@@ -37,6 +37,7 @@ public class Setup {
         Main.linked = ConfigManager.loadData("linked.yml");
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
+        Main.bypass = ConfigManager.loadData("bypass.yml");
 //        Main.pets = ConfigManager.loadData("pets.yml");
 
         // Discord roles

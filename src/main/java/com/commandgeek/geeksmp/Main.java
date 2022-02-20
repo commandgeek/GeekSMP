@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
     public static FileConfiguration linked;
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
+    public static FileConfiguration bypass;
 //  public static FileConfiguration pets;
 
     public static List<String> bannedWords;
@@ -127,6 +128,7 @@ public class Main extends JavaPlugin {
         ConfigManager.createData("linked.yml");
         ConfigManager.createData("locked.yml");
         ConfigManager.createData("trusted.yml");
+        ConfigManager.createData("bypass.yml");
 //      ConfigManager.createData("pets.yml");
 
         // Load files
@@ -142,6 +144,7 @@ public class Main extends JavaPlugin {
         Main.linked = ConfigManager.loadData("linked.yml");
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
+        Main.bypass = ConfigManager.loadConfig("bypass.yml");
 //      Main.pets = ConfigManager.loadData("pets.yml");
 
         // Register events
