@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class BypassManager {
-    static List<String> bypass = Main.bypass.getStringList("bypass");
+    static final List<String> bypass = Main.bypass.getStringList("bypass");
 
     public static void toggle(Player player) {
         if (check(player)) {

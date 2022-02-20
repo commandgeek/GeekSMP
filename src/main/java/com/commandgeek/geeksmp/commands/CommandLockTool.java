@@ -29,7 +29,7 @@ public class CommandLockTool implements CommandExecutor {
             if (target != null) {
                 target.getInventory().addItem(LockManager.getLockTool());
                 new MessageManager("get-lock-tool").replace("%player%", player.getName()).send(target);
-                new MessageManager("give-lock-tool").replace("%player%", args[0]).send(sender);
+                new MessageManager("give-lock-tool").replace("%target%", args[0]).send(sender);
                 return true;
             }
         }
