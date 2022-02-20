@@ -72,20 +72,19 @@ public class ChatManager {
     }
 
     public static String censor(String message, boolean direct, Player player, String group) {
-        String[] words = message.split(" ");
+        String messageColor = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message));
+        String[] words = messageColor.split(" ");
         StringBuilder result = new StringBuilder();
         for (String word : words) {
             if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
                 if (direct) {
                     result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message-color")).append(" ");
-                } else {
-                    if (Main.config.contains("groups." + group + ".chat-color")) {
+                } else if (Main.config.contains("groups." + group + ".chat-color")) {
                         //noinspection ConstantConditions
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
                     } else {
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
                     }
-                }
             } else {
                 result.append(word).append(" ");
             }
@@ -132,14 +131,14 @@ public class ChatManager {
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
-                .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)))
+                .replace("%message%", message)
                 .send(sender);
         //noinspection ConstantConditions
         new MessageManager("direct-message-receive")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
-                .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)))
+                .replace("%message%", message)
                 .send(receiver);
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);
