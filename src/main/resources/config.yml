@@ -1,4 +1,4 @@
-# - Spawn Location -
+# - UNDEAD SPAWN -
 # Location where all new or undead members will spawn and respawn.
 spawn:
   x: 0
@@ -7,7 +7,7 @@ spawn:
   pitch: 0
   yaw: 0
 
-# - Discord -
+# - DISCORD -
 # bot-token: Token of the discord bot. Do not share!
 # smp-chat-channel: ID of the text channel where in-game messages should be sent.
 # change-log-channel: ID of the text channel where change-logs should be published.
@@ -24,13 +24,14 @@ discord:
   change-log-channel: "000000000000000000"
   link-channels:
     - "000000000000000000"
+    - "111111111111111111"
   muted-role: "000000000000000000"
   linked-role: "000000000000000000"
 
-#  - Tab Meta -
+#  - TAB -
 # header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
 # footer:: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
-tab-meta:
+tab:
   header:
     - "&7- &dGeekSMP &7-"
     - " "
@@ -39,17 +40,23 @@ tab-meta:
     - "&7TPS&8: &d%tps% &8- &7Players&8: &d%online%&8/&d%max%"
 
 
-# - Settings -
+# - SETTINGS -
 # allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
-# spawn-radius: Radius around spawn in which one cannot take any damage.
+# spawn-radius: Radius around spawn in which one cannot take any damage (0 = disabled).
 # burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn)
 # allow-end: Whether players are able to enter an end portal.
+# afk-invulnerable: true
+#
 # banned-words: Words which will be blocked in chat.
+# lockable-blocks: List of blocks that can be locked.
+# disabled-commands: Commands no one can use.
 settings:
   allow-unplaced-locking: true
-  spawn-radius: 30
+  spawn-radius: 10
   burn: false
-  allow-end: false
+  allow-end: true
+  afk-invulnerable: true
+
   banned-words:
     - "Example1"
     - "Example2"
@@ -99,15 +106,15 @@ settings:
     - "pl"
     - "bukkit:pl"
 
-# - Groups -
+# - GROUPS -
 # All groups on the server.
 # Configure each with the options below.
-
+#
 # - Format -
 # groups:
 #   <name>:
 #     <option>:
-
+#
 # - Options -
 # color: Main color of the group. Member's names will be changed. (GOLD, AQUA, DARK_RED...)
 # prefix: Group prefix for name and tab-list. ("Owner", "&eStaff"...)
@@ -118,7 +125,7 @@ settings:
 # change: If "false", members will never be moved to a different group by the plugin. If "op" members will never be moved as long as they are oped. (true, false, op)
 # role: Discord role id a member must have to be moved to this group. Does not apply if a member is in a non-changing group.
 # revive-group: Name of the group a member should be moved to when they revive. Only applies to lowest (undead) group.
-
+#
 # Lowest group is default (undead)
 groups:
   owner:
@@ -131,26 +138,31 @@ groups:
     color: AQUA
     prefix: "&b&lSPECIAL "
     chat-format: "&b&lSPECIAL &r&b%player% &8> &f%message%"
-    translate: true
     role: "000000000000000000"
+    translate: true
   staff:
     color: WHITE
     prefix: "&x&b&5&8&e&f&7&lSTAFF "
     chat-format: "&x&b&5&8&e&f&7&lSTAFF &r&f%player% &8> &f%message%"
+    role: "000000000000000000"
     translate: true
     status: staff
-    role: "000000000000000000"
   youtuber:
     color: GRAY
     prefix: "&x&f&f&0&0&0&0&lYT "
     chat-format: "&x&f&f&0&0&0&0&lYT &r&7%player% &8> &f%message%"
     role: "000000000000000000"
+  guest:
+    color: GRAY
+    prefix: "&3&lGUEST "
+    chat-format: "&3&lGUEST &r&7%player% &8> &f%message%"
+    role: "000000000000000000"
   mvp:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lMVP "
     chat-format: "&x&f&f&5&c&6&3&lMVP &r&7%player% &8> &f%message%"
-    translate: true
     role: "000000000000000000"
+    translate: true
   vip+:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lVIP+ "
@@ -165,8 +177,8 @@ groups:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 3 "
     chat-format: "&x&9&0&4&8&f&f&lTIER 3 &r&7%player% &8> &f%message%"
-    translate: true
     role: "000000000000000000"
+    translate: true
   tier2:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 2 "
@@ -177,11 +189,6 @@ groups:
     prefix: "&x&9&0&4&8&f&f&lTIER 1 "
     chat-format: "&x&9&0&4&8&f&f&lTIER 1 &r&7%player% &8> &f%message%"
     role: "000000000000000000"
-  guest:
-    color: GRAY
-    prefix: "&3&lGUEST "
-    chat-format: "&3&lGUEST &r&7%player% &8> &f%message%"
-    role: "000000000000000000"
   revived:
     color: GRAY
     chat-format: "&7%player% &8> &7%message%"
@@ -189,14 +196,14 @@ groups:
     color: DARK_GRAY
     revive-group: "revived"
 
-# - Morph Selection -
+# - MORPH MENU -
 # Item meta for morph selection menu.
-
+#
 # - Format -
 # morph-selection:
 #   item<number>:
 #     <meta>:
-
+#
 # - Meta -
 # name: Item name. ("Zombie", "&6Skeleton"...)
 # lore: Item lore/description. ("&7Strong, slow movement Speed"...)

@@ -1,6 +1,6 @@
 # How to contribute
 1. [Fork the repository](https://github.com/commandgeek/geeksmp/fork)
-2. Make any changes inside of your fork
+2. Make any changes inside your fork
 3. [Create a new Pull Request](https://github.com/commandgeek/geeksmp/compare)
 4. Click on `compare across forks`
 5. Select your fork in the dropdown that says `head repository: commandgeek/geeksmp`
