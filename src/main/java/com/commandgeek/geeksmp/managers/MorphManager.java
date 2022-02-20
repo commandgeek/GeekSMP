@@ -53,7 +53,9 @@ public record MorphManager(Player player) {
         if (!MorphManager.isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
             player.setFoodLevel(20);
-            effect(player);
+            player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+            player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
         }
 
         if (entity.getType() == EntityType.ZOMBIE) {
@@ -155,12 +157,6 @@ public record MorphManager(Player player) {
             }
         }.runTaskTimer(Main.instance, 0, 1);
         morphTasks.put(player, task);
-    }
-
-    public static void effect(Player player) {
-        player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
-        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
-        player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
     }
 
     public static boolean isMorphedPersistent(Player player) {
