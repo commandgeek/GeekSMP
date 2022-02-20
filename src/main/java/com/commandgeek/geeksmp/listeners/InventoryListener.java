@@ -15,6 +15,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,6 +53,28 @@ public class InventoryListener implements Listener {
                             }
                         }
                         if (event.getHotbarButton() == 0) {
+                            event.setCancelled(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onOffhand(PlayerSwapHandItemsEvent event) {
+        Player player = event.getPlayer();
+        if (MorphManager.isMorphedPlayer(player)) {
+            for (String key : Main.morphs.getKeys(false)) {
+                String value = Main.morphs.getString(key);
+                assert value != null;
+                UUID uuid = UUID.fromString(value);
+                Entity entity = Bukkit.getEntity(uuid);
+                if (entity instanceof Skeleton) {
+                    if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
+                        boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
+                        boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
+                        if (skeletonBow|| skeletonArrow) {
                             event.setCancelled(true);
                         }
                     }
