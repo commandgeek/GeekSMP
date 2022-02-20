@@ -27,7 +27,6 @@ public class DeathListener implements Listener {
                 EntityManager.showPlayerForAll(killer);
                 TeamManager.revive(killer);
                 Setup.updatePlayerRole(killer);
-                new MessageManager("revived-warning").send(killer);
 
                 Bukkit.broadcastMessage(new MessageManager("revive").replace("%player%", killer.getName()).replace("%victim%", player.getName()).string());
                 event.setDeathMessage(null);

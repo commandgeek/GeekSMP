@@ -83,16 +83,6 @@ public class InventoryListener implements Listener {
         }
     }
 
-/*    private void cancelUndeadInventoryClick(Player player) {
-        player.closeInventory();
-        player.sendTitle(" ", new MessageManager("item-pickup-forbidden").string(), 0, 20, 5);
-        new BukkitRunnable() {
-            public void run() {
-                player.getInventory().setContents(player.getInventory().getContents());
-            }
-        }.runTaskLater(Main.instance, 0);
-    }*/
-
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();

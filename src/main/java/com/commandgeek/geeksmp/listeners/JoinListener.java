@@ -34,16 +34,6 @@ public class JoinListener implements Listener {
             StatsManager.add("unique-joins");
         }
 
-        // Revived warning message
-        if (TeamManager.isRevived(player)) {
-            new BukkitRunnable() {
-                public void run() {
-                    new MessageManager("revived-warning").send(player);
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
-                }
-            }.runTaskLater(Main.instance, 60);
-        }
-
         if (TeamManager.isUndead(player)) {
             if (Main.morphs.contains(player.getUniqueId().toString())) {
                 Main.morphs.set(player.getUniqueId().toString(), null);

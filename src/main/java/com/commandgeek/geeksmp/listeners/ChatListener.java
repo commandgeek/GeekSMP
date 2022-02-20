@@ -9,9 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.scoreboard.Team;
 
-@SuppressWarnings({"unused"})
-public class ChatListener implements Listener {
 
+public class ChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
@@ -32,7 +31,6 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
             return;
         }
-
 
         Team team = TeamManager.getPlayerTeam(player);
         if (team != null) {
