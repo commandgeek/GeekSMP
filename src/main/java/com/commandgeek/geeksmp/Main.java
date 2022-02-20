@@ -210,7 +210,7 @@ public class Main extends JavaPlugin {
 
         // Delete all Morphs
         for (Player online : Bukkit.getOnlinePlayers()) {
-            new MorphManager(online).unmorph(false);
+            MorphManager.unmorph(online, false);
             online.kickPlayer("Server stopping/restarting!");
         }
 

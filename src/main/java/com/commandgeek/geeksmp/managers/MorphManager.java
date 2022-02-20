@@ -24,12 +24,11 @@ import java.util.UUID;
 
 
 @SuppressWarnings("ConstantConditions")
-public record MorphManager(Player player) {
+public class MorphManager {
     public static final Map<Player, Player> trackedPlayers = new Hashtable<>();
     public static final Map<Player, BukkitTask> morphTasks = new HashMap<>();
-    public static final Map<Player, BukkitTask> zombieTask = new HashMap<>();
 
-    public void morph(EntityType type) {
+    public static void morph(Player player, EntityType type) {
         PlayerInventory inventory = player.getInventory();
 
         if (player.getWorld().getDifficulty() == Difficulty.PEACEFUL) {
@@ -51,7 +50,7 @@ public record MorphManager(Player player) {
         EntityManager.hidePlayerForAll(player);
         universalMorphTask(player, type);
 
-        if (!MorphManager.isMorphedPersistent(player)) {
+        if (!isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
             player.setFoodLevel(20);
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
@@ -82,7 +81,7 @@ public record MorphManager(Player player) {
         ConfigManager.saveData("morphed.yml", Main.morphed);
     }
 
-    public void unmorph(boolean persistent) {
+    public static void unmorph(Player player, boolean persistent) {
         // Variables
         PlayerInventory inventory = player.getInventory();
         Entity entity = getEntity(player);
@@ -97,9 +96,9 @@ public record MorphManager(Player player) {
         ConfigManager.saveData("morphs.yml", Main.morphs);
 
         // Cancel morphTasks
-        if (MorphManager.morphTasks.containsKey(player)) {
-            Bukkit.getScheduler().cancelTask(MorphManager.morphTasks.get(player).getTaskId());
-            MorphManager.morphTasks.remove(player);
+        if (morphTasks.containsKey(player)) {
+            Bukkit.getScheduler().cancelTask(morphTasks.get(player).getTaskId());
+            morphTasks.remove(player);
         }
 
         // Persistent boolean variable
@@ -226,7 +225,7 @@ public record MorphManager(Player player) {
 
     public static void copyDataToMorph(Player player) {
 
-        LivingEntity entity = (LivingEntity) MorphManager.getEntity(player);
+        LivingEntity entity = (LivingEntity) getEntity(player);
         if (entity != null) {
             EntityEquipment equipment = player.getEquipment();
             if (entity.getEquipment() != null && equipment != null) {

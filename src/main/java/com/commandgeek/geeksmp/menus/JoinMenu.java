@@ -47,12 +47,12 @@ public class JoinMenu {
 
     public static void select(Player player, int slot) {
         if (slot == 2) {
-            new MorphManager(player).morph(EntityType.ZOMBIE);
+            MorphManager.morph(player, EntityType.ZOMBIE);
             player.closeInventory();
         }
 
         if (slot == 6) {
-            new MorphManager(player).morph(EntityType.SKELETON);
+            MorphManager.morph(player, EntityType.SKELETON);
             player.closeInventory();
         }
     }

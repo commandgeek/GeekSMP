@@ -21,7 +21,7 @@ public class CommandUnrevive implements CommandExecutor {
 
         if (sender instanceof Player player && args.length == 0) {
             TeamManager.unrevive(player);
-            new MorphManager(player).unmorph(true);
+            MorphManager.unmorph(player,true);
             if (TeamManager.isUndead(player)) JoinMenu.open(player);
             return true;
         }
@@ -32,7 +32,7 @@ public class CommandUnrevive implements CommandExecutor {
                 return true;
             }
             TeamManager.unrevive(target);
-            new MorphManager(target).unmorph(true);
+            MorphManager.unmorph(target,true);
             if (TeamManager.isUndead(target)) JoinMenu.open(target);
             return true;
         }

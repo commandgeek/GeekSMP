@@ -25,7 +25,7 @@ public class QuitListener implements Listener {
 
         Player player = event.getPlayer();
         new PacketManager().removePlayer(player);
-        new MorphManager(player).unmorph(false);
+        MorphManager.unmorph(player,false);
 
         if (TeamManager.isUndead(player)) {
             event.setQuitMessage(new MessageManager("undead-leave").replace("%player%", player.getName()).string());

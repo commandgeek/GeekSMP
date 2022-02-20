@@ -23,7 +23,7 @@ public class DeathListener implements Listener {
             Player killer = player.getKiller();
             if (killer != null && TeamManager.isUndead(killer)) {
 
-                new MorphManager(killer).unmorph(true);
+                MorphManager.unmorph(killer,true);
                 EntityManager.showPlayerForAll(killer);
                 TeamManager.revive(killer);
                 Setup.updatePlayerRole(killer);
@@ -39,7 +39,7 @@ public class DeathListener implements Listener {
 
         if (TeamManager.isRevived(player)) {
             TeamManager.unrevive(player);
-            new MorphManager(player).unmorph(true);
+            MorphManager.unmorph(player,true);
             new MessageManager("smp-chat-death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
             Setup.updatePlayerRole(player);
             return;
@@ -47,7 +47,7 @@ public class DeathListener implements Listener {
 
         if (TeamManager.isUndead(player)) {
             event.setDeathMessage(null);
-            new MorphManager(player).unmorph(true);
+            MorphManager.unmorph(player,true);
             player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation().add(0, 0.5, 0), 20, 0.2, 0.2, 0.2, 0.2);
         }
 

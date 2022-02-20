@@ -22,7 +22,7 @@ public class EntityManager {
         for (Player online : Bukkit.getOnlinePlayers()) {
             boolean hide = true;
             for (Player exclude : excludes) {
-                if (online == exclude || online == player) {
+                if (online == exclude) {
                     hide = false;
                     break;
                 }

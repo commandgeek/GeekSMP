@@ -137,7 +137,7 @@ public class Setup {
                         if (MorphManager.isMorphedPlayer(player)) {
                             new BukkitRunnable() {
                                 public void run() {
-                                    new MorphManager(player).unmorph(true);
+                                    MorphManager.unmorph(player,true);
                                 }
                             }.runTaskLater(Main.instance, 0);
                         }
@@ -175,7 +175,6 @@ public class Setup {
 
     public static void join(Player player) {
         updatePlayerRole(player);
-        EntityManager.hidePlayerForAll(player);
         player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 2);
 
         // Teleport to spawn if they haven't played before
@@ -189,8 +188,9 @@ public class Setup {
         }
 
         // Open morph menu if undead and don't have a morph
-        if (TeamManager.isUndead(player) && !MorphManager.isMorphedPersistent(player)) {
+        if (!MorphManager.isMorphedPersistent(player)) {
             JoinMenu.open(player);
+            EntityManager.hidePlayerForAll(player);
         }
     }
 

@@ -52,7 +52,7 @@ public class JoinListener implements Listener {
 
             // Assign selected morph
             if (MorphManager.isMorphedPersistent(player)) {
-                new MorphManager(player).morph(MorphManager.getEntityTypePersistent(player));
+                MorphManager.morph(player, MorphManager.getEntityTypePersistent(player));
             }
 
             Setup.join(player);

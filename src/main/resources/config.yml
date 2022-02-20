@@ -54,11 +54,11 @@ tab:
 # disabled-commands: Commands no one can use.
 settings:
   allow-unplaced-locking: true
-  spawn-radius: 10
-  spawn-protection: 0
   burn: false
   allow-end: true
   afk-invulnerable: true
+  spawn-radius: 10
+  spawn-protection: 0
   speed-radius: 50
 
   banned-words:
