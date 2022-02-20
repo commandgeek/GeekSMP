@@ -27,6 +27,7 @@ import java.util.UUID;
 public record MorphManager(Player player) {
     public static final Map<Player, Player> trackedPlayers = new Hashtable<>();
     public static final Map<Player, BukkitTask> morphTasks = new HashMap<>();
+    public static final Map<Player, BukkitTask> zombieTask = new HashMap<>();
 
     public void morph(EntityType type) {
         PlayerInventory inventory = player.getInventory();
@@ -48,7 +49,7 @@ public record MorphManager(Player player) {
         player.setGameMode(GameMode.ADVENTURE);
         EntityManager.hideEntity(entity, player);
         EntityManager.hidePlayerForAll(player);
-        universalMorphTask(player);
+        universalMorphTask(player, type);
 
         if (!MorphManager.isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
@@ -59,8 +60,6 @@ public record MorphManager(Player player) {
         }
 
         if (entity.getType() == EntityType.ZOMBIE) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2, true, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1, true, false, false));
             Zombie zombie = (Zombie) entity;
             zombie.setAdult();
         }
@@ -84,22 +83,36 @@ public record MorphManager(Player player) {
     }
 
     public void unmorph(boolean persistent) {
+        // Variables
         PlayerInventory inventory = player.getInventory();
         Entity entity = getEntity(player);
 
+        // Universal stuff
         trackedPlayers.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
+        player.removePotionEffect(PotionEffectType.SPEED);
+
+        // Data file
+        Main.morphs.set(player.getUniqueId().toString(), null);
+        ConfigManager.saveData("morphs.yml", Main.morphs);
+
+        // Cancel morphTasks
+        if (MorphManager.morphTasks.containsKey(player)) {
+            Bukkit.getScheduler().cancelTask(MorphManager.morphTasks.get(player).getTaskId());
+            MorphManager.morphTasks.remove(player);
+        }
+
+        // Persistent boolean variable
+        if (persistent) {
+            Main.morphed.set(player.getUniqueId().toString(), null);
+            ConfigManager.saveData("morphed.yml", Main.morphed);
+        }
+
+        // Entity stuff
         if (entity != null) {
             entity.remove();
-            player.removePotionEffect(PotionEffectType.SPEED);
 
-            Main.morphs.set(player.getUniqueId().toString(), null);
-            ConfigManager.saveData("morphs.yml", Main.morphs);
-            if (persistent) {
-                Main.morphed.set(player.getUniqueId().toString(), null);
-                ConfigManager.saveData("morphed.yml", Main.morphed);
-            }
-
+            // Skeleton stuff
             if (entity.getType() == EntityType.SKELETON) {
                 if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
                     inventory.addItem(inventory.getItem(0));
@@ -110,19 +123,13 @@ public record MorphManager(Player player) {
 
                 inventory.setItem(0, new ItemStack(Material.AIR));
                 inventory.setItem(27, new ItemStack(Material.AIR));
-
-                player.removePotionEffect(PotionEffectType.SPEED);
             }
 
+            // Zombie stuff
             if (entity.getType() == EntityType.ZOMBIE) {
                 player.removePotionEffect(PotionEffectType.SLOW);
                 player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
             }
-        }
-
-        if (MorphManager.morphTasks.containsKey(player)) {
-            Bukkit.getScheduler().cancelTask(MorphManager.morphTasks.get(player).getTaskId());
-            MorphManager.morphTasks.remove(player);
         }
     }
 
@@ -148,12 +155,21 @@ public record MorphManager(Player player) {
                 .get();
     }
 
-    public static void universalMorphTask(Player player) {
+    public static void universalMorphTask(Player player, EntityType entity) {
         BukkitTask task = new BukkitRunnable() {
             public void run() {
-                MorphManager.burnInSunlight(player);
-                MorphManager.copyDataToMorph(player);
-                MorphManager.trackNearestPlayer(player);
+                burnInSunlight(player);
+                copyDataToMorph(player);
+                trackNearestPlayer(player);
+                if (!EntityManager.isPlayerNear(player.getLocation(), Main.config.getInt("settings.speed-radius"))) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, true, false, false));
+                } else if (player.hasPotionEffect(PotionEffectType.SPEED)) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                }
+                if (entity == EntityType.ZOMBIE) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2, true, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1, true, false, false));
+                }
             }
         }.runTaskTimer(Main.instance, 0, 1);
         morphTasks.put(player, task);

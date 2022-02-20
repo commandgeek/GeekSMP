@@ -10,11 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-@SuppressWarnings({"unused"})
+
 public class MoveListener implements Listener {
 
     @EventHandler
@@ -26,14 +24,9 @@ public class MoveListener implements Listener {
             AfkManager.disable(player);
         }
 
-        if (TeamManager.isUndead(player)) {
-            if (!MorphManager.isMorphedPersistent(player)) {
-                event.setCancelled(true);
-            } else if (!EntityManager.isPlayerNear(player.getLocation(), 50)) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, true, false, false));
-            } else {
-                player.removePotionEffect(PotionEffectType.SPEED);
-            }
+        // Don't let unmorphed undeads move
+        if (TeamManager.isUndead(player) && !MorphManager.isMorphedPersistent(player)) {
+            event.setCancelled(true);
         }
 
         Entity entity = MorphManager.getEntity(player);
