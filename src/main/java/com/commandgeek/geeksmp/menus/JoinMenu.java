@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.menus;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.managers.EntityManager;
 import com.commandgeek.geeksmp.managers.InventoryManager;
 import com.commandgeek.geeksmp.managers.ItemManager;
 
@@ -12,9 +13,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class JoinMenu {
 
+public class JoinMenu {
     public static void open(Player player) {
+        EntityManager.hidePlayerForAll(player);
 
         Inventory inventory = new InventoryManager(9, "Select Identity")
                 .set(2, getItem(1))
@@ -50,7 +52,6 @@ public class JoinMenu {
             MorphManager.morph(player, EntityType.ZOMBIE);
             player.closeInventory();
         }
-
         if (slot == 6) {
             MorphManager.morph(player, EntityType.SKELETON);
             player.closeInventory();

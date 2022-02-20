@@ -186,7 +186,6 @@ public class Setup {
         // Open morph menu if undead and don't have a morph
         if (!MorphManager.isMorphedPersistent(player)) {
             JoinMenu.open(player);
-            EntityManager.hidePlayerForAll(player);
         }
     }
 

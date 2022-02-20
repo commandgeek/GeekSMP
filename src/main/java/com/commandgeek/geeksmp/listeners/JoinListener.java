@@ -7,7 +7,6 @@ import com.commandgeek.geeksmp.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +19,8 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
         new BukkitRunnable() {
             public void run() {
                 Setup.updateTabMetaForAll();
@@ -27,11 +28,16 @@ public class JoinListener implements Listener {
             }
         }.runTaskLater(Main.instance, 1);
 
-        Player player = event.getPlayer();
-
         // Add unique joins stat
         if (!player.hasPlayedBefore()) {
             StatsManager.add("unique-joins");
+        }
+
+        // Hide player for everyone else if morphed
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (MorphManager.isMorphedPlayer(online)) {
+                EntityManager.hidePlayerForAll(online);
+            }
         }
 
         if (TeamManager.isUndead(player)) {
@@ -56,9 +62,12 @@ public class JoinListener implements Listener {
             BypassManager.enable(player, false);
         }
 
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            EntityManager.checkHiddenPlayer(online, player);
+        }
+
         StatsManager.add("joins");
         Setup.updatePlayerRole(player);
-        EntityManager.checkHiddenPlayers(player);
         event.setJoinMessage(new MessageManager("join").replace("%player%", player.getName()).string());
         new MessageManager("smp-chat-join")
                 .replace("%player%", player.getName(), true)

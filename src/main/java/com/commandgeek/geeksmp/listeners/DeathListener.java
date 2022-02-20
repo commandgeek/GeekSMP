@@ -24,7 +24,6 @@ public class DeathListener implements Listener {
             if (killer != null && TeamManager.isUndead(killer)) {
 
                 MorphManager.unmorph(killer,true);
-                EntityManager.showPlayerForAll(killer);
                 TeamManager.revive(killer);
                 Setup.updatePlayerRole(killer);
 

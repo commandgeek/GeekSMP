@@ -36,15 +36,13 @@ public class LinkManager {
     }
 
     public static void link(String id, UUID uuid) {
+        User user = DiscordManager.getUserFromId(id);
+        Player player = Bukkit.getPlayer(uuid);
+
         Main.linked.set(id, uuid.toString());
         ConfigManager.saveData("linked.yml", Main.linked);
         removeCode(uuid);
-        linkEvent(id, uuid);
-    }
 
-    public static void linkEvent(String id, UUID uuid) {
-        User user = DiscordManager.getUserFromId(id);
-        Player player = Bukkit.getPlayer(uuid);
         if (player != null) {
             Setup.updatePlayerRole(player);
             if (user != null) {
@@ -56,8 +54,6 @@ public class LinkManager {
         if (user != null) {
             user.addRole(DiscordManager.linkedRole);
             user.updateNickname(server, Bukkit.getOfflinePlayer(uuid).getName());
-            if (!TeamManager.isUndead(player))
-                EntityManager.showPlayerForAll(player);
         }
     }
 

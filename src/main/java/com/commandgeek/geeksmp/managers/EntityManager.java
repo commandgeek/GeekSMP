@@ -9,10 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
-import java.util.Set;
+
 
 public class EntityManager {
-
     public static void hidePlayer(Player entity, Player player) {
         player.hidePlayer(Main.instance, entity);
         new PacketManager(player).addPlayer(entity);
@@ -68,19 +67,12 @@ public class EntityManager {
     }
 
     public static void checkHiddenPlayer(Player check, Player player) {
-        Set<String> keys = Main.morphs.getKeys(false);
-        if (keys.contains(check.getUniqueId().toString())) {
+        if (Main.morphs.getKeys(false).contains(check.getUniqueId().toString())) {
             new BukkitRunnable() {
                 public void run() {
                     hidePlayer(check, player);
                 }
             }.runTaskLater(Main.instance, 0);
-        }
-    }
-
-    public static void checkHiddenPlayers(Player player) {
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            checkHiddenPlayer(online, player);
         }
     }
 

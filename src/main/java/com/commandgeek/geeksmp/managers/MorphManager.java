@@ -37,18 +37,22 @@ public class MorphManager {
         }
 
         LivingEntity entity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), type);
-        entity.setAI(false);
-        entity.setCanPickupItems(false);
-        if (entity.getEquipment() != null)
-            entity.getEquipment().clear();
-        entity.setCustomName(ChatColor.valueOf(Main.config.getString("groups." + TeamManager.getLast() + ".color")) + player.getName());
-        entity.setCustomNameVisible(true);
-        entity.setRemoveWhenFarAway(false);
+        new BukkitRunnable() {
+            public void run() {
+                entity.setAI(false);
+                entity.setCanPickupItems(false);
+                if (entity.getEquipment() != null)
+                    entity.getEquipment().clear();
+                entity.setCustomName(ChatColor.valueOf(Main.config.getString("groups." + TeamManager.getLast() + ".color")) + player.getName());
+                entity.setCustomNameVisible(true);
+                entity.setRemoveWhenFarAway(false);
+            }
+        }.runTaskLater(Main.instance, 1);
 
         player.setGameMode(GameMode.ADVENTURE);
+        universalMorphTask(player, type);
         EntityManager.hideEntity(entity, player);
         EntityManager.hidePlayerForAll(player);
-        universalMorphTask(player, type);
 
         if (!isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
