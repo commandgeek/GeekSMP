@@ -29,16 +29,19 @@ discord:
   muted-role: "000000000000000000"
   linked-role: "000000000000000000"
 
+
 #  - TAB -
 # header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
 # footer:: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
 tab:
   header:
-    - "&7- &dGeekSMP &7-"
+    - "&8- &d&lGeekSMP &8-"
+    - "&7Players: &5%server_online%&8/&5%serveR_max_players%"
     - " "
   footer:
     - " "
-    - "&7TPS&8: &d%tps% &8- &7Players&8: &d%online%&8/&d%max%"
+    - "&7TPS: &a%server_tps_1_colored% &7MSPT: &a%server_mspt%"
+    - "&7RAM: &a%server_ram_used%&7/&a%server_ram_max%"
 
 
 # - SETTINGS -
@@ -83,70 +86,78 @@ settings:
 groups:
   owner:
     color: GREEN
-    prefix: "&a&lOWNER "
-    chat-format: "&a&lOWNER &r&a%player% &8> &f%message%"
+    prefix: "&a&lOWNER &a"
+    chat-color: "&f"
+    role: "000000000000000000"
     translate: true
     status: owner
   special:
+
     color: AQUA
-    prefix: "&b&lSPECIAL "
-    chat-format: "&b&lSPECIAL &r&b%player% &8> &f%message%"
+    prefix: "&b&lSPECIAL &b"
+    chat-color: "&f"
     role: "000000000000000000"
     translate: true
+
+
   staff:
     color: WHITE
-    prefix: "&x&b&5&8&e&f&7&lSTAFF "
-    chat-format: "&x&b&5&8&e&f&7&lSTAFF &r&f%player% &8> &f%message%"
+    prefix: "&x&b&5&8&e&f&7&lSTAFF &f"
+    chat-color: "&f"
     role: "000000000000000000"
     translate: true
     status: staff
   youtuber:
+
     color: GRAY
-    prefix: "&x&f&f&0&0&0&0&lYT "
-    chat-format: "&x&f&f&0&0&0&0&lYT &r&7%player% &8> &f%message%"
+    prefix: "&x&f&f&0&0&0&0&lYT &7"
+    chat-color: "&f"
     role: "000000000000000000"
   guest:
     color: GRAY
-    prefix: "&3&lGUEST "
-    chat-format: "&3&lGUEST &r&7%player% &8> &f%message%"
+    prefix: "&3&lGUEST &7"
+    chat-color: "&f"
     role: "000000000000000000"
   mvp:
     color: GRAY
-    prefix: "&x&f&f&5&c&6&3&lMVP "
-    chat-format: "&x&f&f&5&c&6&3&lMVP &r&7%player% &8> &f%message%"
+    prefix: "&x&f&f&5&c&6&3&lMVP &7"
+    chat-color: "&f"
     role: "000000000000000000"
     translate: true
   vip+:
     color: GRAY
-    prefix: "&x&f&f&5&c&6&3&lVIP+ "
-    chat-format: "&x&f&f&5&c&6&3&lVIP+ &r&7%player% &8> &f%message%"
+    prefix: "&x&f&f&5&c&6&3&lVIP+ &7"
+    chat-color: "&f"
     role: "000000000000000000"
   vip:
     color: GRAY
-    prefix: "&x&f&f&5&c&6&3&lVIP "
-    chat-format: "&x&f&f&5&c&6&3&lVIP &r&7%player% &8> &f%message%"
+    prefix: "&x&f&f&5&c&6&3&lVIP &7"
+    chat-color: "&f"
     role: "000000000000000000"
   tier3:
     color: GRAY
-    prefix: "&x&9&0&4&8&f&f&lTIER 3 "
-    chat-format: "&x&9&0&4&8&f&f&lTIER 3 &r&7%player% &8> &f%message%"
+    prefix: "&x&9&0&4&8&f&f&lTIER 3 &7"
+    chat-color: "&f"
     role: "000000000000000000"
     translate: true
   tier2:
     color: GRAY
-    prefix: "&x&9&0&4&8&f&f&lTIER 2 "
-    chat-format: "&x&9&0&4&8&f&f&lTIER 2 &r&7%player% &8> &f%message%"
+    prefix: "&x&9&0&4&8&f&f&lTIER 2 &7"
+    chat-color: "&f"
     role: "000000000000000000"
   tier1:
     color: GRAY
-    prefix: "&x&9&0&4&8&f&f&lTIER 1 "
-    chat-format: "&x&9&0&4&8&f&f&lTIER 1 &r&7%player% &8> &f%message%"
+    prefix: "&x&9&0&4&8&f&f&lTIER 1 &7"
+    chat-color: "&f"
     role: "000000000000000000"
   revived:
     color: GRAY
-    chat-format: "&7%player% &8> &7%message%"
+    prefix: "&7"
+    chat-color: "&7"
   undead:
     color: DARK_GRAY
+
+
     revive-group: "revived"
 
 

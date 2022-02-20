@@ -43,8 +43,9 @@ chat-format: "%prefix%%player% &8> %message%"
 # %sender% - Player sender name
 # %receiver% - Player receiver name
 # %message% - Direct message content
-direct-message-send: "&6You &8to &3%receiver% &8> &b%message%"
-direct-message-receive: "&3%sender% &8to &6You &8> &b%message%"
+direct-message-color: "&b"
+direct-message-send: "&6You &8to &3%receiver% &8> %color%%message%"
+direct-message-receive: "&3%sender% &8to &6You &8> %color%%message%"
 direct-message-blocked-receiver: "&c%receiver% has disabled direct messages."
 direct-message-blocked-sender: "&cYou have disabled direct messages. Use &4/msgtoggle &c to enable them."
 direct-message-enabled: "&5Direct messages &denabled&5."
@@ -102,7 +103,7 @@ give-lock-tool: "&5You've given &d%target% %5a lock tool"
 # - Information Messages -
 player-information-header: "&d%player% information:"
 player-information-item: "&8 - &5%key%: &a%value%"
-ip-player: "The IP of %player% is %ip%"
+ip-player: "&5The IP of &d%player% &5is &d%ip%"
 
 # - Info Messages -
 # %header% - Info header/title
@@ -195,7 +196,7 @@ unlink-other-success: "&5Successfully unlinked &d%player%&5."
 smp-chat-join: ":arrow_right: **%player%**"
 smp-chat-leave: ":arrow_left: **%player%**"
 smp-chat-death: ":skull: **%message%**"
-smp-chat-message: "%player% » %message%"
+smp-chat-message: "**%prefix%`%player%`** » %message%"
 smp-chat-start: ":white_check_mark: **Server started**"
 smp-chat-stop: ":x: **Server stopped**"
 
