@@ -7,6 +7,7 @@ spawn:
   pitch: 0
   yaw: 0
 
+
 # - DISCORD -
 # bot-token: Token of the discord bot. Do not share!
 # smp-chat-channel: ID of the text channel where in-game messages should be sent.
@@ -48,10 +49,6 @@ tab:
 # allow-end: Whether players are able to enter an end portal.
 # afk-invulnerable: Whether AFK players should be invulnerable to other players.
 # speed-radius: How far undeads need to be from alive player before they get speed (0 = always have speed, -1 = disabled).
-#
-# banned-words: Words which will be blocked in chat.
-# lockable-blocks: List of blocks that can be locked.
-# disabled-commands: Commands no one can use.
 settings:
   allow-unplaced-locking: true
   burn: false
@@ -61,54 +58,6 @@ settings:
   spawn-protection: 0
   speed-radius: 50
 
-  banned-words:
-    - "Example1"
-    - "Example2"
-
-  lockable-blocks:
-    - "chest"
-    - "trapped_chest"
-    - "barrel"
-    - "stone_button"
-    - "oak_button"
-    - "birch_button"
-    - "spruce_button"
-    - "dark_oak_button"
-    - "acacia_button"
-    - "warped_button"
-    - "crimson_button"
-    - "polished_blackstone_button"
-    - "lever"
-    - "dropper"
-    - "dispenser"
-    - "hopper"
-    - "acacia_pressure_plate"
-    - "birch_pressure_plate"
-    - "warped_pressure_plate"
-    - "crimson_pressure_plate"
-    - "oak_pressure_plate"
-    - "dark_oak_pressure_plate"
-    - "jungle_pressure_plate"
-    - "polished_blackstone_pressure_plate"
-    - "spruce_pressure_plate"
-    - "stone_pressure_plate"
-    - "heavy_weighted_pressure_plate"
-    - "light_weighted_pressure_plate"
-
-  disabled-commands:
-    - "help"
-    - "list"
-    - "me"
-    - "msg"
-    - "teammsg"
-    - "tell"
-    - "tm"
-    - "trigger"
-    - "w"
-    - "plugins"
-    - "bukkit:plugins"
-    - "pl"
-    - "bukkit:pl"
 
 # - GROUPS -
 # All groups on the server.
@@ -199,6 +148,7 @@ groups:
   undead:
     color: DARK_GRAY
     revive-group: "revived"
+
 
 # - MORPH MENU -
 # Item meta for morph selection menu.

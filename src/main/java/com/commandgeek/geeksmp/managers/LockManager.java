@@ -39,7 +39,7 @@ public class LockManager {
     }
 
     public static boolean isLockable(Block block) {
-        for (String lockableBlock : Main.lockableBlocks) {
+        for (String lockableBlock : Main.lists.getStringList("lockable-blocks")) {
             Material material = Material.getMaterial(lockableBlock.toUpperCase(Locale.ROOT));
 
             if(material == null) continue;

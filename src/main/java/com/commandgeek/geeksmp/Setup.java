@@ -26,6 +26,7 @@ public class Setup {
     public static void reload() {
         // Load files
         Main.config = ConfigManager.loadConfig("config.yml");
+        Main.lists = ConfigManager.loadConfig("lists.yml");
         Main.messages = ConfigManager.loadConfig("messages.yml");
         Main.info = ConfigManager.loadConfig("info.yml");
         Main.stats = ConfigManager.loadData("stats.yml");
@@ -46,11 +47,6 @@ public class Setup {
         DiscordManager.linkChannels = DiscordManager.channelsFromConfig(Main.config, "discord.link-channels");
         DiscordManager.changeLogChannel = DiscordManager.channelFromConfig(Main.config, "discord.change-log-channel");
         DiscordManager.smpChatChannel = DiscordManager.channelFromConfig(Main.config, "discord.smp-chat-channel");
-
-        // Config lists
-        Main.bannedWords = Main.config.getStringList("settings.banned-words");
-        Main.lockableBlocks = Main.config.getStringList("settings.lockable-blocks");
-        Main.disabledCommands = Main.config.getStringList("settings.disabled-commands");
 
         // Cancel tasks & setup message
         Bukkit.getScheduler().cancelTasks(Main.instance);
@@ -205,8 +201,8 @@ public class Setup {
     }
 
     public static void updateTabMeta(Player player) {
-        if (Main.config.contains("tab-meta.header")) {
-            List<String> items = Main.config.getStringList("tab-meta.header");
+        if (Main.config.contains("tab.header")) {
+            List<String> items = Main.config.getStringList("tab.header");
             StringBuilder header = new StringBuilder();
             for (String item : items) {
                 item = PlaceholderAPI.setPlaceholders(player, item);
@@ -214,8 +210,8 @@ public class Setup {
             }
             player.setPlayerListHeader(ChatColor.translateAlternateColorCodes('&', header.toString().replaceAll("\n$", "")));
         }
-        if (Main.config.contains("tab-meta.footer")) {
-            List<String> items = Main.config.getStringList("tab-meta.footer");
+        if (Main.config.contains("tab.footer")) {
+            List<String> items = Main.config.getStringList("tab.footer");
             StringBuilder footer = new StringBuilder();
             for (String item : items) {
                 item = PlaceholderAPI.setPlaceholders(player, item);
@@ -253,7 +249,6 @@ public class Setup {
                     for (String item : items) {
                         item = PlaceholderAPI.setPlaceholders(null, item);
                         item = ChatColor.stripColor(item);
-                        item = item.replaceAll("[*_~]", "");
                         topic.append(item).append("\n");
                     }
                     DiscordManager.smpChatChannel.asServerTextChannel().get().updateTopic(topic.toString().replaceAll("\n$", ""));

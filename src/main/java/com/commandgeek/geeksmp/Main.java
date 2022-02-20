@@ -22,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
 
 public class Main extends JavaPlugin {
     public static Main instance;
@@ -31,6 +30,7 @@ public class Main extends JavaPlugin {
     public static String botPrefix;
 
     public static FileConfiguration config;
+    public static FileConfiguration lists;
     public static FileConfiguration messages;
     public static FileConfiguration info;
 
@@ -45,10 +45,6 @@ public class Main extends JavaPlugin {
     public static FileConfiguration trusted;
     public static FileConfiguration bypass;
 //  public static FileConfiguration pets;
-
-    public static List<String> bannedWords;
-    public static List<String> lockableBlocks;
-    public static List<String> disabledCommands;
 
     @Override
     public void onEnable() {
@@ -117,6 +113,7 @@ public class Main extends JavaPlugin {
 
         // Create files
         ConfigManager.createDefaultConfig("config.yml");
+        ConfigManager.createDefaultConfig("lists.yml");
         ConfigManager.createDefaultConfig("messages.yml");
         ConfigManager.createDefaultConfig("info.yml");
         ConfigManager.createData("stats.yml");
@@ -133,6 +130,7 @@ public class Main extends JavaPlugin {
 
         // Load files
         Main.config = ConfigManager.loadConfig("config.yml");
+        Main.lists = ConfigManager.loadConfig("lists.yml");
         Main.messages = ConfigManager.loadConfig("messages.yml");
         Main.info = ConfigManager.loadConfig("info.yml");
         Main.stats = ConfigManager.loadData("stats.yml");
