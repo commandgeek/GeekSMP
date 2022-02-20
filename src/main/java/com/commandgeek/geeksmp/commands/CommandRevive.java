@@ -9,8 +9,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
 public class CommandRevive implements CommandExecutor {
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.revive")) {
             new MessageManager("no-permission").send(sender);

@@ -211,7 +211,7 @@ public class Main extends JavaPlugin {
         // Delete all Morphs
         for (Player online : Bukkit.getOnlinePlayers()) {
             new MorphManager(online).unmorph(false);
-            online.kickPlayer("Server restarting!");
+            online.kickPlayer("Server stopping/restarting!");
         }
 
 //        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
