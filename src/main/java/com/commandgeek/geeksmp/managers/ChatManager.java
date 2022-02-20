@@ -10,50 +10,82 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChatManager {
 
+public class ChatManager {
     public static final Map<Player, Player> lastMessagedPlayer = new HashMap<>();
 
-    public static boolean setChatMessageFromFormat(AsyncPlayerChatEvent event, String name) {
+    public static boolean setChatMessageFromFormat(AsyncPlayerChatEvent event, String group) {
         Player player = event.getPlayer();
-        if (Main.config.contains("groups." + name + ".chat-format")) {
+        String translate = Main.config.getString("groups." + group + ".translate");
 
-            String format = Main.config.getString("groups." + name + ".chat-format");
+        if (Main.messages.contains("chat-format")) {
+            String format = Main.messages.getString("chat-format");
             if (format != null) {
-                if (!Main.config.contains("groups." + name + ".translate")) {
-                    String translate = Main.config.getString("groups." + name + ".translate");
-                    if (translate != null && translate.equalsIgnoreCase("false")) {
-                        event.setMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())));
-                    }
+
+                if (!Main.config.contains("groups." + group + ".translate") || (translate != null && translate.equalsIgnoreCase("false"))) {
+                    event.setMessage(ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())));
                 }
-                format = format.replaceAll("%player%", "%s");
-                format = ChatColor.translateAlternateColorCodes('&', format.replaceAll("%message%", "%s"));
 
-                event.setMessage(ChatManager.censor(event.getMessage()));
+                if (Main.config.contains("groups." + group + ".prefix")) {
+                    //noinspection ConstantConditions
+                    format = format.replace("%prefix%", ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".prefix")));
+                } else {
+                    format = format.replace("%prefix%", "");
+                }
 
+                if (Main.config.contains("groups." + group + ".chat-color")) {
+                    format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", Main.config.getString("groups." + group + ".chat-color") + "%s"));
+                } else {
+                    format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", "%s"));
+                }
+
+                format = format.replace("%player%", "%s");
+
+                event.setMessage(censor(event.getMessage(), false, event.getPlayer(), group));
                 event.setFormat(format);
-
-                try {
-                    new MessageManager("smp-chat-message")
-                            .replace("%player%", player.getName(), true)
-                            .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage())))
-                            .sendDiscord(DiscordManager.smpChatChannel);
-                    return true;
-                } catch (IllegalArgumentException ignored) {}
             }
         }
+
+        try {
+            String message = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', event.getMessage()));
+            String[] words = message.split(" ");
+            StringBuilder result = new StringBuilder();
+            for (String word : words) {
+                if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+                    for (char ignored : word.toCharArray()) {
+                        result.append("\\\\*");
+                    }
+                    result.append(" ");
+                } else {
+                    result.append(word).append(" ");
+                }
+            }
+            //noinspection ConstantConditions
+            new MessageManager("smp-chat-message")
+                    .replace("%prefix%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".prefix"))))
+                    .replace("%player%", player.getName(), true)
+                    .replace("%message%", result.toString().trim())
+                    .sendDiscord(DiscordManager.smpChatChannel);
+            return true;
+        } catch (IllegalArgumentException ignored) {}
         return false;
     }
 
-    public static String censor(String message) {
+    public static String censor(String message, boolean direct, Player player, String group) {
         String[] words = message.split(" ");
         StringBuilder result = new StringBuilder();
         for (String word : words) {
-            if (Main.bannedWords.contains(word.toLowerCase())) {
-                for (char ignored : word.toCharArray()) {
-                    result.append("*");
+            if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+                if (direct) {
+                    result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message-color")).append(" ");
+                } else {
+                    if (Main.config.contains("groups." + group + ".chat-color")) {
+                        //noinspection ConstantConditions
+                        result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
+                    } else {
+                        result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
+                    }
                 }
-                result.append(" ");
             } else {
                 result.append(word).append(" ");
             }
@@ -81,7 +113,7 @@ public class ChatManager {
     }
 
     public static void directMessage(Player sender, Player receiver, String message) {
-        message = censor(message);
+        message = censor(message, true, null, null);
 
         if (EntityManager.hasScoreboardTag(sender, "ignore-direct-messages")) {
             new MessageManager("direct-message-blocked-sender").send(sender);
@@ -95,15 +127,19 @@ public class ChatManager {
             return;
         }
 
+        //noinspection ConstantConditions
         new MessageManager("direct-message-send")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%message%", message)
+                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
+                .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)))
                 .send(sender);
+        //noinspection ConstantConditions
         new MessageManager("direct-message-receive")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%message%", message)
+                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
+                .replace("%message%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message)))
                 .send(receiver);
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);

@@ -1,5 +1,5 @@
 # - Plugin Messages -
-reload: "&5GeekSMP reloaded."
+reload: "&dGeekSMP &5successfully reloaded."
 purge-chat: "&c&l- CHAT CLEARED -"
 end-disabled: "&cThe end is currently disabled!"
 
@@ -32,6 +32,12 @@ join: "&a&l+ &a%player%"
 leave: "&c&l- &c%player%"
 undead-join: "&2&l+ &2%player%"
 undead-leave: "&4&l- &4%player%"
+
+# - Chat Format -
+# %prefix% - Team prefix
+# %player% - Player name
+# %message% - Message sent
+chat-format: "%prefix%%player% &8> %message%"
 
 # - Direct Messages -
 # %sender% - Player sender name
@@ -78,9 +84,9 @@ bypass-disabled: "&5Lock bypass &ddisabled"
 
 # - Lock Tool Messages -
 # %player% - Command sender
+# %target% - Player specified
 get-lock-tool: "&5You've been given a lock tool by &d%player%"
-# %player% - Player specified
-give-lock-tool: "&5You've given &d%player% %5a lock tool"
+give-lock-tool: "&5You've given &d%target% %5a lock tool"
 
 ## - Pet Messages -
 ## %player% - Pet player name
@@ -110,8 +116,6 @@ info-item: "&8- &5%item%"
 # %victim% - Morphed player's victim name
 morph: "&7You morphed into a &5%morph%&7."
 revive: "&d%player% &5has been revived by killing &d%victim%&5!"
-revived-warning: "&4Warning! &cWhile revived, your items will NOT be saved when you die!"
-item-pickup-forbidden: "&cYou can only hold 1 item"
 
 # - Tracking Messages -
 # %player% - Tracked player name
