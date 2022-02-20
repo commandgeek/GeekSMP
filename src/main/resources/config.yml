@@ -43,9 +43,11 @@ tab:
 # - SETTINGS -
 # allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
 # spawn-radius: Radius around spawn in which one cannot take any damage (0 = disabled).
+# spawn-protection: Radius around spawn in which spawn protection will take affect (0 = disabled).
 # burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn)
 # allow-end: Whether players are able to enter an end portal.
-# afk-invulnerable: true
+# afk-invulnerable: Whether AFK players should be invulnerable to other players.
+# speed-radius: How far undeads need to be from alive player before they get speed (0 = always have speed, -1 = disabled).
 #
 # banned-words: Words which will be blocked in chat.
 # lockable-blocks: List of blocks that can be locked.
@@ -53,9 +55,11 @@ tab:
 settings:
   allow-unplaced-locking: true
   spawn-radius: 10
+  spawn-protection: 0
   burn: false
   allow-end: true
   afk-invulnerable: true
+  speed-radius: 50
 
   banned-words:
     - "Example1"

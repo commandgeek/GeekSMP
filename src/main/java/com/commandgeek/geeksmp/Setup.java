@@ -56,6 +56,9 @@ public class Setup {
         Bukkit.getScheduler().cancelTasks(Main.instance);
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "GeekSMP finished setup");
 
+        // Set spawn protection
+        Bukkit.setSpawnRadius(Main.config.getInt("settings.spawn-protection"));
+
         // One-time updates
         updateTasks();
         updateTabMetaForAll();
@@ -95,9 +98,8 @@ public class Setup {
         for (String key : Main.morphs.getKeys(false)) {
             Player player = Bukkit.getPlayer(UUID.fromString(key));
             if (player != null) {
-                String value = Main.morphs.getString(key);
-                if (value != null) {
-                    MorphManager.universalMorphTask(player);
+                if (Main.morphs.getString(key) != null) {
+                    MorphManager.universalMorphTask(player, null);
                 }
             }
         }
