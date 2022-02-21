@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class TeamManager {
@@ -39,7 +40,8 @@ public class TeamManager {
 
     public static String endsWith(String name) {
         if (Bukkit.getScoreboardManager() != null) {
-            for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
+            Set<Team> teams = Bukkit.getScoreboardManager().getMainScoreboard().getTeams();
+            for (Team team : teams) {
                 if (team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(name)) {
                     return team.getName();
                 }

@@ -33,6 +33,10 @@ public class DamageListener implements Listener {
             if (MorphManager.isMorphedPlayer(player)) {
                 Entity entity = MorphManager.getEntity(player);
                 if (entity != null) {
+                    //FIXME Doesn't work :(
+//                    if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && player.isBlocking()) {
+//                        event.setCancelled(true);
+//                    }
                     new PacketManager().animateEntity(entity, 1);
                     entity.getWorld().playSound(entity.getLocation(), Sound.valueOf("ENTITY_" + entity.getType() + "_HURT"), 1, 1);
                 }
@@ -43,28 +47,31 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
-        Entity entity = event.getEntity();
+        Entity victim = event.getEntity();
 
         if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem) {
+            Player entity = MorphManager.getPlayer(victim);
+
             if (damager instanceof Arrow arrow) {
                 arrow.remove();
             }
 
-            Player victim = MorphManager.getPlayer(entity);
-            if (victim != null && damager.getUniqueId() != victim.getUniqueId()) {
-                victim.damage(event.getDamage(), damager);
+            if (entity != null && damager.getUniqueId() != entity.getUniqueId()) {
+                entity.damage(event.getDamage(), damager);
                 event.setCancelled(true);
             }
 
             // AFK invulnerability
-            if (Main.config.getBoolean("settings.afk-invulnerable") && damager instanceof Player && entity instanceof Player && AfkManager.afk.contains(entity)) {
+            if (Main.config.getBoolean("settings.afk-invulnerable") && damager instanceof Player && entity != null && AfkManager.afk.contains(entity)) {
                 event.setCancelled(true);
             }
         }
 
         // Prevent undeads from destroying item frames or armor stands
-        if ((entity instanceof ItemFrame || entity instanceof ArmorStand) && damager instanceof Player player) {
-            if(TeamManager.isUndead(player)) event.setCancelled(true);
+        if ((victim instanceof ItemFrame || victim instanceof ArmorStand) && damager instanceof Player player) {
+            if (TeamManager.isUndead(player)) {
+                event.setCancelled(true);
+            }
         }
     }
 }

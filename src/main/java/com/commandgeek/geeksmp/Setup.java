@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,8 +72,9 @@ public class Setup {
         if (section != null) {
             Set<String> keys = section.getKeys(false);
             int i = 1;
+            int length = NumberManager.length(keys.size());
             for (String key : keys) {
-                TeamManager team = new TeamManager(NumberManager.digits(i, NumberManager.length(keys.size())) + "_" + key);
+                TeamManager team = new TeamManager(NumberManager.digits(i, length) + "_" + key);
                 if (section.contains(key + ".color")) {
                     team.color(ChatColor.valueOf(section.getString(key + ".color")));
                 }
@@ -118,11 +120,13 @@ public class Setup {
         User user = DiscordManager.getUserFromPlayer(player);
         ConfigurationSection section = Main.config.getConfigurationSection("groups");
         if (user != null && section != null) {
+            Set<String> keys = section.getKeys(false);
             user.updateNickname(DiscordManager.server, player.getName());
             updateMemberRoles(player.getUniqueId());
 
-            for (String key : section.getKeys(false)) {
-                if (section.contains(key + ".role")) {
+            for (String key : keys) {
+                String id = section.getString(key + ".role");
+                if (DiscordManager.userHasRole(user, id)) {
                     if (DiscordManager.userHasRole(user, section.getString(key + ".role"))) {
                         if (MorphManager.isMorphedPlayer(player)) {
                             new BukkitRunnable() {
@@ -141,7 +145,8 @@ public class Setup {
 
         // Check Revived
         if (TeamManager.isAlive(player)) {
-            new TeamManager(TeamManager.endsWith(Main.config.getString("groups." + TeamManager.getLast() + ".revive-group"))).join(player);
+            String name = Main.config.getString("groups." + TeamManager.getLast() + ".revive-group");
+            new TeamManager(TeamManager.endsWith(name)).join(player);
             return;
         }
 
@@ -194,16 +199,18 @@ public class Setup {
 
     public static void updateTabMeta(Player player) {
         if (Main.config.contains("tab.header")) {
+            List<String> items = Main.config.getStringList("tab.header");
             StringBuilder header = new StringBuilder();
-            for (String item : Main.config.getStringList("tab.header")) {
+            for (String item : items) {
                 item = PlaceholderAPI.setPlaceholders(player, item);
                 header.append(item).append("\n");
             }
             player.setPlayerListHeader(ChatColor.translateAlternateColorCodes('&', header.toString().replaceAll("\n$", "")));
         }
         if (Main.config.contains("tab.footer")) {
+            List<String> items = Main.config.getStringList("tab.footer");
             StringBuilder footer = new StringBuilder();
-            for (String item : Main.config.getStringList("tab.footer")) {
+            for (String item : items) {
                 item = PlaceholderAPI.setPlaceholders(player, item);
                 footer.append(item).append("\n");
             }
@@ -234,8 +241,9 @@ public class Setup {
                 updateTeams();
                 updateAllRoles();
                 if (DiscordManager.smpChatChannel.asServerTextChannel().isPresent() && Main.config.contains("discord.smp-chat-topic")) {
+                    List<String> items = Main.config.getStringList("discord.smp-chat-topic");
                     StringBuilder topic = new StringBuilder();
-                    for (String item : Main.config.getStringList("discord.smp-chat-topic")) {
+                    for (String item : items) {
                         item = PlaceholderAPI.setPlaceholders(null, item);
                         item = ChatColor.stripColor(item);
                         topic.append(item).append("\n");

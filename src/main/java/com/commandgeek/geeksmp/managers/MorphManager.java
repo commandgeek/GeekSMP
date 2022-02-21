@@ -2,7 +2,6 @@ package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
 
-import com.commandgeek.geeksmp.Setup;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -24,7 +23,6 @@ import java.util.Map;
 import java.util.UUID;
 
 
-@SuppressWarnings("ConstantConditions")
 public class MorphManager {
     public static final Map<Player, Player> trackedPlayers = new Hashtable<>();
     public static final Map<Player, BukkitTask> morphTasks = new HashMap<>();
@@ -38,23 +36,22 @@ public class MorphManager {
         }
 
         LivingEntity entity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), type);
+        entity.setAI(false);
+        entity.setCanPickupItems(false);
+        if (entity.getEquipment() != null)
+            entity.getEquipment().clear();
+        entity.setRemoveWhenFarAway(false);
         new BukkitRunnable() {
             public void run() {
-                entity.setAI(false);
-                entity.setCanPickupItems(false);
-                if (entity.getEquipment() != null)
-                    entity.getEquipment().clear();
                 entity.setCustomName(ChatColor.valueOf(Main.config.getString("groups." + TeamManager.getLast() + ".color")) + player.getName());
                 entity.setCustomNameVisible(true);
-                entity.setRemoveWhenFarAway(false);
             }
-        }.runTaskLater(Main.instance, 1);
+        }.runTaskLater(Main.instance,1);
 
         player.setGameMode(GameMode.ADVENTURE);
         universalMorphTask(player, type);
         EntityManager.hideEntity(entity, player);
         EntityManager.hidePlayerForAll(player);
-        Setup.updatePlayerRole(player);
 
         if (!isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
@@ -70,9 +67,11 @@ public class MorphManager {
         }
 
         if (entity.getType() == EntityType.SKELETON) {
+            //noinspection ConstantConditions
             if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
                 inventory.addItem(inventory.getItem(0));
             }
+            //noinspection ConstantConditions
             if (inventory.getItem(27) != null && !inventory.getItem(27).isSimilar(skeletonArrow())) {
                 inventory.addItem(inventory.getItem(27));
             }
@@ -96,7 +95,6 @@ public class MorphManager {
         trackedPlayers.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.removePotionEffect(PotionEffectType.SPEED);
-        Setup.updatePlayerRole(player);
 
         // Data file
         Main.morphs.set(player.getUniqueId().toString(), null);
@@ -120,9 +118,11 @@ public class MorphManager {
 
             // Skeleton stuff
             if (entity.getType() == EntityType.SKELETON) {
+                //noinspection ConstantConditions
                 if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
                     inventory.addItem(inventory.getItem(0));
                 }
+                //noinspection ConstantConditions
                 if (inventory.getItem(27) != null && !inventory.getItem(27).isSimilar(skeletonArrow())) {
                     inventory.addItem(inventory.getItem(27));
                 }

@@ -1,5 +1,6 @@
 package com.commandgeek.geeksmp.commands;
 
+import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.MorphManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
@@ -34,6 +35,7 @@ public class CommandUnrevive implements CommandExecutor {
             TeamManager.unrevive(target);
             MorphManager.unmorph(target,true);
             if (TeamManager.isUndead(target)) JoinMenu.open(target);
+            Setup.updatePlayerRole(target);
             return true;
         }
 
