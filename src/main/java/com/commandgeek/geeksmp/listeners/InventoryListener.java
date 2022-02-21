@@ -63,18 +63,15 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onOffhand(PlayerSwapHandItemsEvent event) {
-        Player player = event.getPlayer();
-        if (MorphManager.isMorphedPlayer(player)) {
+        if (MorphManager.isMorphedPlayer(event.getPlayer())) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
                 assert value != null;
-                UUID uuid = UUID.fromString(value);
-                Entity entity = Bukkit.getEntity(uuid);
-                if (entity instanceof Skeleton) {
+                if (Bukkit.getEntity(UUID.fromString(value)) instanceof Skeleton) {
                     if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
                         boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
                         boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
-                        if (skeletonBow|| skeletonArrow) {
+                        if (skeletonBow || skeletonArrow) {
                             event.setCancelled(true);
                         }
                     }
