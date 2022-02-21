@@ -63,10 +63,10 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("unrevive", new CommandUnrevive(), new TabPlayer());
         Setup.registerCommand("mute", new CommandMute(), new TabOfflinePlayer());
         Setup.registerCommand("mutelist", new CommandMuteList(), new TabEmpty());
-        Setup.registerCommand("unmute", new CommandUnmute(), new TabUnmute());
+        Setup.registerCommand("unmute", new CommandUnmute(), null);
         Setup.registerCommand("ban", new CommandBan(), new TabOfflinePlayer());
         Setup.registerCommand("banlist", new CommandBanList(), new TabEmpty());
-        Setup.registerCommand("unban", new CommandUnban(), new TabUnban());
+        Setup.registerCommand("unban", new CommandUnban(), null);
         Setup.registerCommand("die", new CommandDie(), new TabEmpty());
         Setup.registerCommand("gmc", new CommandGmc(), new TabPlayer());
         Setup.registerCommand("gms", new CommandGms(), new TabPlayer());
@@ -80,7 +80,7 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("twitch", new CommandTwitch(), new TabEmpty());
         Setup.registerCommand("map", new CommandMap(), new TabEmpty());
         Setup.registerCommand("reloadsmp", new CommandReloadSmp(), new TabEmpty());
-        Setup.registerCommand("changelog", new CommandChangeLog(), new TabChangeLog());
+        Setup.registerCommand("changelog", new CommandChangeLog(), null);
         Setup.registerCommand("unlink", new CommandUnlink(), new TabOfflinePlayer());
         Setup.registerCommand("purgechat", new CommandPurgeChat(), new TabEmpty());
         Setup.registerCommand("purgeteams", new CommandPurgeTeams(), new TabEmpty());
@@ -92,23 +92,23 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("reply", new CommandReply(), new TabEmpty());
         Setup.registerCommand("msgtoggle", new CommandMsgToggle(), new TabEmpty());
         Setup.registerCommand("spy", new CommandSpy(), new TabEmpty());
-        Setup.registerCommand("track", new CommandTrack(), new TabTrack());
+        Setup.registerCommand("track", new CommandTrack(), null);
         Setup.registerCommand("seeinv", new CommandSeeInv(), new TabPlayer());
         Setup.registerCommand("lookup", new CommandLookup(), new TabOfflinePlayer());
         Setup.registerCommand("playerinfo", new CommandPlayerInfo(), new TabOfflinePlayer());
         Setup.registerCommand("stats", new CommandStats(), new TabEmpty());
-        Setup.registerCommand("trust", new CommandTrust(), new TabTrust());
+        Setup.registerCommand("trust", new CommandTrust(), null);
         Setup.registerCommand("trustlist", new CommandTrustList(), new TabEmpty());
-        Setup.registerCommand("untrust", new CommandUntrust(), new TabUntrust());
-//      Setup.registerCommand("pet", new CommandPet(), new TabPet());
+        Setup.registerCommand("untrust", new CommandUntrust(), null);
+//      Setup.registerCommand("pet", new CommandPet(), null);
         Setup.registerCommand("inspect", new CommandInspect(), new TabEmpty());
         Setup.registerCommand("ip", new CommandIP(), new TabPlayer());
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
-        Setup.registerCommand("reason", new CommandReason(), new TabOfflinePlayer());
+        Setup.registerCommand("reason", new CommandReason(), null);
         Setup.registerCommand("bypass", new CommandBypass(), new TabEmpty());
         Setup.registerCommand("broadcast", new CommandBroadcast(), new TabEmpty());
         Setup.registerCommand("locktool", new CommandLockTool(), new TabPlayer());
-        Setup.registerCommand("debug", new CommandDebug(), new TabDebug());
+        Setup.registerCommand("debug", new CommandDebug(), null);
         Setup.registerCommand("trash", new CommandTrash(), new TabEmpty());
 
         // Create files

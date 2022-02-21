@@ -6,13 +6,16 @@ import com.commandgeek.geeksmp.managers.MorphManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class CommandDebug implements CommandExecutor {
+
+public class CommandDebug implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player) {
 
@@ -48,5 +51,24 @@ public class CommandDebug implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> suggestions = new ArrayList<>();
+        List<String> results = new ArrayList<>();
+
+        if (args.length == 1) {
+            suggestions.add("item0");
+            suggestions.add("item27");
+            suggestions.add("skeletonbow");
+            suggestions.add("skeletonarrow");
+        }
+
+        for (String suggestion : suggestions) {
+            if (suggestion.toLowerCase().startsWith(args[args.length - 1].toLowerCase())) {
+                results.add(suggestion);
+            }
+        }
+        return results;
     }
 }
