@@ -138,14 +138,11 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onPlayerEntityInteract(PlayerInteractEntityEvent event) {
         String old = event.getRightClicked().getCustomName();
-        event.getPlayer().sendMessage(Main.morphs.getKeys(false).toString());
         if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG) {
-            event.getPlayer().sendMessage("NAME TAG");
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
                 assert value != null;
                 if (value.contains(event.getRightClicked().getUniqueId().toString())) {
-                    event.getPlayer().sendMessage("SUCCESS");
                     event.setCancelled(true);
                 }
             }
