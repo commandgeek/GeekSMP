@@ -12,12 +12,12 @@ import org.bukkit.entity.Player;
 public class CommandPurgeChat implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.purgechat") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            online.sendMessage("\n ".repeat(600) + new MessageManager("purge-chat").string());
+            online.sendMessage("\n ".repeat(600) + new MessageManager("plugin.purge-chat").string());
         }
         return true;
     }

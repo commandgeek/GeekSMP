@@ -18,8 +18,8 @@ public class ChatManager {
         Player player = event.getPlayer();
         String translate = Main.config.getString("groups." + group + ".translate");
 
-        if (Main.messages.contains("chat-format")) {
-            String format = Main.messages.getString("chat-format");
+        if (Main.messages.contains("chat.format")) {
+            String format = Main.messages.getString("chat.format");
             if (format != null) {
 
                 if (!Main.config.contains("groups." + group + ".translate") || (translate != null && translate.equalsIgnoreCase("false"))) {
@@ -61,7 +61,7 @@ public class ChatManager {
                 }
             }
             //noinspection ConstantConditions
-            new MessageManager("smp-chat-message")
+            new MessageManager("smp-chat.message")
                     .replace("%prefix%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".prefix"))))
                     .replace("%player%", player.getName(), true)
                     .replace("%message%", result.toString().trim())
@@ -78,7 +78,7 @@ public class ChatManager {
         for (String word : words) {
             if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
                 if (direct) {
-                    result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message-color")).append(" ");
+                    result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message.color")).append(" ");
                 } else if (Main.config.contains("groups." + group + ".chat-color")) {
                         //noinspection ConstantConditions
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
@@ -103,7 +103,7 @@ public class ChatManager {
     public static void directMessage(Player sender, String to, String message) {
         Player receiver = Bukkit.getPlayer(to);
         if (receiver == null) {
-            new MessageManager("invalid-player")
+            new MessageManager("errors.invalid-player")
                     .replace("%player%", to)
                     .send(sender);
             return;
@@ -115,35 +115,35 @@ public class ChatManager {
         message = censor(message, true, null, null);
 
         if (EntityManager.hasScoreboardTag(sender, "ignore-direct-messages")) {
-            new MessageManager("direct-message-blocked-sender").send(sender);
+            new MessageManager("direct-message.blocked-sender").send(sender);
             return;
         }
 
         if (EntityManager.hasScoreboardTag(receiver, "ignore-direct-messages")) {
-            new MessageManager("direct-message-blocked-receiver")
+            new MessageManager("direct-message.blocked-receiver")
                     .replace("%receiver%", receiver.getName())
                     .send(sender);
             return;
         }
 
         //noinspection ConstantConditions
-        new MessageManager("direct-message-send")
+        new MessageManager("direct-message.send")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
+                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
                 .replace("%message%", message)
                 .send(sender);
         //noinspection ConstantConditions
-        new MessageManager("direct-message-receive")
+        new MessageManager("direct-message.receive")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message-color")))
+                .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
                 .replace("%message%", message)
                 .send(receiver);
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);
 
-        String spy = new MessageManager("spy-message")
+        String spy = new MessageManager("spy.message")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%message%", message)

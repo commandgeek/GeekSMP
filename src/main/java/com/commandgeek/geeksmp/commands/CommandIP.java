@@ -16,21 +16,21 @@ public class CommandIP implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.ip") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null) {
-                new MessageManager("invalid-player")
+                new MessageManager("errors.invalid-player")
                     .replace("%player%", args[0])
                     .send(sender);
                 return true;
             }
 
             String IP = target.getAddress().getHostString();
-            new MessageManager("ip-player")
+            new MessageManager("information.player.ip")
                     .replace("%player%", target.getName())
                     .replace("%ip%", IP)
                     .send(sender);
@@ -38,14 +38,14 @@ public class CommandIP implements CommandExecutor {
 
         } else if(sender instanceof Player player && args.length == 0) {
             String IP = player.getAddress().getHostString();
-            new MessageManager("ip-player")
+            new MessageManager("information.player.ip")
                 .replace("%player%", player.getName())
                 .replace("%ip%", IP)
                 .send(player);
             return true;
         }
 
-        new MessageManager("invalid-arguments").send(sender);
+        new MessageManager("errors.invalid-arguments").send(sender);
         return true;
     }
 }

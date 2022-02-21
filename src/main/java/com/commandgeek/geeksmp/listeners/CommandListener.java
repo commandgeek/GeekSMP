@@ -30,7 +30,7 @@ public class CommandListener implements Listener {
         List<String> disabled = Main.lists.getStringList("disabled-commands");
         String commandName = args[0].toLowerCase(Locale.ROOT);
         if (disabled.contains(commandName.replace("/", "")) || disabled.contains(commandName)) {
-            new MessageManager("disabled-command").send(event.getPlayer());
+            new MessageManager("errors.disabled-command").send(event.getPlayer());
             event.setCancelled(true);
         }
     }

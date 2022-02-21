@@ -19,21 +19,21 @@ public class CommandMuteList implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.mutelist") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
-        new MessageManager("mutelist-header").send(sender);
+        new MessageManager("punishing.muting.list.header").send(sender);
         Set<String> keys = Main.muted.getKeys(false);
         boolean empty = true;
         for (String key : keys) {
             OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(key));
             if (op.hasPlayedBefore()) {
-                new MessageManager("mutelist-list").replace("%player%", op.getName()).send(sender);
+                new MessageManager("punishing.muting.list.list").replace("%player%", op.getName()).send(sender);
                 empty = false;
             }
         }
         if (empty)
-            new MessageManager("mutelist-empty").send(sender);
+            new MessageManager("punishing.muting.list.empty").send(sender);
         return true;
     }
 }

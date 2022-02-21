@@ -63,7 +63,7 @@ public class EventListener implements Listener {
                 loc = Bukkit.getWorlds().get(0).getSpawnLocation();
             }
             player.teleport(loc);
-            new MessageManager("end-disabled").send(player);
+            new MessageManager("plugin.end-disabled").send(player);
         }
     }
 

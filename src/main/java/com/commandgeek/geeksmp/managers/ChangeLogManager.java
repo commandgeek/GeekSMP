@@ -41,11 +41,11 @@ public class ChangeLogManager {
         if (changeLogs.containsKey(sender)) {
             ChangeLog log = changeLogs.get(sender);
 
-            new MessageManager("change-log-create-header")
+            new MessageManager("change-log.create.header")
                     .replace("%version%", log.title)
                     .send(sender);
             for (String item : log.items) {
-                new MessageManager("change-log-create-item")
+                new MessageManager("change-log.create.item")
                         .replace("%item%", item)
                         .send(sender);
             }
@@ -58,23 +58,23 @@ public class ChangeLogManager {
             ChangeLog log = changeLogs.get(sender);
 
             EmbedBuilder embed = new EmbedBuilder();
-            String title = new MessageManager("change-log-publish-header")
+            String title = new MessageManager("change-log.publish.header")
                     .replace("%version%", log.title)
                     .string();
             embed.setTitle(title);
-            embed.setFooter(new MessageManager("change-log-publish-footer").string());
-            embed.setColor(Color.decode(new MessageManager("change-log-publish-color").string()));
+            embed.setFooter(new MessageManager("change-log.publish.footer").string());
+            embed.setColor(Color.decode(new MessageManager("change-log.publish.color").string()));
 
             StringBuilder items = new StringBuilder();
             for (String item : log.items) {
-                String format = new MessageManager("change-log-publish-item")
+                String format = new MessageManager("change-log.publish.item")
                         .replace("%item%", item)
                         .string();
                 items.append(format).append("\n");
             }
             embed.setDescription(items.toString().trim());
             DiscordManager.changeLogChannel.sendMessage(embed);
-            new MessageManager("change-log-publish-success").send(sender);
+            new MessageManager("change-log.publish.success").send(sender);
         }
     }
 }

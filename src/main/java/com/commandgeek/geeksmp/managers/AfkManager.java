@@ -31,14 +31,14 @@ public class AfkManager {
             String prefix = team.getPrefix() + team.getColor();
             String suffix = ChatColor.translateAlternateColorCodes('&', " &8[&7AFK&8]");
             player.setPlayerListName(prefix + player.getName() + suffix);
-            Bukkit.broadcastMessage(new MessageManager("afk-enabled").replace("%player%", player.getName()).string());
+            Bukkit.broadcastMessage(new MessageManager("afk.enabled").replace("%player%", player.getName()).string());
         }
     }
 
     public static void disable(Player player) {
         afk.remove(player);
         player.setPlayerListName(player.getName());
-        Bukkit.broadcastMessage(new MessageManager("afk-disabled").replace("%player%", player.getName()).string());
+        Bukkit.broadcastMessage(new MessageManager("afk.disabled").replace("%player%", player.getName()).string());
     }
 
     public static boolean check(Player player) {

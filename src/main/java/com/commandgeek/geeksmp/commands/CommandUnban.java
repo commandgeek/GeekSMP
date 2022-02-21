@@ -20,7 +20,7 @@ import java.util.UUID;
 public class CommandUnban implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.unban") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 

@@ -27,7 +27,7 @@ public class DeathListener implements Listener {
                 TeamManager.revive(killer);
                 Setup.updatePlayerRole(killer);
 
-                Bukkit.broadcastMessage(new MessageManager("revive").replace("%player%", killer.getName()).replace("%victim%", player.getName()).string());
+                Bukkit.broadcastMessage(new MessageManager("morphing.revive").replace("%player%", killer.getName()).replace("%victim%", player.getName()).string());
                 event.setDeathMessage(null);
                 player.playSound(player.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 1);
                 killer.playSound(killer.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 1);
@@ -38,7 +38,7 @@ public class DeathListener implements Listener {
         if (TeamManager.isRevived(player)) {
             TeamManager.unrevive(player);
             MorphManager.unmorph(player,true);
-            new MessageManager("smp-chat-death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
+            new MessageManager("smp-chat.death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
             Setup.updatePlayerRole(player);
             return;
         }
@@ -50,7 +50,7 @@ public class DeathListener implements Listener {
         }
 
         if (event.getDeathMessage() != null && !event.getDeathMessage().isEmpty()) {
-            new MessageManager("smp-chat-death")
+            new MessageManager("smp-chat.death")
                     .replace("%message%", event.getDeathMessage())
                     .sendDiscord(DiscordManager.smpChatChannel);
         }

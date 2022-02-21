@@ -15,38 +15,38 @@ public class CommandPlayerInfo implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.playerinfo")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         if (args.length == 1) {
             OfflinePlayer target = EntityManager.getOfflinePlayer(args[0]);
             if (target == null) {
-                new MessageManager("invalid-player")
+                new MessageManager("errors.invalid-player")
                         .replace("%player%", args[0])
                         .send(sender);
                 return true;
             }
 
-            new MessageManager("player-information-header")
+            new MessageManager("information.player.info-header")
                     .replace("%player%", target.getName())
                     .send(sender);
-            new MessageManager("player-information-item")
+            new MessageManager("information.player.info-item")
                     .replace("%key%", "First Joined")
                     .replace("%value%", NumberManager.getTimeSince(target.getFirstPlayed()))
                     .send(sender);
-            new MessageManager("player-information-item")
+            new MessageManager("information.player.info-item")
                     .replace("%key%", "Last Joined")
                     .replace("%value%", target.isOnline() ? "Online" : NumberManager.getTimeSince(target.getLastPlayed()))
                     .send(sender);
-            new MessageManager("player-information-item")
+            new MessageManager("information.player.info-item")
                     .replace("%key%", "UUID")
                     .replace("%value%", target.getUniqueId().toString())
                     .send(sender);
             return true;
         }
 
-        new MessageManager("invalid-arguments").send(sender);
+        new MessageManager("errors.invalid-arguments").send(sender);
         return true;
     }
 }

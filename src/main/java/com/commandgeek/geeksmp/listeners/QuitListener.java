@@ -28,17 +28,17 @@ public class QuitListener implements Listener {
         MorphManager.unmorph(player,false);
 
         if (TeamManager.isUndead(player)) {
-            event.setQuitMessage(new MessageManager("undead-leave").replace("%player%", player.getName()).string());
+            event.setQuitMessage(new MessageManager("join-leave.undead.leave").replace("%player%", player.getName()).string());
             return;
         }
-        event.setQuitMessage(new MessageManager("leave").replace("%player%", player.getName()).string());
-        new MessageManager("smp-chat-leave")
+        event.setQuitMessage(new MessageManager("join-leave.leave").replace("%player%", player.getName()).string());
+        new MessageManager("smp-chat.leave")
                 .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
     }
 
     @EventHandler
     public void onKick(PlayerKickEvent event) {
-        event.setReason(new MessageManager("logout-kicked").replace("%reason%", event.getReason()).string());
+        event.setReason(new MessageManager("join-leave.kicked").replace("%reason%", event.getReason()).string());
     }
 }

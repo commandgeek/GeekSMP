@@ -181,7 +181,7 @@ public class Main extends JavaPlugin {
             public void run() {
                 if (discordAPI != null) {
                     Setup.reload();
-                    new MessageManager("smp-chat-start").sendDiscord(DiscordManager.smpChatChannel);
+                    new MessageManager("smp-chat.start").sendDiscord(DiscordManager.smpChatChannel);
                     cancel();
                 }
             }
@@ -202,7 +202,7 @@ public class Main extends JavaPlugin {
 
         // Unregister Discord Bot
         if (discordAPI != null) {
-            new MessageManager("smp-chat-stop").sendDiscord(DiscordManager.smpChatChannel);
+            new MessageManager("smp-chat.stop").sendDiscord(DiscordManager.smpChatChannel);
             discordAPI = null;
         }
 

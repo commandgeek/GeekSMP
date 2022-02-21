@@ -13,13 +13,13 @@ public class CommandLockTool implements CommandExecutor {
 
         // Check if a player issued the command
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
 
         // Check if they have the permission node
         if (!player.hasPermission("geeksmp.command.locktool")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
@@ -28,15 +28,15 @@ public class CommandLockTool implements CommandExecutor {
             Player target = Bukkit.getPlayer(args[0]);
             if (target != null) {
                 target.getInventory().addItem(LockManager.getLockTool());
-                new MessageManager("get-lock-tool").replace("%player%", player.getName()).send(target);
-                new MessageManager("give-lock-tool").replace("%target%", args[0]).send(sender);
+                new MessageManager("trusting.lock-tool.get").replace("%player%", player.getName()).send(target);
+                new MessageManager("trusting.lock-tool.give").replace("%target%", args[0]).send(sender);
                 return true;
             }
         }
 
         // Give lock tool to sender
         player.getInventory().addItem(LockManager.getLockTool());
-        new MessageManager("get-lock-tool").replace("%player%", player.getName()).send(sender);
+        new MessageManager("trusting.lock-tool.get").replace("%player%", player.getName()).send(sender);
         return true;
     }
 }

@@ -46,7 +46,7 @@ public class LinkManager {
         if (player != null) {
             Setup.updatePlayerRole(player);
             if (user != null) {
-                new MessageManager("link-success")
+                new MessageManager("linking.link.success")
                         .replace("%user%", user.getDiscriminatedName())
                         .send(player);
             }

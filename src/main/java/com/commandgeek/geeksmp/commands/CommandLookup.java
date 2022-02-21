@@ -16,14 +16,14 @@ public class CommandLookup implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.lookup")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         if (args.length == 1) {
             OfflinePlayer target = EntityManager.getOfflinePlayer(args[0]);
             if (target == null) {
-                new MessageManager("invalid-player")
+                new MessageManager("errors.invalid-player")
                         .replace("%player%", args[0])
                         .send(sender);
                 return true;
@@ -31,11 +31,11 @@ public class CommandLookup implements CommandExecutor {
 
             User user = DiscordManager.getUserFromUuid(target.getUniqueId());
             if (user == null) {
-                new MessageManager("lookup-missing")
+                new MessageManager("lookup.missing")
                         .replace("%player%", target.getName())
                         .send(sender);
                 } else {
-                new MessageManager("lookup-player")
+                new MessageManager("lookup.player")
                         .replace("%player%", target.getName())
                         .replace("%user%", user.getDiscriminatedName())
                         .send(sender);
@@ -43,7 +43,7 @@ public class CommandLookup implements CommandExecutor {
             return true;
         }
 
-        new MessageManager("invalid-arguments").send(sender);
+        new MessageManager("errors.invalid-arguments").send(sender);
         return true;
     }
 }

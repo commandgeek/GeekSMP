@@ -20,7 +20,7 @@ public class CommandDebug implements TabExecutor {
         if (sender instanceof Player player) {
 
             if (!player.hasPermission("geeksmp.command.debug")) {
-                new MessageManager("no-permission").send(player);
+                new MessageManager("errors.no-permission").send(player);
                 return true;
             }
 

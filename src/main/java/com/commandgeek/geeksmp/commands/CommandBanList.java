@@ -19,21 +19,21 @@ public class CommandBanList implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.banlist") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
-        new MessageManager("banlist-header").send(sender);
+        new MessageManager("punishing.banning.list.header").send(sender);
         Set<String> keys = Main.banned.getKeys(false);
         boolean empty = true;
         for (String key : keys) {
             OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(key));
             if (op.hasPlayedBefore()) {
-                new MessageManager("banlist-list").replace("%player%", op.getName()).send(sender);
+                new MessageManager("punishing.banning.list.list").replace("%player%", op.getName()).send(sender);
                 empty = false;
             }
         }
         if (empty)
-            new MessageManager("banlist-empty").send(sender);
+            new MessageManager("punishing.banning.list.empty").send(sender);
         return true;
     }
 }

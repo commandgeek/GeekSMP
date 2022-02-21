@@ -11,19 +11,19 @@ import org.bukkit.entity.Player;
 public class CommandCode implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
         if (!player.hasPermission("geeksmp.command.code")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         String code = LinkManager.generateCode(player.getUniqueId());
         if (LinkManager.getDiscordID(player.getUniqueId()) == null) {
-            new MessageManager("link-generate-code").replace("%code%", code).send(player);
+            new MessageManager("linking.link.code.generate").replace("%code%", code).send(player);
         } else {
-            new MessageManager("link-generate-code-already-linked").replace("%code%", code).send(player);
+            new MessageManager("linking.link.code.already-linked").replace("%code%", code).send(player);
         }
         return true;
     }

@@ -24,9 +24,9 @@ public class ChatListener implements Listener {
         long remainder = MuteManager.checkMuted(String.valueOf(player.getUniqueId()));
         if (remainder != 0) {
             if (remainder > 0) {
-                new MessageManager("chat-muted-temporary").replace("%duration%", NumberManager.getTimeFrom(remainder)).send(player);
+                new MessageManager("punishing.muting.mute.chat.temporary").replace("%duration%", NumberManager.getTimeFrom(remainder)).send(player);
             } else {
-                new MessageManager("chat-muted-permanent").send(player);
+                new MessageManager("punishing.muting.mute.chat.permanent").send(player);
             }
             event.setCancelled(true);
             return;
@@ -43,7 +43,7 @@ public class ChatListener implements Listener {
             ChatManager.setChatMessageFromFormat(event, name);
         } else {
             event.setCancelled(true);
-            new MessageManager("chat-forbidden").send(player);
+            new MessageManager("chat.forbidden").send(player);
         }
     }
 }

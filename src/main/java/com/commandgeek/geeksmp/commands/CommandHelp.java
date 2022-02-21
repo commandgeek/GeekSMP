@@ -14,7 +14,7 @@ public class CommandHelp implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.help")) {
-            new MessageManager("no-permission").send(sender);
+            new MessageManager("errors.no-permission").send(sender);
             return true;
         }
 
@@ -23,10 +23,10 @@ public class CommandHelp implements CommandExecutor {
             for (String key : section.getKeys(false)) {
                 if (Main.info.isList("help." + key)) {
                     String header = WordUtils.capitalizeFully(key.replace("-", " "));
-                    new MessageManager("info-header").replace("%header%", header).send(sender);
+                    new MessageManager("information.info.header").replace("%header%", header).send(sender);
                     for (String item : Main.info.getStringList("help." + key)) {
                         item = item.replaceAll("\\*\\*(\\w+)\\*\\*", "$1");
-                        new MessageManager("info-item").replace("%item%", item).send(sender);  
+                        new MessageManager("information.info.item").replace("%item%", item).send(sender);
                     }
                 }
             }

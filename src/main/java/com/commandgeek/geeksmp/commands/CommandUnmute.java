@@ -20,7 +20,7 @@ import java.util.UUID;
 public class CommandUnmute implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.unlink") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
@@ -28,7 +28,7 @@ public class CommandUnmute implements TabExecutor {
             MuteManager.unmute(args[0], sender);
             return true;
         }
-        new MessageManager("invalid-arguments").send(sender);
+        new MessageManager("errors.invalid-arguments").send(sender);
         return true;
     }
 

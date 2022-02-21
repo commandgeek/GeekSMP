@@ -127,7 +127,7 @@ public class LockManager {
         // Check If Block Is Lockable
         if (!isLockable(block)) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
-            new MessageManager("lock-invalid").send(player);
+            new MessageManager("locking.lock.invalid").send(player);
             return;
         }
 
@@ -136,7 +136,7 @@ public class LockManager {
         if (!(placer == null && (Main.config.getBoolean("settings.allow-unplaced-locking") || EntityManager.hasScoreboardTag(player, "bypass-placed-locking")))) {
             if (placer == null || !placer.equals(player.getUniqueId().toString())) {
                 player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
-                new MessageManager("lock-fail")
+                new MessageManager("locking.lock.fail")
                         .replace("%block%", getName(block))
                         .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(getPlacer(block)))).getName())
                         .send(player);
@@ -149,14 +149,14 @@ public class LockManager {
         // Check If Block Is Already Locked
         if (isLocked(block)) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
-            new MessageManager("lock-again").send(player);
+            new MessageManager("locking.lock.again").send(player);
             return;
         }
 
         if (!attemptLockDoubleChest(block, player)) {
             lock(block, player);
         }
-        new MessageManager("lock-success")
+        new MessageManager("locking.lock.success")
                 .replace("%block%", getName(block))
                 .send(player);
     }
@@ -212,7 +212,7 @@ public class LockManager {
         // Check If Block Is Locked
         if (!isLocked(block)) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
-            new MessageManager("unlock-invalid").send(player);
+            new MessageManager("locking.unlock.invalid").send(player);
             return;
         }
 
@@ -220,7 +220,7 @@ public class LockManager {
         String placer = getPlacer(block);
         if ((placer == null || !placer.equals(player.getUniqueId().toString())) && !TeamManager.isStaff(player) && !player.isOp()) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
-            new MessageManager("unlock-fail")
+            new MessageManager("locking.unlock.fail")
                     .replace("%block%", getName(block))
                     .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(getPlacer(block)))).getName())
                     .send(player);
@@ -230,7 +230,7 @@ public class LockManager {
         if (!attemptUnlockDoubleChest(block, player)) {
             unlock(block, player);
         }
-        new MessageManager("unlock-success")
+        new MessageManager("locking.unlock.success")
                 .replace("%block%", getName(block))
                 .send(player);
     }
@@ -267,11 +267,11 @@ public class LockManager {
             trusted.add(op.getUniqueId().toString());
             Main.trusted.set(player.getUniqueId().toString(), trusted);
             ConfigManager.saveData("trusted.yml", Main.trusted);
-            new MessageManager("trust-success")
+            new MessageManager("trusting.trust.success")
                     .replace("%player%", op.getName())
                     .send(player);
         } else {
-            new MessageManager("trust-fail")
+            new MessageManager("trusting.trust.fail")
                     .replace("%player%", op.getName())
                     .send(player);
         }
@@ -283,11 +283,11 @@ public class LockManager {
             trusted.remove(op.getUniqueId().toString());
             Main.trusted.set(player.getUniqueId().toString(), trusted);
             ConfigManager.saveData("trusted.yml", Main.trusted);
-            new MessageManager("untrust-success")
+            new MessageManager("trusting.untrust.success")
                     .replace("%player%", op.getName())
                     .send(player);
         } else {
-            new MessageManager("untrust-fail")
+            new MessageManager("trusting.untrust.fail")
                     .replace("%player%", op.getName())
                     .send(player);
         }

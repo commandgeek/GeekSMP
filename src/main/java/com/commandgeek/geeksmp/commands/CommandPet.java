@@ -19,11 +19,11 @@ public class CommandPet implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
         if (!player.hasPermission("geeksmp.command.pet") && (TeamManager.isUndead(player) || TeamManager.isRevived(player))) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
@@ -36,12 +36,12 @@ public class CommandPet implements TabExecutor {
                         pets.add(Bukkit.getOfflinePlayer(UUID.fromString(key)));
                     }
                 }
-                new MessageManager("pet-list-header").send(player);
+                new MessageManager("pets.pet.list.header").send(player);
                 if (pets.size() == 0) {
-                    new MessageManager("pet-list-empty").send(player);
+                    new MessageManager("pets.pet.list.empty").send(player);
                 } else {
                     for (OfflinePlayer pet : pets) {
-                        new MessageManager("pet-list-item")
+                        new MessageManager("pets.pet.list.item")
                                 .replace("%player%", pet.getName())
                                 .send(player);
                     }
@@ -56,7 +56,7 @@ public class CommandPet implements TabExecutor {
                     }
                 }
                 ConfigManager.saveData("pets.yml", Main.pets);
-                new MessageManager("pet-clear").send(player);
+                new MessageManager("pets.pet.clear").send(player);
                 return true;
             }
         }
@@ -65,7 +65,7 @@ public class CommandPet implements TabExecutor {
             if (args[0].equalsIgnoreCase("add")) {
                 OfflinePlayer target = EntityManager.getOfflinePlayer(args[1]);
                 if (target == null) {
-                    new MessageManager("invalid-player")
+                    new MessageManager("errors.invalid-player")
                             .replace("%player%", args[1])
                             .send(player);
                     return true;
@@ -76,7 +76,7 @@ public class CommandPet implements TabExecutor {
             if (args[0].equalsIgnoreCase("remove")) {
                 OfflinePlayer target = EntityManager.getOfflinePlayer(args[1]);
                 if (target == null) {
-                    new MessageManager("invalid-player")
+                    new MessageManager("errors.invalid-player")
                             .replace("%player%", args[1])
                             .send(player);
                     return true;
@@ -86,7 +86,7 @@ public class CommandPet implements TabExecutor {
             }
         }
 
-        new MessageManager("invalid-arguments").send(player);
+        new MessageManager("errors.invalid-arguments").send(player);
         return true;
     }
 

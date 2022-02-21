@@ -16,21 +16,21 @@ public class CommandTrustList implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
         if (!player.hasPermission("geeksmp.command.trustlist")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         List<String> trusted = Main.trusted.getStringList(player.getUniqueId().toString());
-        new MessageManager("trust-list-header").send(player);
+        new MessageManager("trusting.trust.list.header").send(player);
         if (trusted.size() == 0) {
-            new MessageManager("trust-list-empty").send(player);
+            new MessageManager("trusting.trust.list.empty").send(player);
         } else {
             for (String uuid : trusted) {
-                new MessageManager("trust-list-item")
+                new MessageManager("trusting.trust.list.item")
                         .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName())
                         .send(player);
             }

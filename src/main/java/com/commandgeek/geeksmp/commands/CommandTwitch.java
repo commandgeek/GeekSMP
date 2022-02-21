@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 public class CommandTwitch implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.twitch")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
-        new MessageManager("link-twitch").send(sender);
+        new MessageManager("links.twitch").send(sender);
         return true;
     }
 }

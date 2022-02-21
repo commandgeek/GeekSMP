@@ -16,7 +16,7 @@ public class BanManager {
     public static void ban(String name, String duration, String reason, CommandSender sender) {
         OfflinePlayer op = EntityManager.getOfflinePlayer(name);
         if (op == null) {
-            new MessageManager("invalid-player").replace("%player%", name).send(sender);
+            new MessageManager("errors.invalid-player").replace("%player%", name).send(sender);
             return;
         }
         if (op.isOnline()) {
@@ -31,7 +31,7 @@ public class BanManager {
         if (duration == null) {
             Main.banned.set(id + ".until", -1);
             ConfigManager.saveData("banned.yml", Main.banned);
-            new MessageManager("ban-permanent").replace("%player%", name).send(sender);
+            new MessageManager("punishing.banning.ban.permanent").replace("%player%", name).send(sender);
             return;
         }
         long dur = Integer.parseInt(duration.replaceAll("(^[0-9]+)(.*)", "$1"));
@@ -39,44 +39,44 @@ public class BanManager {
             Main.banned.set(id + ".until", dur * 60 * 1000 + time);
             ConfigManager.saveData("banned.yml", Main.banned);
             if (dur == 1)
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " minute").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " minute").send(sender);
             else
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " minutes").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " minutes").send(sender);
             return;
         }
         if (duration.endsWith("h")) {
             Main.banned.set(id + ".until", dur * 60 * 60 * 1000 + time);
             ConfigManager.saveData("banned.yml", Main.banned);
             if (dur == 1)
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " hour").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " hour").send(sender);
             else
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " hours").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " hours").send(sender);
             return;
         }
         if (duration.endsWith("d")) {
             Main.banned.set(id + ".until", dur * 60 * 60 * 24 * 1000 + time);
             ConfigManager.saveData("banned.yml", Main.banned);
             if (dur == 1)
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " day").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " day").send(sender);
             else
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " days").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " days").send(sender);
             return;
         }
         if (duration.endsWith("w")) {
             Main.banned.set(id + ".until", dur * 60 * 60 * 24 * 7 * 1000 + time);
             ConfigManager.saveData("banned.yml", Main.banned);
             if (dur == 1)
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " week").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " week").send(sender);
             else
-                new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " weeks").send(sender);
+                new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " weeks").send(sender);
             return;
         }
         Main.banned.set(id + ".until", dur * 1000 + time);
         ConfigManager.saveData("banned.yml", Main.banned);
         if (dur == 1)
-            new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " second").send(sender);
+            new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " second").send(sender);
         else
-            new MessageManager("ban-temporary").replace("%player%", name).replace("%duration%", dur + " seconds").send(sender);
+            new MessageManager("punishing.banning.ban.temporary").replace("%player%", name).replace("%duration%", dur + " seconds").send(sender);
     }
 
     public static boolean isBanned(UUID uuid) {
@@ -111,11 +111,11 @@ public class BanManager {
             if (Main.banned.contains(String.valueOf(id))) {
                 Main.banned.set(String.valueOf(id), null);
                 ConfigManager.saveData("banned.yml", Main.banned);
-                new MessageManager("unban-success").replace("%player%", name).send(sender);
+                new MessageManager("punishing.banning.unban.success").replace("%player%", name).send(sender);
                 return;
             }
         }
-        new MessageManager("unban-fail").replace("%player%", name).send(sender);
+        new MessageManager("punishing.banning.unban.fail").replace("%player%", name).send(sender);
     }
 
     public static String getReason(UUID uuid) {

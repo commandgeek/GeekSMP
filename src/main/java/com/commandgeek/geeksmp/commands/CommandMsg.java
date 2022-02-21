@@ -11,11 +11,11 @@ public class CommandMsg implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
         if (!player.hasPermission("geeksmp.command.msg") || TeamManager.isUndead(player) || MuteManager.isMuted(player.getUniqueId())) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
@@ -24,7 +24,7 @@ public class CommandMsg implements CommandExecutor {
             return true;
         }
 
-        new MessageManager("invalid-arguments").send(player);
+        new MessageManager("errors.invalid-arguments").send(player);
         return true;
     }
 }

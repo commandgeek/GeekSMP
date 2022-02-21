@@ -14,12 +14,12 @@ public class CommandAfk implements CommandExecutor {
     public final HashMap<String, Long> cooldowns = new HashMap<>();
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            new MessageManager("console-forbidden").send(sender);
+            new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
 
         if (!player.hasPermission("geeksmp.command.afk")) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 

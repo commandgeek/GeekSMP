@@ -19,14 +19,14 @@ public class CommandReason implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.reason") && !TeamManager.isStaff(player)) {
-            new MessageManager("no-permission").send(player);
+            new MessageManager("errors.no-permission").send(player);
             return true;
         }
 
         if (args.length == 1) {
             OfflinePlayer target = EntityManager.getOfflinePlayer(args[0]);
             if (target == null) {
-                new MessageManager("invalid-player")
+                new MessageManager("errors.invalid-player")
                         .replace("%player%", args[0])
                         .send(sender);
                 return true;
@@ -35,18 +35,18 @@ public class CommandReason implements TabExecutor {
             long banTime = BanManager.checkBanned(target.getUniqueId().toString());
 
             if (!MuteManager.isMuted(target.getUniqueId()) && !BanManager.isBanned(target.getUniqueId())) {
-                new MessageManager("reason-fail")
+                new MessageManager("punishing.reason.fail")
                         .replace("%player%", target.getName())
                         .send(sender);
             } else {
                 if (MuteManager.isMuted(target.getUniqueId())) {
                     if (muteTime == -1) {
-                        new MessageManager("reason-mute-permanent")
+                        new MessageManager("punishing.reason.mute.permanent")
                                 .replace("%player%", target.getName())
                                 .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
                                 .send(sender);
                     } else {
-                        new MessageManager("reason-mute-temporary")
+                        new MessageManager("punishing.reason.mute.temporary")
                                 .replace("%player%", target.getName())
                                 .replace("%duration%", NumberManager.getTimeFrom(muteTime))
                                 .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
@@ -55,12 +55,12 @@ public class CommandReason implements TabExecutor {
                 }
                 if (BanManager.isBanned(target.getUniqueId())) {
                     if (banTime == -1) {
-                        new MessageManager("reason-ban-permanent")
+                        new MessageManager("punishing.reason.ban.permanent")
                                 .replace("%player%", target.getName())
                                 .replace("%reason%", BanManager.getReason(target.getUniqueId()))
                                 .send(sender);
                     } else {
-                        new MessageManager("reason-ban-temporary")
+                        new MessageManager("punishing.reason.ban.temporary")
                                 .replace("%player%", target.getName())
                                 .replace("%duration%", NumberManager.getTimeFrom(banTime))
                                 .replace("%reason%", BanManager.getReason(target.getUniqueId()))
@@ -71,7 +71,7 @@ public class CommandReason implements TabExecutor {
             return true;
         }
 
-        new MessageManager("invalid-arguments").send(sender);
+        new MessageManager("errors.invalid-arguments").send(sender);
         return true;
     }
 

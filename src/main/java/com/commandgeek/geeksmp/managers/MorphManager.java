@@ -54,7 +54,7 @@ public class MorphManager {
         EntityManager.hidePlayerForAll(player);
 
         if (!isMorphedPersistent(player)) {
-            new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
+            new MessageManager("morphing.morph").replace("%morph%", type.toString().toLowerCase()).send(player);
             player.setFoodLevel(20);
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
@@ -270,14 +270,14 @@ public class MorphManager {
         }
         String message;
         if (tracked == null) {
-            message = new MessageManager("tracking-empty").string();
+            message = new MessageManager("track.empty").string();
         } else if (player.getWorld() == tracked.getWorld()) {
-            message = new MessageManager("tracking-player")
+            message = new MessageManager("track.player")
                     .replace("%player%", tracked.getName())
                     .replace("%distance%", String.valueOf(Math.round(player.getLocation().distance(tracked.getLocation()))))
                     .string();
         } else {
-            message = new MessageManager("tracking-player")
+            message = new MessageManager("track.player")
                     .replace("%player%", tracked.getName())
                     .replace("%distance%m", "Different World")
                     .replace("%distance%", "Different World")
@@ -294,11 +294,11 @@ public class MorphManager {
             owners.add(player.getUniqueId().toString());
             Main.pets.set(op.getUniqueId().toString(), owners);
             ConfigManager.saveData("pets.yml", Main.pets);
-            new MessageManager("pet-success")
+            new MessageManager("pets.pet.success")
                     .replace("%player%", op.getName())
                     .send(player);
         } else {
-            new MessageManager("pet-fail")
+            new MessageManager("pets.pet.fail")
                     .replace("%player%", op.getName())
                     .send(player);
         }
@@ -310,11 +310,11 @@ public class MorphManager {
             owners.remove(player.getUniqueId().toString());
             Main.pets.set(op.getUniqueId().toString(), owners);
             ConfigManager.saveData("pets.yml", Main.pets);
-            new MessageManager("unpet-success")
+            new MessageManager("pets.unpet.success")
                     .replace("%player%", op.getName())
                     .send(player);
         } else {
-            new MessageManager("unpet-fail")
+            new MessageManager("pets.unpet.fail")
                     .replace("%player%", op.getName())
                     .send(player);
         }

@@ -15,7 +15,7 @@ public class CommandRules implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.rules")) {
-            new MessageManager("no-permission").send(sender);
+            new MessageManager("errors.no-permission").send(sender);
             return true;
         }
 
@@ -24,12 +24,12 @@ public class CommandRules implements CommandExecutor {
             for (String key : section.getKeys(false)) {
                 if (Main.info.isList("rules." + key)) {
                     String header = WordUtils.capitalizeFully(key.replace("-", " "));
-                    new MessageManager("info-header").replace("%header%", header).send(sender);
+                    new MessageManager("information.info.header").replace("%header%", header).send(sender);
                     for (String item : Main.info.getStringList("rules." + key)) {
                         item = item.replaceAll("\\*", "");
                         item = item.replaceAll("__", "");
                         item = item.replaceAll("~~", "");
-                        new MessageManager("info-item").replace("%item%", item).send(sender);
+                        new MessageManager("information.info.item").replace("%item%", item).send(sender);
                     }
                 }
             }

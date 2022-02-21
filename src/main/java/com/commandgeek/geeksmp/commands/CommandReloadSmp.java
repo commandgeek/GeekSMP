@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 public class CommandReloadSmp implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player && !sender.hasPermission("geeksmp.command.reloadsmp")) {
-            new MessageManager("no-permission").send(sender);
+            new MessageManager("errors.no-permission").send(sender);
             return true;
         }
 
         Setup.reload();
-        new MessageManager("reload").send(sender);
+        new MessageManager("plugin.reload").send(sender);
         return false;
     }
 }

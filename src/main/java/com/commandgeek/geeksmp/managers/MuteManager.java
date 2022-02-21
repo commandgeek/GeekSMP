@@ -15,7 +15,7 @@ public class MuteManager {
     public static void mute(String name, String duration, String reason, CommandSender sender) {
         OfflinePlayer op = EntityManager.getOfflinePlayer(name);
         if (op == null) {
-            new MessageManager("invalid-player").replace("%player%", name).send(sender);
+            new MessageManager("errors.invalid-player").replace("%player%", name).send(sender);
             return;
         }
 
@@ -27,7 +27,7 @@ public class MuteManager {
             Main.muted.set(id + ".until", -1);
             ConfigManager.saveData("muted.yml", Main.muted);
             Setup.updateMemberRoles(op.getUniqueId());
-            new MessageManager("mute-permanent").replace("%player%", name).send(sender);
+            new MessageManager("punishing.muting.mute.permanent").replace("%player%", name).send(sender);
             return;
         }
         long dur = Integer.parseInt(duration.replaceAll("(^[0-9]+)(.*)", "$1"));
@@ -36,9 +36,9 @@ public class MuteManager {
             ConfigManager.saveData("muted.yml", Main.muted);
             Setup.updateMemberRoles(op.getUniqueId());
             if (dur == 1)
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " minute").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " minute").send(sender);
             else
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " minutes").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " minutes").send(sender);
             return;
         }
         if (duration.endsWith("h")) {
@@ -46,9 +46,9 @@ public class MuteManager {
             ConfigManager.saveData("muted.yml", Main.muted);
             Setup.updateMemberRoles(op.getUniqueId());
             if (dur == 1)
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " hour").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " hour").send(sender);
             else
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " hours").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " hours").send(sender);
             return;
         }
         if (duration.endsWith("d")) {
@@ -56,9 +56,9 @@ public class MuteManager {
             ConfigManager.saveData("muted.yml", Main.muted);
             Setup.updateMemberRoles(op.getUniqueId());
             if (dur == 1)
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " day").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " day").send(sender);
             else
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " days").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " days").send(sender);
             return;
         }
         if (duration.endsWith("w")) {
@@ -66,18 +66,18 @@ public class MuteManager {
             ConfigManager.saveData("muted.yml", Main.muted);
             Setup.updateMemberRoles(op.getUniqueId());
             if (dur == 1)
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " week").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " week").send(sender);
             else
-                new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " weeks").send(sender);
+                new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " weeks").send(sender);
             return;
         }
         Main.muted.set(id + ".until", dur * 1000 + time);
         ConfigManager.saveData("muted.yml", Main.muted);
         Setup.updateMemberRoles(op.getUniqueId());
         if (dur == 1)
-            new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " second").send(sender);
+            new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " second").send(sender);
         else
-            new MessageManager("mute-temporary").replace("%player%", name).replace("%duration%", dur + " seconds").send(sender);
+            new MessageManager("punishing.muting.mute.temporary").replace("%player%", name).replace("%duration%", dur + " seconds").send(sender);
     }
 
     public static boolean isMuted(UUID uuid) {
@@ -115,11 +115,11 @@ public class MuteManager {
                 Main.muted.set(String.valueOf(id), null);
                 ConfigManager.saveData("muted.yml", Main.muted);
                 Setup.updateMemberRoles(op.getUniqueId());
-                new MessageManager("unmute-success").replace("%player%", name).send(sender);
+                new MessageManager("punishing.muting.unmute.success").replace("%player%", name).send(sender);
                 return;
             }
         }
-        new MessageManager("unmute-fail").replace("%player%", name).send(sender);
+        new MessageManager("punishing.muting.unmute.fail").replace("%player%", name).send(sender);
     }
 
     public static String getReason(UUID uuid) {

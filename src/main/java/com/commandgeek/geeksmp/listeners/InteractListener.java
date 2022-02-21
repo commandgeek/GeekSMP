@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
@@ -51,11 +52,11 @@ public class InteractListener implements Listener {
                 String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
                 if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
                     event.setCancelled(true);
-                    new MessageManager("block-locked")
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
+                    new MessageManager("locking.block-locked")
                             .replace("%block%", LockManager.getName(event.getClickedBlock()))
                             .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
                             .send(player);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
                 }
             }
         }
@@ -114,7 +115,7 @@ public class InteractListener implements Listener {
                 if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
                     event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
-                    new MessageManager("block-locked")
+                    new MessageManager("locking.block-locked")
                             .replace("%block%", LockManager.getName(event.getBlock()))
                             .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
                             .send(player);
