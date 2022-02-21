@@ -2,6 +2,7 @@ package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
 
+import com.commandgeek.geeksmp.Setup;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -53,6 +54,7 @@ public class MorphManager {
         universalMorphTask(player, type);
         EntityManager.hideEntity(entity, player);
         EntityManager.hidePlayerForAll(player);
+        Setup.updatePlayerRole(player);
 
         if (!isMorphedPersistent(player)) {
             new MessageManager("morph").replace("%morph%", type.toString().toLowerCase()).send(player);
@@ -94,6 +96,7 @@ public class MorphManager {
         trackedPlayers.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.removePotionEffect(PotionEffectType.SPEED);
+        Setup.updatePlayerRole(player);
 
         // Data file
         Main.morphs.set(player.getUniqueId().toString(), null);
