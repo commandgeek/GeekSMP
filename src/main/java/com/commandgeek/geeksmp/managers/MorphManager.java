@@ -280,7 +280,9 @@ public class MorphManager {
                     .replace("%distance%", "Different World")
                     .string();
         }
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+        if (!BypassManager.check(player)) {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+        }
     }
 
 /*    public static void pet(OfflinePlayer op, Player player) {
