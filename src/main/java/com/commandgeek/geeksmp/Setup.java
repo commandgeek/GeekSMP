@@ -16,9 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 public class Setup {
@@ -232,6 +230,25 @@ public class Setup {
                 updateTabMetaForAll();
             }
         }.runTaskTimer(Main.instance, 0, 20); // 20 ticks (1 second)
+    }
+
+    public static List<Material> getList(String type) {
+        List<Material> blocks = new ArrayList<>();
+        if (Objects.equals(type, "pressure_plate")) {
+            blocks.add(Material.ACACIA_PRESSURE_PLATE);
+            blocks.add(Material.BIRCH_PRESSURE_PLATE);
+            blocks.add(Material.CRIMSON_PRESSURE_PLATE);
+            blocks.add(Material.JUNGLE_PRESSURE_PLATE);
+            blocks.add(Material.OAK_PRESSURE_PLATE);
+            blocks.add(Material.SPRUCE_PRESSURE_PLATE);
+            blocks.add(Material.STONE_PRESSURE_PLATE);
+            blocks.add(Material.WARPED_PRESSURE_PLATE);
+            blocks.add(Material.DARK_OAK_PRESSURE_PLATE);
+            blocks.add(Material.HEAVY_WEIGHTED_PRESSURE_PLATE);
+            blocks.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
+            blocks.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
+        }
+        return blocks;
     }
 
     // Update Discord channel topic, teams, and roles periodically
