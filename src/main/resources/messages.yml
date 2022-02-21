@@ -196,7 +196,7 @@ unlink-other-success: "&5Successfully unlinked &d%player%&5."
 smp-chat-join: ":arrow_right: **%player%**"
 smp-chat-leave: ":arrow_left: **%player%**"
 smp-chat-death: ":skull: **%message%**"
-smp-chat-message: "**%prefix%`%player%`** » %message%"
+smp-chat-message: "**%prefix%%player%** » %message%"
 smp-chat-start: ":white_check_mark: **Server started**"
 smp-chat-stop: ":x: **Server stopped**"
 

@@ -5,15 +5,14 @@ import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,15 +24,13 @@ import java.util.UUID;
 public class InteractListener implements Listener {
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Material material = event.getMaterial();
 
         // Animate Morphed Entity if Exists
-        Entity entity = MorphManager.getEntity(player);
-        if (entity != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && material == Material.BOW)) {
-                new PacketManager().animateEntity(entity, 0);
+        if (MorphManager.getEntity(player) != null) {
+            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getMaterial() == Material.BOW)) {
+                new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
             }
         }
 
@@ -48,22 +45,27 @@ public class InteractListener implements Listener {
             }
         }
 
-        // Check if Locked
-        if (((!TeamManager.isStaff(player) && !player.isOp()) || !player.isSneaking()) && !BypassManager.check(player)) {
+        // Check if locked
+        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
             if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
                 String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
-                if (owner != null) {
-                    OfflinePlayer op = Bukkit.getOfflinePlayer(UUID.fromString(owner));
-                    if (!LockManager.isTrustedBy(player, op)) {
-                        event.setCancelled(true);
-                        new MessageManager("block-locked")
-                                .replace("%block%", LockManager.getName(event.getClickedBlock()))
-                                .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
-                                .send(player);
-                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
-                    }
+                if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
+                    event.setCancelled(true);
+                    new MessageManager("block-locked")
+                            .replace("%block%", LockManager.getName(event.getClickedBlock()))
+                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
+                            .send(player);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onEntityInteract(EntityInteractEvent event) {
+        // Cancel if entity interacts with locked blocked
+        if (LockManager.isLocked(event.getBlock()) && Main.locked.getString(LockManager.getId(event.getBlock()) + ".locked") != null) {
+            event.setCancelled(true);
         }
     }
 
@@ -82,18 +84,18 @@ public class InteractListener implements Listener {
             return;
         }
 
-        // Check Undead Not Near Owner
-/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-            event.setCancelled(true);
-            return;
-        }
-*/
         // Check if Locked Double Chest
         new BukkitRunnable() {
             public void run() {
                 LockManager.checkLockDoubleChest(event.getBlock(), player);
             }
         }.runTaskLater(Main.instance, 1);
+
+        // Check Undead Not Near Owner
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+            event.setCancelled(true);
+            return;
+        }*/
     }
 
     @EventHandler
@@ -106,19 +108,18 @@ public class InteractListener implements Listener {
             return;
         }
 
-        // Check Undead Not Near Owner
-/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-            event.setCancelled(true);
-            return;
-        }
-*/
         // Check Locked Block
-        if (LockManager.isLocked(event.getBlock())) {
-            if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
-                event.setCancelled(true);
-                new MessageManager("block-locked").send(player);
-                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
-                return;
+        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
+            if (LockManager.isLocked(event.getBlock())) {
+                if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
+                    event.setCancelled(true);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
+                    new MessageManager("block-locked")
+                            .replace("%block%", LockManager.getName(event.getBlock()))
+                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
+                            .send(player);
+                    return;
+                }
             }
         }
 
@@ -126,5 +127,11 @@ public class InteractListener implements Listener {
         if (LockManager.isPlaced(event.getBlock())) {
             LockManager.unplace(event.getBlock());
         }
+
+        // Check Undead Not Near Owner
+/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+            event.setCancelled(true);
+            return;
+        }*/
     }
 }
