@@ -4,6 +4,7 @@ import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.*;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,20 +26,38 @@ public class QuitListener implements Listener {
 
         Player player = event.getPlayer();
         new PacketManager().removePlayer(player);
-        MorphManager.unmorph(player,false);
+        MorphManager.unmorph(player, false);
 
         if (TeamManager.isUndead(player)) {
-            event.setQuitMessage(new MessageManager("join-leave.undead.leave").replace("%player%", player.getName()).string());
+            if (TeamManager.getPlayerTeam(player) != null) {
+                //noinspection ConstantConditions
+                event.setQuitMessage(new MessageManager("join-leave.undead.leave")
+                        .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                        .replace("%player%", player.getName())
+                        .string());
+            }
             return;
         }
-        event.setQuitMessage(new MessageManager("join-leave.leave").replace("%player%", player.getName()).string());
-        new MessageManager("smp-chat.leave")
-                .replace("%player%", player.getName(), true)
-                .sendDiscord(DiscordManager.smpChatChannel);
+
+        if (TeamManager.getPlayerTeam(player) != null) {
+            //noinspection ConstantConditions
+            event.setQuitMessage(new MessageManager("join-leave.leave")
+                    .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                    .replace("%player%", player.getName())
+                    .string());
+
+            //noinspection ConstantConditions
+            new MessageManager("smp-chat.leave")
+                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                    .replace("%player%", player.getName(), true)
+                    .sendDiscord(DiscordManager.smpChatChannel);
+        }
     }
 
     @EventHandler
     public void onKick(PlayerKickEvent event) {
-        event.setReason(new MessageManager("join-leave.kicked").replace("%reason%", event.getReason()).string());
+        event.setReason(new MessageManager("join-leave.kicked")
+                .replace("%reason%", event.getReason())
+                .string());
     }
 }

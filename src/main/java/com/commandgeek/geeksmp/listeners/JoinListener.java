@@ -45,7 +45,13 @@ public class JoinListener implements Listener {
 
                     Setup.join(player);
                     player.setGameMode(GameMode.ADVENTURE);
-                    event.setJoinMessage(new MessageManager("join-leave.undead.join").replace("%player%", player.getName()).string());
+                    if (TeamManager.getPlayerTeam(player) != null) {
+                        //noinspection ConstantConditions
+                        event.setJoinMessage(new MessageManager("join-leave.undead.join")
+                                .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                                .replace("%player%", player.getName())
+                                .string());
+                    }
                 }
             }
         }.runTaskLater(Main.instance, 5);
@@ -66,10 +72,20 @@ public class JoinListener implements Listener {
 
         StatsManager.add("joins");
         Setup.updatePlayerRole(player);
-        event.setJoinMessage(new MessageManager("join-leave.join").replace("%player%", player.getName()).string());
-        new MessageManager("smp-chat.join")
-                .replace("%player%", player.getName(), true)
-                .sendDiscord(DiscordManager.smpChatChannel);
+
+        if (TeamManager.getPlayerTeam(player) != null) {
+            //noinspection ConstantConditions
+            event.setJoinMessage(new MessageManager("join-leave.join")
+                    .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                    .replace("%player%", player.getName())
+                    .string());
+
+            //noinspection ConstantConditions
+            new MessageManager("smp-chat.join")
+                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                    .replace("%player%", player.getName(), true)
+                    .sendDiscord(DiscordManager.smpChatChannel);
+        }
     }
 
     @EventHandler
