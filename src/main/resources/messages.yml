@@ -2,6 +2,7 @@ plugin:
   reload: "&dGeekSMP &5successfully reloaded."
   purge-chat: "&c&l- CHAT CLEARED -"
   end-disabled: "&cThe end is currently disabled!"
+  time: "&5Time set to &d%time% &5in &d%world%&5."
 
 
 links:
@@ -27,18 +28,20 @@ errors:
   invalid-arguments: "&cInvalid arguments."
   invalid-player: "&cCannot find &4%player%&c."
   invalid-duration: "&cInvalid duration."
+  invalid-world: "&4%world% &cis not a valid world."
   disabled-command: "&cThis command is disabled."
   no-permission: "&cYou do not have permission to run this command."
   console-forbidden: "&cYou cannot run this command from console."
 
 
+# %prefix% - Player's team prefix
 # %player% - Player name
 join-leave:
-  join: "&a&l+ &a%player%"
-  leave: "&c&l- &c%player%"
+  join: "&a&l+ %prefix%%player%"
+  leave: "&c&l- %prefix%%player%"
   undead:
-    join: "&2&l+ &2%player%"
-    leave: "&4&l- &4%player%"
+    join: "&2&l+ %prefix%%player%"
+    leave: "&4&l- %prefix%%player%"
 
   # %reason% - Reason for punishment
   kicked: "&cYou were kicked!\n\n&8Reason:\n&7%reason%"
@@ -232,11 +235,12 @@ linking:
     other-success: "&5Successfully unlinked &d%player%&5."
 
 
+# %prefix% - Player's team prefix
 # %player% - Player name
 # %message% - Message content
 smp-chat:
-  join: ":arrow_right: **%player%**"
-  leave: ":arrow_left: **%player%**"
+  join: ":arrow_right: **%prefix%%player%**"
+  leave: ":arrow_left: **%prefix%%player%**"
   death: ":skull: **%message%**"
   message: "**%prefix%%player%** » %message%"
   start: ":white_check_mark: **Server started**"

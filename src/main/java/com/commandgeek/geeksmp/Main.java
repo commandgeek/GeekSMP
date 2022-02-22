@@ -109,6 +109,8 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("locktool", new CommandLockTool(), new TabPlayer());
         Setup.registerCommand("debug", new CommandDebug(), null);
         Setup.registerCommand("trash", new CommandTrash(), new TabEmpty());
+        Setup.registerCommand("day", new CommandDay(), new TabWorld());
+        Setup.registerCommand("night", new CommandNight(), new TabWorld());
 
         // Create files
         ConfigManager.createDefaultConfig("config.yml");
