@@ -88,7 +88,7 @@ trusting:
     success: "&5Trusting &d%player%&5."
     fail: "&c%player% is already trusted."
     list:
-      header: "&dTrusted Players"
+      header: "&d%player%'s Trusted Players"
       item: "&8 - &5%player%"
       empty: "&8 - &5&onone"
   untrust:
