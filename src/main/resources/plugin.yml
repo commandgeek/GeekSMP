@@ -159,7 +159,7 @@ permissions:
   geeksmp.command.changelog:
     default: op
   geeksmp.command.unlink:
-    default: op
+    default: true
   geeksmp.command.purgechat:
     default: op
   geeksmp.command.purgeteams:

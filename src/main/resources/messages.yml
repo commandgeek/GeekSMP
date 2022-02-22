@@ -24,8 +24,8 @@ afk:
 
 # %player% - Invalid player name
 errors:
-  invalid-arguments: "&cInvalid Arguments."
-  invalid-player: "&cCannot find %player%."
+  invalid-arguments: "&cInvalid arguments."
+  invalid-player: "&cCannot find &4%player%&c."
   invalid-duration: "&cInvalid duration."
   disabled-command: "&cThis command is disabled."
   no-permission: "&cYou do not have permission to run this command."
@@ -70,15 +70,15 @@ direct-message:
 # %block% - Targeted block name
 # %player% - Owner's username
 locking:
-  block-locked: "&c%block% &4is locked by &c%player%&4."
+  block-locked: "&4%block% &cis locked by &4%player%&c."
   lock:
     success: "&5Locked &d%block%&5."
-    fail: "&c%block% &4was placed by &c%player%&4."
+    fail: "&4%block% &cwas placed by &4%player%&c."
     invalid: "&cThis block cannot be locked."
     again: "&cYou already locked this block."
   unlock:
     success: "&5Unlocked &d%block%&5."
-    fail: "&c%block% &4was locked by &c%player%&4."
+    fail: "&4%block% &cwas locked by &4%player%&c."
     invalid: "&cThis block isn't locked."
 
 
@@ -95,8 +95,8 @@ trusting:
     success: "&5No longer trusting &d%player%&5."
     fail: "&c%player% isn't trusted."
   bypass:
-    bypass-enabled: "&5Lock bypass &denabled"
-    bypass-disabled: "&5Lock bypass &ddisabled"
+    enabled: "&5Lock bypass &denabled"
+    disabled: "&5Lock bypass &ddisabled"
 
 
   # %player% - Command sender
@@ -108,8 +108,8 @@ trusting:
 
 information:
   player:
-    info-header: "&d%player% information:"
-    info-item: "&8 - &5%key%: &a%value%"
+    header: "&d%player% information:"
+    item: "&8 - &5%key%: &a%value%"
     ip: "&5The IP of &d%player% &5is &d%ip%"
 
   # %header% - Info header/title
@@ -257,9 +257,10 @@ change-log:
     success: "&5Change-log successfully published!"
 
 
-# Only take effect if settings.pets is enabled in config.yml
+# Only takes effect if settings.pets is enabled in config.yml
 # %player% - Pet player name
 pets:
+  disabled: "&4Pets &care currently &4disabled&c."
   pet:
     success: "&5Made &d%player%&5 your pet."
     fail: "&c%player% is already your pet."

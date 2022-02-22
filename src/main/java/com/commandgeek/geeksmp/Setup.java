@@ -36,7 +36,7 @@ public class Setup {
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
         Main.bypass = ConfigManager.loadData("bypass.yml");
-        if (Main.config.getBoolean("settings.pets")) {
+        if (MorphManager.pets()) {
             Main.pets = ConfigManager.loadData("pets.yml");
         }
 
@@ -157,8 +157,12 @@ public class Setup {
     public static void updateMemberRoles(UUID uuid) {
         User user = DiscordManager.getUserFromUuid(uuid);
         if (user == null) return;
-        if (MuteManager.isMuted(uuid) || BanManager.isBanned(uuid)) user.addRole(DiscordManager.mutedRole);
-        if (!MuteManager.isMuted(uuid) && !BanManager.isBanned(uuid)) user.removeRole(DiscordManager.mutedRole);
+        if (MuteManager.isMuted(uuid) || BanManager.isBanned(uuid)) {
+            user.addRole(DiscordManager.mutedRole);
+        }
+        if (!MuteManager.isMuted(uuid) && !BanManager.isBanned(uuid)) {
+            user.removeRole(DiscordManager.mutedRole);
+        }
     }
 
     public static void updateAllRoles() {
@@ -169,6 +173,7 @@ public class Setup {
 
     public static void join(Player player) {
         updatePlayerRole(player);
+        updateTeams();
         player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 2);
 
         // Teleport to spawn if they haven't played before

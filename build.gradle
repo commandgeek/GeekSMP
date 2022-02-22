@@ -44,7 +44,7 @@ shadowJar {
     dependencies {
         exclude(dependency('com.mojang:authlib:1.5.21'))
         exclude(dependency('org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'))
-        exclude(dependency {it.moduleGroup == 'com.comphenix.protocol'})
+        exclude(dependency('com.comphenix.protocol:ProtocolLib:4.7.0'))
     }
 }
 

@@ -39,7 +39,7 @@ public class CommandDebug implements TabExecutor {
 
                 if (args[0].equals("skeletonbow")) {
                     player.getInventory().addItem(MorphManager.skeletonBow());
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dGave you &5Skeleton Bow &dto &5" + player.getName()));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dGave &5Skeleton Bow &dto &5" + player.getName()));
                     return true;
                 }
 

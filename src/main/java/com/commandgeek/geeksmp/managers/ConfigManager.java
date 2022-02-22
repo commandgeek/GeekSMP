@@ -15,6 +15,7 @@ public class ConfigManager {
 
     private static final File dataFolder = Main.instance.getDataFolder();
     private static final File dataStorage = new File(dataFolder, "data");
+    @SuppressWarnings("EmptyMethod")
     private static void ignore(boolean b) {}
 
     public static void createDefaultConfig(String name) {
