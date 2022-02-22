@@ -33,11 +33,10 @@ public class DiscordManager {
     public static Role linkedRole;
 
     public static Server getMainServer() {
-        assert Main.discordAPI != null;
         for (Server server : Main.discordAPI.getServers()) {
             return server;
         }
-        Bukkit.getLogger().warning("Failed to get Main Discord Server!");
+        Bukkit.getLogger().warning("Failed to get main Discord server!");
         return null;
     }
 

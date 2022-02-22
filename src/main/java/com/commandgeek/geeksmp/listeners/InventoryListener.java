@@ -41,19 +41,20 @@ public class InventoryListener implements Listener {
             if (MorphManager.isMorphedPlayer(player)) {
                 for (String key : Main.morphs.getKeys(false)) {
                     String value = Main.morphs.getString(key);
-                    assert value != null;
-                    UUID uuid = UUID.fromString(value);
-                    Entity entity = Bukkit.getEntity(uuid);
-                    if (entity instanceof Skeleton) {
-                        if (event.getCurrentItem() != null && event.getCurrentItem().getItemMeta() != null) {
-                            boolean skeletonBow = event.getCurrentItem().isSimilar(MorphManager.skeletonBow());
-                            boolean skeletonArrow = event.getCurrentItem().isSimilar(MorphManager.skeletonArrow());
-                            if ((skeletonBow && slot == 0) || (skeletonArrow && (slot == 27 || event.getClick() == ClickType.NUMBER_KEY))) {
+                    if (value != null) {
+                        UUID uuid = UUID.fromString(value);
+                        Entity entity = Bukkit.getEntity(uuid);
+                        if (entity instanceof Skeleton) {
+                            if (event.getCurrentItem() != null && event.getCurrentItem().getItemMeta() != null) {
+                                boolean skeletonBow = event.getCurrentItem().isSimilar(MorphManager.skeletonBow());
+                                boolean skeletonArrow = event.getCurrentItem().isSimilar(MorphManager.skeletonArrow());
+                                if ((skeletonBow && slot == 0) || (skeletonArrow && (slot == 27 || event.getClick() == ClickType.NUMBER_KEY))) {
+                                    event.setCancelled(true);
+                                }
+                            }
+                            if (event.getHotbarButton() == 0) {
                                 event.setCancelled(true);
                             }
-                        }
-                        if (event.getHotbarButton() == 0) {
-                            event.setCancelled(true);
                         }
                     }
                 }
@@ -67,15 +68,16 @@ public class InventoryListener implements Listener {
         if (MorphManager.isMorphedPlayer(player)) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
-                assert value != null;
-                UUID uuid = UUID.fromString(value);
-                Entity entity = Bukkit.getEntity(uuid);
-                if (entity instanceof Skeleton) {
-                    if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
-                        boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
-                        boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
-                        if (skeletonBow || skeletonArrow) {
-                            event.setCancelled(true);
+                if (value != null) {
+                    UUID uuid = UUID.fromString(value);
+                    Entity entity = Bukkit.getEntity(uuid);
+                    if (entity instanceof Skeleton) {
+                        if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
+                            boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
+                            boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
+                            if (skeletonBow || skeletonArrow) {
+                                event.setCancelled(true);
+                            }
                         }
                     }
                 }
@@ -92,11 +94,12 @@ public class InventoryListener implements Listener {
         if (TeamManager.isUndead(player) && MorphManager.isMorphedPlayer(player) && (item.isSimilar(MorphManager.skeletonBow()) || item.isSimilar(MorphManager.skeletonArrow()))) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
-                assert value != null;
-                UUID uuid = UUID.fromString(value);
-                Entity entity = Bukkit.getEntity(uuid);
-                if (entity instanceof Skeleton) {
-                    event.setCancelled(true);
+                if (value != null) {
+                    UUID uuid = UUID.fromString(value);
+                    Entity entity = Bukkit.getEntity(uuid);
+                    if (entity instanceof Skeleton) {
+                        event.setCancelled(true);
+                    }
                 }
             }
         }
