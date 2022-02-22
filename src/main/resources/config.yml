@@ -1,3 +1,21 @@
+# - SETTINGS -
+# spawn-radius: Radius around spawn in which one cannot take any damage (0 = disabled).
+# spawn-protection: Radius around spawn in which spawn protection will take affect (0 = disabled).
+# speed-radius: How far undeads need to be from alive player before they get speed (0 = always have speed, -1 = disabled).
+# burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn).
+# allow-end: Whether players are able to enter an end portal.
+# afk-invulnerable: Whether AFK players should be invulnerable to other players.
+# allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
+settings:
+  spawn-radius: 10
+  spawn-protection: 0
+  speed-radius: 50
+  burn: false
+  allow-end: true
+  afk-invulnerable: true
+  allow-unplaced-locking: false
+
+
 # - UNDEAD SPAWN -
 # Location where all new or undead members will spawn and respawn.
 spawn:
@@ -9,8 +27,10 @@ spawn:
 
 
 # - DISCORD -
+# prefix: The prefix the bot should use for Discord commands.
 # bot-token: Token of the discord bot. Do not share!
 # smp-chat-channel: ID of the text channel where in-game messages should be sent.
+# smp-chat-topic: What the channel topic of smp-chat-channel will be. PAPI placeholders supported.
 # change-log-channel: ID of the text channel where change-logs should be published.
 # link-channels: IDs of the channels where users can enter their verification codes.
 # muted-role: ID of the role users should be given when muted.
@@ -32,11 +52,12 @@ discord:
 
 #  - TAB -
 # header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
-# footer:: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
+# footer: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
 tab:
   header:
     - "&8- &d&lGeekSMP &8-"
-    - "&7Players: &5%server_online%&8/&5%serveR_max_players%"
+    - "&7Players: &5%server_online%&8/&5%server_max_players%"
+    - "&7Ping: &5%player_ping%"
     - " "
   footer:
     - " "
@@ -44,27 +65,8 @@ tab:
     - "&7RAM: &a%server_ram_used%&7/&a%server_ram_max%"
 
 
-# - SETTINGS -
-# allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
-# spawn-radius: Radius around spawn in which one cannot take any damage (0 = disabled).
-# spawn-protection: Radius around spawn in which spawn protection will take affect (0 = disabled).
-# burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn)
-# allow-end: Whether players are able to enter an end portal.
-# afk-invulnerable: Whether AFK players should be invulnerable to other players.
-# speed-radius: How far undeads need to be from alive player before they get speed (0 = always have speed, -1 = disabled).
-settings:
-  allow-unplaced-locking: true
-  burn: false
-  allow-end: true
-  afk-invulnerable: true
-  spawn-radius: 10
-  spawn-protection: 0
-  speed-radius: 50
-
-
 # - GROUPS -
-# All groups on the server.
-# Configure each with the options below.
+# All groups on the server. Configure each with the options below.
 #
 # - Format -
 # groups:
@@ -75,8 +77,7 @@ settings:
 # color: Main color of the group. Member's names will be changed. (GOLD, AQUA, DARK_RED...)
 # prefix: Group prefix for name and tab-list. ("Owner", "&eStaff"...)
 # suffix: Group suffix for name and tab-list. ("Tier 1", "&6Level 2"..)
-# chat-format: Format for chat messages. If none is provided chat will be disabled for group. Previous prefixes and colors do not apply.
-#              Use placeholders %name% and %message%. ("%player% &7> &r%message%", "%player% -  %message%"...)
+# chat-color: Color of chat for the group
 # translate: Whether messages from group members should translate color codes. (true, false)
 # change: If "false", members will never be moved to a different group by the plugin. If "op" members will never be moved as long as they are oped. (true, false, op)
 # role: Discord role id a member must have to be moved to this group. Does not apply if a member is in a non-changing group.
@@ -92,14 +93,11 @@ groups:
     translate: true
     status: owner
   special:
-
     color: AQUA
     prefix: "&b&lSPECIAL &b"
     chat-color: "&f"
     role: "000000000000000000"
     translate: true
-
-
   staff:
     color: WHITE
     prefix: "&x&b&5&8&e&f&7&lSTAFF &f"
@@ -107,8 +105,8 @@ groups:
     role: "000000000000000000"
     translate: true
     status: staff
-  youtuber:
 
+  youtuber:
     color: GRAY
     prefix: "&x&f&f&0&0&0&0&lYT &7"
     chat-color: "&f"
@@ -118,6 +116,7 @@ groups:
     prefix: "&3&lGUEST &7"
     chat-color: "&f"
     role: "000000000000000000"
+
   mvp:
     color: GRAY
     prefix: "&x&f&f&5&c&6&3&lMVP &7"
@@ -134,6 +133,7 @@ groups:
     prefix: "&x&f&f&5&c&6&3&lVIP &7"
     chat-color: "&f"
     role: "000000000000000000"
+
   tier3:
     color: GRAY
     prefix: "&x&9&0&4&8&f&f&lTIER 3 &7"
@@ -150,41 +150,47 @@ groups:
     prefix: "&x&9&0&4&8&f&f&lTIER 1 &7"
     chat-color: "&f"
     role: "000000000000000000"
+
   revived:
     color: GRAY
     prefix: "&7"
     chat-color: "&7"
   undead:
     color: DARK_GRAY
-
-
     revive-group: "revived"
 
 
 # - MORPH MENU -
-# Item meta for morph selection menu.
+# Item meta for morph selection menu
+# title: Title given to the GUI
+# size: Size of the menu (multiples of 9)
+# items: See "Items Format" below
 #
-# - Format -
-# morph-selection:
-#   item<number>:
+# - Items Format -
+# items:
+#   <number>:
 #     <meta>:
 #
 # - Meta -
-# name: Item name. ("Zombie", "&6Skeleton"...)
-# lore: Item lore/description. ("&7Strong, slow movement Speed"...)
-# skull: Skull texture value. ("000000000000000000000000...")
-morph-selection:
-  item1:
-    material: PLAYER_HEAD
-    name: "&6Zombie"
-    lore: "&7Can hold one item. Stronger attack but slower movement speed."
-    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTZmYzg1NGJiODRjZjRiNzY5NzI5Nzk3M2UwMmI3OWJjMTA2OTg0NjBiNTFhNjM5YzYwZTVlNDE3NzM0ZTExIn19fQ=="
-  item2:
-    material: PLAYER_HEAD
-    name: "&a/verify"
-    lore: "&7Are you a &dTwitch Sub &7or &cPatron&7? Do you want to access the Discord Server? No problem! Just type &a/verify &7after selecting your morph, and enter the 4 digit code in the discord server."
-  item3:
-    material: PLAYER_HEAD
-    name: "&6Skeleton"
-    lore: "&7Can hold one item. After each bow shot a new arrow will be given."
-    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzAxMjY4ZTljNDkyZGExZjBkODgyNzFjYjQ5MmE0YjMwMjM5NWY1MTVhN2JiZjc3ZjRhMjBiOTVmYzAyZWIyIn19fQ=="
+# material: Item material
+# name: Item name ("Zombie", "&6Skeleton"...)
+# lore: Item lore/description ("&7Strong, slow movement Speed"...)
+# skull: Skull texture value ("000000000000000000000000...")
+morph-menu:
+  title: "&5Morph Selection"
+  size: 9
+  items:
+    1:
+      material: PLAYER_HEAD
+      name: "&6Zombie"
+      lore: "&7Can hold one item. Stronger attack but slower movement speed."
+      skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTZmYzg1NGJiODRjZjRiNzY5NzI5Nzk3M2UwMmI3OWJjMTA2OTg0NjBiNTFhNjM5YzYwZTVlNDE3NzM0ZTExIn19fQ=="
+    2:
+      material: PLAYER_HEAD
+      name: "&a/verify"
+      lore: "&7Are you a &dTwitch Sub &7or &cPatron&7? Do you want to access the Discord Server? No problem! Just type &a/verify &7after selecting your morph, and enter the 4 digit code in the discord server."
+    3:
+      material: PLAYER_HEAD
+      name: "&6Skeleton"
+      lore: "&7Can hold one item. After each bow shot a new arrow will be given."
+      skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzAxMjY4ZTljNDkyZGExZjBkODgyNzFjYjQ5MmE0YjMwMjM5NWY1MTVhN2JiZjc3ZjRhMjBiOTVmYzAyZWIyIn19fQ=="

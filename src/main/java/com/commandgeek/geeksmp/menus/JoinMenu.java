@@ -6,6 +6,7 @@ import com.commandgeek.geeksmp.managers.InventoryManager;
 import com.commandgeek.geeksmp.managers.ItemManager;
 
 import com.commandgeek.geeksmp.managers.MorphManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,8 +18,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class JoinMenu {
     public static void open(Player player) {
         EntityManager.hidePlayerForAll(player);
+        String title = ChatColor.translateAlternateColorCodes('&', "&5Morph Selection");
+        int size = 9;
 
-        Inventory inventory = new InventoryManager(9, "Select Identity")
+        if (Main.config.contains("morph-menu.title")) {
+            //noinspection ConstantConditions
+            title = ChatColor.translateAlternateColorCodes('&', Main.config.getString("morph-menu.title"));
+        }
+        if (Main.config.contains("morph-menu.size")) {
+            size = Main.config.getInt("morph-menu.size");
+        }
+
+        Inventory inventory = new InventoryManager(size, ChatColor.translateAlternateColorCodes('&', title))
                 .set(2, getItem(1))
                 .set(4, getItem(2))
                 .set(6, getItem(3))
@@ -33,15 +44,15 @@ public class JoinMenu {
     }
 
     private static ItemStack getItem(int index) {
-        String material = Main.config.getString("morph-selection.item" + index + ".material");
+        String material = Main.config.getString("morph-menu.items." + index + ".material");
         if (material != null) {
             ItemManager itemManager = new ItemManager(Material.matchMaterial(material));
-            if (Main.config.contains("morph-selection.item" + index + ".name"))
-                itemManager.name(Main.config.getString("morph-selection.item" + index + ".name"));
-            if (Main.config.contains("morph-selection.item" + index + ".lore"))
-                itemManager.paragraph(30, Main.config.getString("morph-selection.item" + index + ".lore"));
-            if (Main.config.contains("morph-selection.item" + index + ".skull"))
-                itemManager.head(Main.config.getString("morph-selection.item" + index + ".skull"));
+            if (Main.config.contains("morph-menu.items." + index + ".name"))
+                itemManager.name(Main.config.getString("morph-menu.items." + index + ".name"));
+            if (Main.config.contains("morph-menu.items." + index + ".lore"))
+                itemManager.paragraph(30, Main.config.getString("morph-menu.items." + index + ".lore"));
+            if (Main.config.contains("morph-menu.items." + index + ".skull"))
+                itemManager.head(Main.config.getString("morph-menu.items." + index + ".skull"));
             return itemManager.get();
         }
         return null;
