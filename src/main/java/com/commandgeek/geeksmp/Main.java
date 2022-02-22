@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
     public static FileConfiguration bypass;
-//  public static FileConfiguration pets;
+    public static FileConfiguration pets;
 
     @Override
     public void onEnable() {
@@ -100,7 +100,6 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("trust", new CommandTrust(), null);
         Setup.registerCommand("trustlist", new CommandTrustList(), new TabOfflinePlayer());
         Setup.registerCommand("untrust", new CommandUntrust(), null);
-//      Setup.registerCommand("pet", new CommandPet(), null);
         Setup.registerCommand("inspect", new CommandInspect(), new TabEmpty());
         Setup.registerCommand("ip", new CommandIP(), new TabPlayer());
         Setup.registerCommand("afk", new CommandAfk(), new TabEmpty());
@@ -126,7 +125,6 @@ public class Main extends JavaPlugin {
         ConfigManager.createData("locked.yml");
         ConfigManager.createData("trusted.yml");
         ConfigManager.createData("bypass.yml");
-//      ConfigManager.createData("pets.yml");
 
         // Load files
         Main.config = ConfigManager.loadConfig("config.yml");
@@ -143,7 +141,13 @@ public class Main extends JavaPlugin {
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
         Main.bypass = ConfigManager.loadConfig("bypass.yml");
-//      Main.pets = ConfigManager.loadData("pets.yml");
+
+        // Pet stuff
+        if (Main.config.getBoolean("settings.pets")) {
+            Setup.registerCommand("pet", new CommandPet(), null);
+            ConfigManager.createData("pets.yml");
+            Main.pets = ConfigManager.loadData("pets.yml");
+        }
 
         // Register events
         Bukkit.getServer().getPluginManager().registerEvents(new EventListener(), this);

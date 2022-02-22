@@ -91,8 +91,8 @@ commands:
     aliases: [tlist]
   untrust:
     aliases: []
-# pet:
-#   aliases: []
+  pet:
+    aliases: []
   inspect:
     aliases: [i]
   ip:
@@ -196,8 +196,8 @@ permissions:
     default: true
   geeksmp.command.untrust:
     default: true
-# geeksmp.command.pet:
-#   default: op
+  geeksmp.command.pet:
+    default: op
   geeksmp.command.inspect:
     default: op
   geeksmp.command.ip:

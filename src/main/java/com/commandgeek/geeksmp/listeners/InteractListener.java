@@ -1,7 +1,6 @@
 package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
-import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
@@ -82,7 +81,6 @@ public class InteractListener implements Listener {
         // Check Holding Lock Tool
         if (LockManager.holdingLockTool(player)) {
             event.setCancelled(true);
-            return;
         }
 
         // Check if Locked Double Chest
@@ -93,10 +91,9 @@ public class InteractListener implements Listener {
         }.runTaskLater(Main.instance, 1);
 
         // Check Undead Not Near Owner
-/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+        if (Main.config.getBoolean("settings.pets") && TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
-            return;
-        }*/
+        }
     }
 
     @EventHandler
@@ -130,10 +127,9 @@ public class InteractListener implements Listener {
         }
 
         // Check Undead Not Near Owner
-/*        if (TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
+        if (Main.config.getBoolean("settings.pets") && TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
             event.setCancelled(true);
-            return;
-        }*/
+        }
     }
 
     @EventHandler
@@ -142,8 +138,7 @@ public class InteractListener implements Listener {
         if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
-                assert value != null;
-                if (value.contains(event.getRightClicked().getUniqueId().toString())) {
+                if (value != null && value.contains(event.getRightClicked().getUniqueId().toString())) {
                     event.setCancelled(true);
                 }
             }

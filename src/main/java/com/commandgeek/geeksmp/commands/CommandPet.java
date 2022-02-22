@@ -1,4 +1,4 @@
-/*package com.commandgeek.geeksmp.commands;
+package com.commandgeek.geeksmp.commands;
 
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.managers.*;
@@ -138,4 +138,3 @@ public class CommandPet implements TabExecutor {
         return results;
     }
 }
-*/

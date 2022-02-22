@@ -257,16 +257,17 @@ change-log:
     success: "&5Change-log successfully published!"
 
 
-## %player% - Pet player name
-#pets:
-#  pet:
-#    success: "&5Made &d%player%&5 your pet."
-#    fail: "&c%player% is already your pet."
-#    clear: "&5All your pets have been cleared."
-#    list:
-#      header: "&dYour pets"
-#      item: "&8 - &5%player%"
-#      empty: "&8 - &5&onone"
-#  unpet:
-#    success: "&5Removed &d%player%&5 as your pet."
-#    fail: "&c%player% isn't your pet."
+# Only take effect if settings.pets is enabled in config.yml
+# %player% - Pet player name
+pets:
+  pet:
+    success: "&5Made &d%player%&5 your pet."
+    fail: "&c%player% is already your pet."
+    clear: "&5All your pets have been cleared."
+    list:
+      header: "&dYour pets"
+      item: "&8 - &5%player%"
+      empty: "&8 - &5&onone"
+  unpet:
+    success: "&5Removed &d%player%&5 as your pet."
+    fail: "&c%player% isn't your pet."

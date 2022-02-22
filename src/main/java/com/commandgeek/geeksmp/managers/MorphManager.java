@@ -17,10 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 public class MorphManager {
@@ -288,7 +285,7 @@ public class MorphManager {
         }
     }
 
-/*    public static void pet(OfflinePlayer op, Player player) {
+    public static void pet(OfflinePlayer op, Player player) {
         List<String> owners = Main.pets.getStringList(op.getUniqueId().toString());
         if (!owners.contains(player.getUniqueId().toString()) && player.getUniqueId() != op.getUniqueId()) {
             owners.add(player.getUniqueId().toString());
@@ -334,5 +331,4 @@ public class MorphManager {
         }
         return false;
     }
-*/
 }
