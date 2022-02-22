@@ -7,6 +7,9 @@ import org.javacord.api.entity.channel.TextChannel;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.mention.AllowedMentions;
+import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 
 import java.util.regex.Matcher;
 
@@ -23,7 +26,7 @@ public class MessageManager {
     }
 
     public MessageManager replace(String regex, String replacement, boolean escapeMarkdown) {
-        if(escapeMarkdown) {
+        if (escapeMarkdown) {
             String mdRegex = "[*_`~>|]";
             replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
         }
@@ -43,7 +46,15 @@ public class MessageManager {
 
 
     public void sendDiscord(TextChannel channel) {
-        channel.sendMessage(message);
+        AllowedMentions allowedMentions = new AllowedMentionsBuilder()
+                .setMentionEveryoneAndHere(false)
+                .setMentionRoles(false)
+                .build();
+
+        new MessageBuilder()
+                .setAllowedMentions(allowedMentions)
+                .append(message)
+                .send(channel);
     }
 
     public String string() {
