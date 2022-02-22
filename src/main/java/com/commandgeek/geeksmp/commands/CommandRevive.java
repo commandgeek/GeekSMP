@@ -22,6 +22,7 @@ public class CommandRevive implements CommandExecutor {
             TeamManager.revive(player);
             MorphManager.unmorph(player,true);
             EntityManager.showPlayerForAll(player);
+            Setup.updatePlayerRole(player);
             return true;
         }
         if (args.length == 1) {
