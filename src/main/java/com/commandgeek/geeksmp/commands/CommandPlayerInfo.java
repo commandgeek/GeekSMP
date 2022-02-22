@@ -28,18 +28,18 @@ public class CommandPlayerInfo implements CommandExecutor {
                 return true;
             }
 
-            new MessageManager("information.player.info-header")
+            new MessageManager("information.player.header")
                     .replace("%player%", target.getName())
                     .send(sender);
-            new MessageManager("information.player.info-item")
+            new MessageManager("information.player.item")
                     .replace("%key%", "First Joined")
                     .replace("%value%", NumberManager.getTimeSince(target.getFirstPlayed()))
                     .send(sender);
-            new MessageManager("information.player.info-item")
+            new MessageManager("information.player.item")
                     .replace("%key%", "Last Joined")
                     .replace("%value%", target.isOnline() ? "Online" : NumberManager.getTimeSince(target.getLastPlayed()))
                     .send(sender);
-            new MessageManager("information.player.info-item")
+            new MessageManager("information.player.item")
                     .replace("%key%", "UUID")
                     .replace("%value%", target.getUniqueId().toString())
                     .send(sender);

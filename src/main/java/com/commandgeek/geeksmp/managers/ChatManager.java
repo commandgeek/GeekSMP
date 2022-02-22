@@ -143,7 +143,7 @@ public class ChatManager {
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);
 
-        String spy = new MessageManager("spy.message")
+        String spy = new MessageManager("direct-message.spy.message")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%message%", message)

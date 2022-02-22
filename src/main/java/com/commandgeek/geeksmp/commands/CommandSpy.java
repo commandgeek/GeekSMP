@@ -24,10 +24,10 @@ public class CommandSpy implements CommandExecutor {
         String tag = "spy-direct-messages";
         if (EntityManager.hasScoreboardTag(player, tag)) {
             player.removeScoreboardTag(tag);
-            new MessageManager("spy.disabled").send(player);
+            new MessageManager("direct-message.spy.").send(player);
         } else {
             player.addScoreboardTag(tag);
-            new MessageManager("spy.enabled").send(player);
+            new MessageManager("direct-message.spy.").send(player);
         }
         return true;
     }
