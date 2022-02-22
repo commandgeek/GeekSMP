@@ -25,36 +25,34 @@ public class JoinListener implements Listener {
             public void run() {
                 Setup.updateTabMetaForAll();
                 Setup.updateSetupTimer();
+                if (TeamManager.isUndead(player)) {
+                    if (Main.morphs.contains(player.getUniqueId().toString())) {
+                        Main.morphs.set(player.getUniqueId().toString(), null);
+                        ConfigManager.saveData("morphs.yml", Main.morphs);
+                    }
+
+                    // Assign selected morph
+                    if (MorphManager.isMorphedPersistent(player)) {
+                        MorphManager.morph(player, MorphManager.getEntityTypePersistent(player));
+                    }
+
+                    // Hide player for everyone else if morphed
+                    for (Player online : Bukkit.getOnlinePlayers()) {
+                        if (MorphManager.isMorphedPlayer(online)) {
+                            EntityManager.hidePlayerForAll(online);
+                        }
+                    }
+
+                    Setup.join(player);
+                    player.setGameMode(GameMode.ADVENTURE);
+                    event.setJoinMessage(new MessageManager("join-leave.undead.join").replace("%player%", player.getName()).string());
+                }
             }
-        }.runTaskLater(Main.instance, 1);
+        }.runTaskLater(Main.instance, 5);
 
         // Add unique joins stat
         if (!player.hasPlayedBefore()) {
             StatsManager.add("unique-joins");
-        }
-
-        // Hide player for everyone else if morphed
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            if (MorphManager.isMorphedPlayer(online)) {
-                EntityManager.hidePlayerForAll(online);
-            }
-        }
-
-        if (TeamManager.isUndead(player)) {
-            if (Main.morphs.contains(player.getUniqueId().toString())) {
-                Main.morphs.set(player.getUniqueId().toString(), null);
-                ConfigManager.saveData("morphs.yml", Main.morphs);
-            }
-
-            // Assign selected morph
-            if (MorphManager.isMorphedPersistent(player)) {
-                MorphManager.morph(player, MorphManager.getEntityTypePersistent(player));
-            }
-
-            Setup.join(player);
-            player.setGameMode(GameMode.ADVENTURE);
-            event.setJoinMessage(new MessageManager("undead-join").replace("%player%", player.getName()).string());
-            return;
         }
 
         // Enable lock bypass
@@ -68,8 +66,8 @@ public class JoinListener implements Listener {
 
         StatsManager.add("joins");
         Setup.updatePlayerRole(player);
-        event.setJoinMessage(new MessageManager("join").replace("%player%", player.getName()).string());
-        new MessageManager("smp-chat-join")
+        event.setJoinMessage(new MessageManager("join-leave.join").replace("%player%", player.getName()).string());
+        new MessageManager("smp-chat.join")
                 .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
     }
@@ -93,11 +91,11 @@ public class JoinListener implements Listener {
         if (remainder != 0) {
             String reason;
             if (remainder > 0) {
-                reason = new MessageManager("login-banned-temporary")
+                reason = new MessageManager("punishing.banning.login.-temporary")
                         .replace("%duration%", NumberManager.getTimeFrom(remainder))
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             } else {
-                reason = new MessageManager("login-banned-permanent")
+                reason = new MessageManager("punishing.banning.login.-permanent")
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             }
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, reason);
