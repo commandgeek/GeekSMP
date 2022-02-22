@@ -317,6 +317,10 @@ public class MorphManager {
         }
     }
 
+    public static boolean pets() {
+        return Main.config.getBoolean("settings.pets");
+    }
+
     public static boolean isPettedBy(OfflinePlayer player, OfflinePlayer owner) {
         List<String> owners = Main.pets.getStringList(player.getUniqueId().toString());
         return owners.contains(owner.getUniqueId().toString());

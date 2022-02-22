@@ -3,6 +3,7 @@ package com.commandgeek.geeksmp.listeners;
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.managers.*;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +34,14 @@ public class MoveListener implements Listener {
         if (entity != null) {
             entity.teleport(player.getLocation());
             new PacketManager(player).hideEntity(entity);
+        }
+
+        if (TeamManager.isUndead(player) && MorphManager.pets()) {
+            if (MorphManager.isPetNearOwner(player)) {
+                player.setGameMode(GameMode.SURVIVAL);
+            } else {
+                player.setGameMode(GameMode.ADVENTURE);
+            }
         }
     }
 

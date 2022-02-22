@@ -89,11 +89,6 @@ public class InteractListener implements Listener {
                 LockManager.checkLockDoubleChest(event.getBlock(), player);
             }
         }.runTaskLater(Main.instance, 1);
-
-        // Check Undead Not Near Owner
-        if (Main.config.getBoolean("settings.pets") && TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-            event.setCancelled(true);
-        }
     }
 
     @EventHandler
@@ -124,11 +119,6 @@ public class InteractListener implements Listener {
         // Check if Should Remove Placer
         if (LockManager.isPlaced(event.getBlock())) {
             LockManager.unplace(event.getBlock());
-        }
-
-        // Check Undead Not Near Owner
-        if (Main.config.getBoolean("settings.pets") && TeamManager.isUndead(player) && !MorphManager.isPetNearOwner(player)) {
-            event.setCancelled(true);
         }
     }
 

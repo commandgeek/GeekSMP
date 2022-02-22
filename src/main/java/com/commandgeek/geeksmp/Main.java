@@ -143,10 +143,12 @@ public class Main extends JavaPlugin {
         Main.bypass = ConfigManager.loadConfig("bypass.yml");
 
         // Pet stuff
-        if (Main.config.getBoolean("settings.pets")) {
+        if (MorphManager.pets()) {
             Setup.registerCommand("pet", new CommandPet(), null);
             ConfigManager.createData("pets.yml");
             Main.pets = ConfigManager.loadData("pets.yml");
+        } else {
+            Setup.registerCommand("pet", new CommandPet(), new TabEmpty());
         }
 
         // Register events

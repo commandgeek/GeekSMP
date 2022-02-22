@@ -5,8 +5,8 @@
 # burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn).
 # allow-end: Whether players are able to enter an end portal.
 # afk-invulnerable: Whether AFK players should be invulnerable to other players.
-# allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
 # pets: Pets allow undead due to certain things if an alive player (their owner) does /pet <undead> and they are near their owner
+# allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
 settings:
   spawn-radius: 10
   spawn-protection: 0
@@ -14,7 +14,7 @@ settings:
   burn: false
   allow-end: true
   afk-invulnerable: true
-  pets: false
+  pets: false # REQUIRES RESTART
   allow-unplaced-locking: false
 
 

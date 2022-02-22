@@ -22,6 +22,10 @@ public class CommandPet implements TabExecutor {
             new MessageManager("errors.console-forbidden").send(sender);
             return true;
         }
+        if (!MorphManager.pets()) {
+            new MessageManager("pets.disabled").send(player);
+            return true;
+        }
         if (!player.hasPermission("geeksmp.command.pet") && (TeamManager.isUndead(player) || TeamManager.isRevived(player))) {
             new MessageManager("errors.no-permission").send(player);
             return true;

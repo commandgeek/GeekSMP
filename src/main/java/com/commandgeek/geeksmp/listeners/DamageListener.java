@@ -49,7 +49,7 @@ public class DamageListener implements Listener {
         Entity damager = event.getDamager();
         Entity victim = event.getEntity();
 
-        if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem) {
+        if (damager instanceof Player || damager instanceof Arrow || damager instanceof Trident || damager instanceof IronGolem || damager instanceof Wolf) {
             Player entity = MorphManager.getPlayer(victim);
 
             if (damager instanceof Arrow arrow) {
@@ -70,7 +70,7 @@ public class DamageListener implements Listener {
         // Prevent undeads from destroying item frames or armor stands
         if ((victim instanceof ItemFrame || victim instanceof ArmorStand) && damager instanceof Player player) {
             if (TeamManager.isUndead(player)) {
-                if (Main.config.getBoolean("settings.pets")) {
+                if (MorphManager.pets()) {
                     if (!MorphManager.isPetNearOwner(player)) {
                         event.setCancelled(true);
                     }
