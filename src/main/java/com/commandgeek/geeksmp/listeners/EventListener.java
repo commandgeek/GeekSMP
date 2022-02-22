@@ -3,8 +3,7 @@ package com.commandgeek.geeksmp.listeners;
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.managers.*;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +11,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
+import org.bukkit.inventory.ItemStack;
 
 
 public class EventListener implements Listener {
@@ -72,6 +73,35 @@ public class EventListener implements Listener {
         Player player = (Player) event.getEntity();
         if (TeamManager.isUndead(player)) {
             event.setFoodLevel(20);
+        }
+    }
+
+    @EventHandler
+    public void onVehicleDestroy(VehicleDestroyEvent event) {
+        Entity attacker = event.getAttacker();
+        Vehicle vehicle = event.getVehicle();
+
+        if (attacker != null && TeamManager.isUndead((Player) attacker) && ((Player) attacker).getGameMode() == GameMode.ADVENTURE && (vehicle.getType() == EntityType.BOAT || ListManager.getEntityTypeList("minecart").contains(vehicle.getType()))) {
+            if (vehicle.getType() == EntityType.BOAT) {
+                Boat boat = (Boat) vehicle;
+                Material material = null;
+                if (boat.getWoodType() == TreeSpecies.GENERIC || boat.getWoodType() == TreeSpecies.REDWOOD) {
+                    if (boat.getWoodType() == TreeSpecies.GENERIC) {
+                        material = Material.OAK_BOAT;
+                    }
+                    if (boat.getWoodType() == TreeSpecies.REDWOOD) {
+                        material = Material.SPRUCE_BOAT;
+                    }
+                } else {
+                    material = Material.valueOf(boat.getWoodType() + "_BOAT");
+                }
+                if (material != null) {
+                    attacker.getWorld().dropItemNaturally(vehicle.getLocation(), new ItemStack(material));
+                }
+            }
+            if (ListManager.getEntityTypeList("minecart").contains(vehicle.getType())) {
+                event.setCancelled(true);
+            }
         }
     }
 }
