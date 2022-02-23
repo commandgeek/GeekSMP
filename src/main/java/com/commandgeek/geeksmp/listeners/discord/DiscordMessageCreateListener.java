@@ -327,7 +327,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         if (DiscordManager.server.hasPermission(user, PermissionType.ADMINISTRATOR)) {
             try {
                 Bukkit.getScheduler().callSyncMethod(Main.instance, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), message.getContent())).get();
-                message.addReaction("greencheck:884155019530752001");
+//                message.addReaction("greencheck:884155019530752001");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
