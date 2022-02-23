@@ -115,6 +115,8 @@ commands:
     aliases: [sunrise, midday, sun]
   night:
     aliases: [midnight, sunset, moon]
+  enderchest:
+    aliases: [echest]
 
 
 permissions:
@@ -223,4 +225,6 @@ permissions:
   geeksmp.command.day:
     default: op
   geeksmp.command.night:
+    default: op
+  geeksmp.command.enderchest:
     default: op
