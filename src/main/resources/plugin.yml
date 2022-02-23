@@ -104,7 +104,7 @@ commands:
   bypass:
     aliases: []
   broadcast:
-    aliases: [alert]
+    aliases: [alert, bc]
   locktool:
     aliases: [getlocktool, givelocktool, tool, givetool, gettool]
   debug:
