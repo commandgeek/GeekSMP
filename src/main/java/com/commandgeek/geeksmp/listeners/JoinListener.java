@@ -21,10 +21,14 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        StatsManager.add("joins");
+        Setup.updatePlayerRole(player);
+
         new BukkitRunnable() {
             public void run() {
                 Setup.updateTabMetaForAll();
                 Setup.updateSetupTimer();
+
                 if (TeamManager.isUndead(player)) {
                     if (Main.morphs.contains(player.getUniqueId().toString())) {
                         Main.morphs.set(player.getUniqueId().toString(), null);
@@ -70,21 +74,18 @@ public class JoinListener implements Listener {
             EntityManager.checkHiddenPlayer(online, player);
         }
 
-        StatsManager.add("joins");
-        Setup.updatePlayerRole(player);
+        //noinspection ConstantConditions
+        new MessageManager("smp-chat.join")
+                .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                .replace("%player%", player.getName(), true)
+                .sendDiscord(DiscordManager.smpChatChannel);
 
-        if (TeamManager.getPlayerTeam(player) != null) {
+        if (TeamManager.isAlive(player) && TeamManager.getPlayerTeam(player) != null) {
             //noinspection ConstantConditions
             event.setJoinMessage(new MessageManager("join-leave.join")
                     .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
                     .replace("%player%", player.getName())
                     .string());
-
-            //noinspection ConstantConditions
-            new MessageManager("smp-chat.join")
-                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
-                    .replace("%player%", player.getName(), true)
-                    .sendDiscord(DiscordManager.smpChatChannel);
         }
     }
 

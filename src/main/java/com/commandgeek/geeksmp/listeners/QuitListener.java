@@ -17,40 +17,39 @@ public class QuitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        new PacketManager().removePlayer(player);
+
         new BukkitRunnable() {
             public void run() {
                 Setup.updateTabMetaForAll();
                 Setup.updateSetupTimer();
             }
-        }.runTaskLater(Main.instance, 1);
+        }.runTaskLater(Main.instance, 5);
 
-        Player player = event.getPlayer();
-        new PacketManager().removePlayer(player);
-        MorphManager.unmorph(player, false);
+        //noinspection ConstantConditions
+        new MessageManager("smp-chat.leave")
+                .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                .replace("%player%", player.getName(), true)
+                .sendDiscord(DiscordManager.smpChatChannel);
 
-        if (TeamManager.isUndead(player)) {
-            if (TeamManager.getPlayerTeam(player) != null) {
+        if (TeamManager.getPlayerTeam(player) != null) {
+            if (TeamManager.isAlive(player)) {
+                //noinspection ConstantConditions
+                event.setQuitMessage(new MessageManager("join-leave.leave")
+                        .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                        .replace("%player%", player.getName())
+                        .string());
+            } else if (TeamManager.isUndead(player)) {
+                MorphManager.unmorph(player, false);
+
                 //noinspection ConstantConditions
                 event.setQuitMessage(new MessageManager("join-leave.undead.leave")
                         .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
                         .replace("%player%", player.getName())
                         .string());
             }
-            return;
-        }
-
-        if (TeamManager.getPlayerTeam(player) != null) {
-            //noinspection ConstantConditions
-            event.setQuitMessage(new MessageManager("join-leave.leave")
-                    .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
-                    .replace("%player%", player.getName())
-                    .string());
-
-            //noinspection ConstantConditions
-            new MessageManager("smp-chat.leave")
-                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
-                    .replace("%player%", player.getName(), true)
-                    .sendDiscord(DiscordManager.smpChatChannel);
         }
     }
 
