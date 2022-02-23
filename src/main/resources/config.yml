@@ -79,7 +79,7 @@ tab:
 # color: Main color of the group. Member's names will be changed. (GOLD, AQUA, DARK_RED...)
 # prefix: Group prefix for name and tab-list. ("Owner", "&eStaff"...)
 # suffix: Group suffix for name and tab-list. ("Tier 1", "&6Level 2"..)
-# chat-color: Color of chat for the group
+# chat-color: Color of chat for the group. If none is defined the group won't be able to chat.
 # translate: Whether messages from group members should translate color codes. (true, false)
 # change: If "false", members will never be moved to a different group by the plugin. If "op" members will never be moved as long as they are oped. (true, false, op)
 # role: Discord role id a member must have to be moved to this group. Does not apply if a member is in a non-changing group.

@@ -36,7 +36,7 @@ public class ChatManager {
                 if (Main.config.contains("groups." + group + ".chat-color")) {
                     format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", Main.config.getString("groups." + group + ".chat-color") + "%s"));
                 } else {
-                    format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", "%s"));
+                    return false;
                 }
 
                 format = format.replace("%player%", "%s");
