@@ -33,10 +33,6 @@ public class DamageListener implements Listener {
             if (MorphManager.isMorphedPlayer(player)) {
                 Entity entity = MorphManager.getEntity(player);
                 if (entity != null) {
-                    //FIXME Doesn't work :(
-//                    if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && player.isBlocking()) {
-//                        event.setCancelled(true);
-//                    }
                     new PacketManager().animateEntity(entity, 1);
                     entity.getWorld().playSound(entity.getLocation(), Sound.valueOf("ENTITY_" + entity.getType() + "_HURT"), 1, 1);
                 }

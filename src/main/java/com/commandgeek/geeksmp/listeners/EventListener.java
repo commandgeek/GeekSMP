@@ -11,8 +11,6 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.vehicle.VehicleDestroyEvent;
-import org.bukkit.inventory.ItemStack;
 
 
 public class EventListener implements Listener {
@@ -76,12 +74,12 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    // Used to make boats/minecarts drop when an undead breaks them | NOT NEEDED, MADE BY MISTAKE
+/*    @EventHandler
     public void onVehicleDestroy(VehicleDestroyEvent event) {
-        Entity attacker = event.getAttacker();
         Vehicle vehicle = event.getVehicle();
 
-        if (attacker != null && TeamManager.isUndead((Player) attacker) && ((Player) attacker).getGameMode() == GameMode.ADVENTURE && (vehicle.getType() == EntityType.BOAT || ListManager.getEntityTypeList("minecart").contains(vehicle.getType()))) {
+        if (event.getAttacker() instanceof Player attacker && TeamManager.isUndead(attacker) && attacker.getGameMode() == GameMode.ADVENTURE && (vehicle.getType() == EntityType.BOAT || ListManager.getEntityTypeList("minecart").contains(vehicle.getType()))) {
             if (vehicle.getType() == EntityType.BOAT) {
                 Boat boat = (Boat) vehicle;
                 Material material = null;
@@ -103,5 +101,5 @@ public class EventListener implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 }
