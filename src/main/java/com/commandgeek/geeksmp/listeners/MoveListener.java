@@ -36,11 +36,16 @@ public class MoveListener implements Listener {
             new PacketManager(player).hideEntity(entity);
         }
 
-        if (TeamManager.isUndead(player) && MorphManager.pets()) {
-            if (MorphManager.isPetNearOwner(player)) {
-                player.setGameMode(GameMode.SURVIVAL);
-            } else {
-                player.setGameMode(GameMode.ADVENTURE);
+        if (TeamManager.isUndead(player)) {
+            if (MorphManager.pets()) {
+                if (MorphManager.isPetNearOwner(player)) {
+                    player.setGameMode(GameMode.SURVIVAL);
+                } else {
+                    player.setGameMode(GameMode.ADVENTURE);
+                }
+            }
+            if (player.isGliding()) {
+                player.setGliding(false);
             }
         }
     }
@@ -63,10 +68,8 @@ public class MoveListener implements Listener {
 
     @EventHandler
     public void onToggle(EntityToggleGlideEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (TeamManager.isUndead(player) && event.isGliding()) {
-                event.setCancelled(true);
-            }
+        if (event.getEntity() instanceof Player player && TeamManager.isUndead(player)) {
+            event.setCancelled(true);
         }
     }
 }
