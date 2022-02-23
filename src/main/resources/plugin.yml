@@ -1,6 +1,6 @@
 name: GeekSMP
 author: CommandGeek
-main: com.commandgeek.GeekSMP.Main
+main: com.commandgeek.geeksmp.Main
 
 version: '${version}'
 api-version: 1.13
@@ -78,7 +78,7 @@ commands:
   track:
     aliases: []
   seeinv:
-    aliaes: [invsee]
+    aliases: [invsee]
   lookup:
     aliases: [linked]
   playerinfo:
@@ -91,8 +91,8 @@ commands:
     aliases: [tlist]
   untrust:
     aliases: []
-# pet:
-#   aliases: []
+  pet:
+    aliases: []
   inspect:
     aliases: [i]
   ip:
@@ -107,6 +107,16 @@ commands:
     aliases: [alert]
   locktool:
     aliases: [getlocktool, givelocktool, tool, givetool, gettool]
+  debug:
+    aliases: []
+  trash:
+    aliases: [disposal]
+  day:
+    aliases: [sunrise, midday, sun]
+  night:
+    aliases: [midnight, sunset, moon]
+  enderchest:
+    aliases: [echest]
 
 
 permissions:
@@ -155,7 +165,7 @@ permissions:
   geeksmp.command.changelog:
     default: op
   geeksmp.command.unlink:
-    default: op
+    default: true
   geeksmp.command.purgechat:
     default: op
   geeksmp.command.purgeteams:
@@ -192,8 +202,8 @@ permissions:
     default: true
   geeksmp.command.untrust:
     default: true
-# geeksmp.command.pet:
-#   default: op
+  geeksmp.command.pet:
+    default: op
   geeksmp.command.inspect:
     default: op
   geeksmp.command.ip:
@@ -207,4 +217,14 @@ permissions:
   geeksmp.command.broadcast:
     default: op
   geeksmp.command.locktool:
+    default: op
+  geeksmp.command.debug:
+    default: op
+  geeksmp.command.trash:
+    default: op
+  geeksmp.command.day:
+    default: op
+  geeksmp.command.night:
+    default: op
+  geeksmp.command.enderchest:
     default: op
