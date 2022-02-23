@@ -2,7 +2,20 @@ plugin:
   reload: "&dGeekSMP &5successfully reloaded."
   purge-chat: "&c&l- CHAT CLEARED -"
   end-disabled: "&cThe end is currently disabled!"
+
+  # %time% - The time it was set to
+  # %world% - The world the time was set in
   time: "&5Time set to &d%time% &5in &d%world%&5."
+
+
+broadcast:
+  # %message% - Message to be broadcasted (do not include space before)
+  minecraft: "&8[&d&lBROADCAST&8]&5%message%"
+  discord: "**`BROADCAST`%message%**"
+
+  # %platform% - The platform it failed to send to (either Minecraft or Discord)
+  # %path% - The platform message path (ex: broadcast.minecraft)
+  not-sent: "&cBroadcast not sent to &4%platform% &cbecause &4%path% &cis blank."
 
 
 links:
