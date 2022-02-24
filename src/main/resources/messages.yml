@@ -24,19 +24,36 @@ links:
   map: "&5GeekSMP Map! &ahttps://commandgeek.com/geeksmp-map"
 
 
-discord-commands:
-  smp: "Join `play.commandgeek.com` on **Java 1.17.1** to play the GeekSMP!"
-  invite: "Invite your friends! https://discord.gg/Ft6YB6yjAC"
-  map: "The GeekSMP Map! https//commandgeek.com/geeksmp-map"
+discord:
+  # %user% - Pings the user that sent the message
+  chat-fail: ":warning: %user%, failed to send message, make sure you're linked!"
+
+  # %prefix% - Player's team prefix
+  # %player% - Player name
+  # %message% - Message content
+  smp-chat:
+    join: ":arrow_right: **%prefix%%player%**"
+    leave: ":arrow_left: **%prefix%%player%**"
+    death: ":skull: **%message%**"
+    message: "**%prefix%%player%** » %message%"
+    start: ":white_check_mark: **Server started**"
+    stop: ":x: **Server stopped**"
+
+  commands:
+    smp: "Join `play.commandgeek.com` on **Java 1.17.1** to play the GeekSMP!"
+    invite: "Invite your friends! https://discord.gg/Ft6YB6yjAC"
+    map: "The GeekSMP Map! https//commandgeek.com/geeksmp-map"
 
 
 # %player% - AFKed player
 afk:
-  enabled: "&7&o%player% is now afk."
-  disabled: "&7&o%player% is no longer afk."
+  enabled: "&7&o%player% is now AFK."
+  disabled: "&7&o%player% is no longer AFK."
 
 
 # %player% - Invalid player name
+# %world% - Invalid world name
+# %remaining% - Remaining cooldown seconds
 errors:
   invalid-arguments: "&cInvalid arguments."
   invalid-player: "&cCannot find &4%player%&c."
@@ -45,6 +62,7 @@ errors:
   disabled-command: "&cThis command is disabled."
   no-permission: "&cYou do not have permission to run this command."
   console-forbidden: "&cYou cannot run this command from console."
+  cooldown: "&cYou can't do that for another &4%remaining% &cseconds!"
 
 
 # %prefix% - Player's team prefix
@@ -52,9 +70,6 @@ errors:
 join-leave:
   join: "&a&l+ %prefix%%player%"
   leave: "&c&l- %prefix%%player%"
-  undead:
-    join: "&2&l+ %prefix%%player%"
-    leave: "&4&l- %prefix%%player%"
 
   # %reason% - Reason for punishment
   kicked: "&cYou were kicked!\n\n&8Reason:\n&7%reason%"
@@ -246,18 +261,6 @@ linking:
   unlink:
     success: "&5Your account has been successfully unlinked."
     other-success: "&5Successfully unlinked &d%player%&5."
-
-
-# %prefix% - Player's team prefix
-# %player% - Player name
-# %message% - Message content
-smp-chat:
-  join: ":arrow_right: **%prefix%%player%**"
-  leave: ":arrow_left: **%prefix%%player%**"
-  death: ":skull: **%message%**"
-  message: "**%prefix%%player%** » %message%"
-  start: ":white_check_mark: **Server started**"
-  stop: ":x: **Server stopped**"
 
 
 # %version% - Plugin version
