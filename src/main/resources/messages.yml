@@ -243,10 +243,12 @@ lookup:
 chat:
   forbidden: "&cYou are unable to chat."
 
-  # %prefix% - Team prefix
+  # %prefix% - Group prefix
   # %player% - Player name
   # %message% - Message sent
   format: "%prefix%%player% &8> %message%"
+  # %chatcolor% - Player's group chat color
+  discord: "&8[&b&lDISC&8] %prefix%%player% &8> %chatcolor%&b%message%"
 
 
 # %code% - Generated linking code
