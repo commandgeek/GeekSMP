@@ -29,26 +29,20 @@ public class QuitListener implements Listener {
         }.runTaskLater(Main.instance, 5);
 
         //noinspection ConstantConditions
-        new MessageManager("smp-chat.leave")
+        new MessageManager("discord.smp-chat.leave")
                 .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
                 .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
 
         if (TeamManager.getPlayerTeam(player) != null) {
-            if (TeamManager.isAlive(player)) {
-                //noinspection ConstantConditions
-                event.setQuitMessage(new MessageManager("join-leave.leave")
-                        .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
-                        .replace("%player%", player.getName())
-                        .string());
-            } else if (TeamManager.isUndead(player)) {
-                MorphManager.unmorph(player, false);
+            //noinspection ConstantConditions
+            event.setQuitMessage(new MessageManager("join-leave.leave")
+                    .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
+                    .replace("%player%", player.getName())
+                    .string());
 
-                //noinspection ConstantConditions
-                event.setQuitMessage(new MessageManager("join-leave.undead.leave")
-                        .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
-                        .replace("%player%", player.getName())
-                        .string());
+            if (TeamManager.isUndead(player)) {
+                MorphManager.unmorph(player, false);
             }
         }
     }

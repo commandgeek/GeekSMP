@@ -49,13 +49,6 @@ public class JoinListener implements Listener {
 
                     Setup.join(player);
                     player.setGameMode(GameMode.ADVENTURE);
-                    if (TeamManager.getPlayerTeam(player) != null) {
-                        //noinspection ConstantConditions
-                        event.setJoinMessage(new MessageManager("join-leave.undead.join")
-                                .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
-                                .replace("%player%", player.getName())
-                                .string());
-                    }
                 }
             }
         }.runTaskLater(Main.instance, 5);
@@ -75,12 +68,12 @@ public class JoinListener implements Listener {
         }
 
         //noinspection ConstantConditions
-        new MessageManager("smp-chat.join")
+        new MessageManager("discord.smp-chat.join")
                 .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
                 .replace("%player%", player.getName(), true)
                 .sendDiscord(DiscordManager.smpChatChannel);
 
-        if (TeamManager.isAlive(player) && TeamManager.getPlayerTeam(player) != null) {
+        if (TeamManager.getPlayerTeam(player) != null) {
             //noinspection ConstantConditions
             event.setJoinMessage(new MessageManager("join-leave.join")
                     .replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix())
