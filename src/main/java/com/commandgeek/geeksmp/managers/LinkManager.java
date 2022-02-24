@@ -19,6 +19,10 @@ public class LinkManager {
 
     private static final Server server = DiscordManager.server;
 
+    public static boolean isLinked(String id) {
+        return Main.linked.contains(id);
+    }
+
     public static UUID getPlayerUUID(String id) {
         String uuid = Main.linked.getString(id);
         if (uuid != null) return UUID.fromString(uuid);
