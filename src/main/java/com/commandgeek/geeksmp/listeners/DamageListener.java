@@ -30,7 +30,7 @@ public class DamageListener implements Listener {
                 return;
             }
 
-            if (MorphManager.isMorphedPlayer(player)) {
+            if (!(Main.config.getBoolean("settings.afk-invulnerable") && AfkManager.afk.contains(player)) && MorphManager.isMorphedPlayer(player)) {
                 Entity entity = MorphManager.getEntity(player);
                 if (entity != null) {
                     new PacketManager().animateEntity(entity, 1);
@@ -58,8 +58,14 @@ public class DamageListener implements Listener {
             }
 
             // AFK invulnerability
-            if (Main.config.getBoolean("settings.afk-invulnerable") && damager instanceof Player && entity != null && AfkManager.afk.contains(entity)) {
-                event.setCancelled(true);
+            if (Main.config.getBoolean("settings.afk-invulnerable")) {
+                if (entity != null) {
+                    if (AfkManager.afk.contains(entity)) {
+                        event.setCancelled(true);
+                    }
+                } else if (victim instanceof Player player && AfkManager.afk.contains(player)) {
+                    event.setCancelled(true);
+                }
             }
         }
 
