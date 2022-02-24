@@ -25,6 +25,14 @@ public class ListManager {
             result.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
             result.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
         }
+        if (Objects.equals(type, "boat")) {
+            result.add(Material.ACACIA_BOAT);
+            result.add(Material.BIRCH_BOAT);
+            result.add(Material.DARK_OAK_BOAT);
+            result.add(Material.JUNGLE_BOAT);
+            result.add(Material.OAK_BOAT);
+            result.add(Material.SPRUCE_BOAT);
+        }
         return result;
     }
 
