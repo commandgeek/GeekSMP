@@ -6,7 +6,10 @@ import org.apache.commons.lang.WordUtils;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
@@ -153,9 +156,10 @@ public class LockManager {
             return;
         }
 
-        if (!attemptLockDoubleChest(block, player)) {
+        if (!attemptLockDoubleChest(block, player) && !attemptLockDoor(block, player)) {
             lock(block, player);
         }
+
         new MessageManager("locking.lock.success")
                 .replace("%block%", getName(block))
                 .send(player);
@@ -184,6 +188,34 @@ public class LockManager {
         return false;
     }
 
+    public static boolean attemptLockDoor(Block block, Player player) {
+        if (block.getType().toString().contains("_DOOR")) {
+            Door door = (Door) block.getState().getBlockData();
+            Location bottom = block.getLocation();
+            Location top = block.getLocation();
+
+            block.getRelative(BlockFace.UP);
+            block.getRelative(BlockFace.DOWN);
+
+            if (door.getHalf() == Bisected.Half.TOP) {
+                bottom = block.getLocation().subtract(0, 1, 0);
+            }
+
+            if (door.getHalf() == Bisected.Half.BOTTOM) {
+                top = block.getLocation().add(0, 1, 0);
+            }
+
+            for (Location location : new Location[]{top, bottom}) {
+                Block locationBlock = location.getBlock();
+                Main.locked.set(getId(locationBlock), null);
+                place(locationBlock, player);
+                lock(locationBlock, player);
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static void checkLockDoubleChest(Block block, Player player) {
         if (block.getState() instanceof Chest chest) {
             if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
@@ -202,6 +234,37 @@ public class LockManager {
                         player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
                         return;
                     }
+                }
+            }
+        }
+    }
+
+    public static void checkLockDoor(Block block, Player player) {
+        if (block.getType().toString().contains("_DOOR")) {
+            Door door = (Door) block.getState().getBlockData();
+            Location bottom = block.getLocation();
+            Location top = block.getLocation();
+
+            if (door.getHalf() == Bisected.Half.TOP) {
+                bottom = block.getLocation().subtract(0, 1, 0);
+            }
+
+            if (door.getHalf() == Bisected.Half.BOTTOM) {
+                top = block.getLocation().add(0, 1, 0);
+            }
+
+            Location[] locations = {top, bottom};
+            for (Location loc : locations) {
+                Block locBlock = loc.getBlock();
+                if (isLocked(locBlock)) {
+                    String owner = getLocker(locBlock);
+                    Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
+                    Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
+                    Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
+                    Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
+                    ConfigManager.saveData("locked.yml", Main.locked);
+                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
+                    return;
                 }
             }
         }
@@ -227,7 +290,7 @@ public class LockManager {
             return;
         }
 
-        if (!attemptUnlockDoubleChest(block, player)) {
+        if (!attemptUnlockDoubleChest(block, player) && !attemptUnlockDoor(block, player)) {
             unlock(block, player);
         }
         new MessageManager("locking.unlock.success")
@@ -252,6 +315,28 @@ public class LockManager {
                 }
                 return true;
             }
+        }
+        return false;
+    }
+
+    public static boolean attemptUnlockDoor(Block block, Player player) {
+        if (block.getType().toString().contains("_DOOR")) {
+            Door door = (Door) block.getState().getBlockData();
+            Location top = block.getLocation();
+            Location bottom = block.getLocation();
+
+            if (door.getHalf() == Bisected.Half.TOP) {
+                bottom = block.getLocation().subtract(0, 1, 0);
+            }
+
+            if (door.getHalf() == Bisected.Half.BOTTOM) {
+                top = block.getLocation().add(0, 1, 0);
+            }
+
+            for (Location location : new Location[]{top, bottom}) {
+                unlock(location.getBlock(), player);
+            }
+            return true;
         }
         return false;
     }
