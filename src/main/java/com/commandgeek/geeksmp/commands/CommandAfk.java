@@ -28,7 +28,9 @@ public class CommandAfk implements CommandExecutor {
             long secondsLeft = ((cooldowns.get(sender.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
             if(secondsLeft>0) {
                 // Still cooling down
-                sender.sendMessage("You cant use that commands for another "+ secondsLeft +" seconds!");
+                new MessageManager("errors.cooldown")
+                        .replace("%remaining%", String.valueOf(secondsLeft))
+                        .send(player);
                 return true;
             }
         }

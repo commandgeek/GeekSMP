@@ -6,6 +6,7 @@ import com.commandgeek.geeksmp.managers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,7 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        Block block = event.getClickedBlock();
 
         // Animate Morphed Entity if Exists
         if (MorphManager.getEntity(player) != null) {
@@ -35,26 +37,26 @@ public class InteractListener implements Listener {
         }
 
         // If Holding Lock Tool
-        if (LockManager.holdingLockTool(player) && event.getHand() == EquipmentSlot.HAND) {
+        if (LockManager.holdingLockTool(player) && event.getHand() == EquipmentSlot.HAND && block != null) {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                LockManager.attemptLock(event.getClickedBlock(), player);
+                LockManager.attemptLock(block, player);
                 event.setCancelled(true);
             } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                LockManager.attemptUnlock(event.getClickedBlock(), player);
+                LockManager.attemptUnlock(block, player);
                 event.setCancelled(true);
             }
         }
 
         // Check if locked
         if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
-            if (event.getClickedBlock() != null && LockManager.isLockedForPlayer(event.getClickedBlock(), player)) {
-                String owner = Main.locked.getString(LockManager.getId(event.getClickedBlock()) + ".locked");
+            if (block != null && LockManager.isLockedForPlayer(block, player)) {
+                String owner = Main.locked.getString(LockManager.getId(block) + ".locked");
                 if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
                     event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
                     new MessageManager("locking.block-locked")
-                            .replace("%block%", LockManager.getName(event.getClickedBlock()))
-                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getClickedBlock())))).getName())
+                            .replace("%block%", LockManager.getName(block))
+                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(block)))).getName())
                             .send(player);
                 }
             }
@@ -83,10 +85,11 @@ public class InteractListener implements Listener {
             event.setCancelled(true);
         }
 
-        // Check if Locked Double Chest
+        // Check if Locked double chest or door
         new BukkitRunnable() {
             public void run() {
                 LockManager.checkLockDoubleChest(event.getBlock(), player);
+                LockManager.checkLockDoor(event.getBlock(), player);
             }
         }.runTaskLater(Main.instance, 1);
     }
@@ -94,6 +97,7 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onDestroyBlock(BlockBreakEvent event) {
         Player player = event.getPlayer();
+        Block block = event.getBlock();
 
         // Check Holding Lock Tool
         if (LockManager.holdingLockTool(player)) {
@@ -103,22 +107,24 @@ public class InteractListener implements Listener {
 
         // Check Locked Block
         if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
-            if (LockManager.isLocked(event.getBlock())) {
-                if (LockManager.isLockedForPlayer(event.getBlock(), player)) {
+            if (LockManager.isLocked(block)) {
+                if (LockManager.isLockedForPlayer(block, player)) {
                     event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
                     new MessageManager("locking.block-locked")
-                            .replace("%block%", LockManager.getName(event.getBlock()))
+                            .replace("%block%", LockManager.getName(block))
                             .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
                             .send(player);
                     return;
+                } else {
+                    LockManager.attemptUnlock(block, player);
                 }
             }
         }
 
         // Check if Should Remove Placer
-        if (LockManager.isPlaced(event.getBlock())) {
-            LockManager.unplace(event.getBlock());
+        if (LockManager.isPlaced(block)) {
+            LockManager.unplace(block);
         }
     }
 

@@ -127,18 +127,16 @@ public class Setup {
             for (String key : keys) {
                 String id = section.getString(key + ".role");
                 if (DiscordManager.userHasRole(user, id)) {
-                    if (DiscordManager.userHasRole(user, section.getString(key + ".role"))) {
-                        if (MorphManager.isMorphedPlayer(player)) {
-                            new BukkitRunnable() {
-                                public void run() {
-                                    MorphManager.unmorph(player,true);
-                                }
-                            }.runTaskLater(Main.instance, 0);
-                        }
-                        new TeamManager(TeamManager.endsWith(key)).join(player);
-                        TeamManager.revive(player);
-                        return;
+                    if (MorphManager.isMorphedPlayer(player)) {
+                        new BukkitRunnable() {
+                            public void run() {
+                                MorphManager.unmorph(player,true);
+                            }
+                        }.runTaskLater(Main.instance, 0);
                     }
+                    new TeamManager(TeamManager.endsWith(key)).join(player);
+                    TeamManager.revive(player);
+                    return;
                 }
             }
         }

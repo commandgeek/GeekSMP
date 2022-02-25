@@ -5,6 +5,7 @@ import com.commandgeek.geeksmp.Setup;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
@@ -51,6 +52,11 @@ public class TeamManager {
     }
 
     public static Team getPlayerTeam(Player player) {
+        return Bukkit.getScoreboardManager() != null ? Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(player.getName()) : null;
+    }
+
+    public static Team getOfflinePlayerTeam(OfflinePlayer player) {
+        //noinspection ConstantConditions
         return Bukkit.getScoreboardManager() != null ? Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(player.getName()) : null;
     }
 
