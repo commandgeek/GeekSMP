@@ -98,10 +98,10 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onHopper(InventoryMoveItemEvent event) {
-        if (event.getSource().getLocation() != null && event.getDestination().getType() == InventoryType.HOPPER) {
+        if (event.getSource().getLocation() != null && event.getDestination().getLocation() != null && event.getDestination().getType() == InventoryType.HOPPER) {
             Block source = event.getSource().getLocation().getBlock();
-            if (event.getDestination().getLocation() != null && LockManager.isLocked(source)) {
-                Block destination = event.getDestination().getLocation().getBlock();
+            Block destination = event.getDestination().getLocation().getBlock();
+            if (LockManager.isLocked(source) || LockManager.isLocked(destination)) {
                 String sourceOwner = LockManager.getLocker(source);
                 String destinationOwner = LockManager.getLocker(destination);
                 if (destinationOwner == null || !destinationOwner.equals(sourceOwner)) {
