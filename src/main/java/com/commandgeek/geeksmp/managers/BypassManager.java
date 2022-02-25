@@ -27,12 +27,12 @@ public class BypassManager {
             bypass.add(player.getUniqueId().toString());
             Main.bypass.set("bypass", bypass);
             ConfigManager.saveData("bypass.yml", Main.bypass);
-            new MessageManager("trusting.bypass.enabled").send(player);
+            new MessageManager("locking.bypass.enabled").send(player);
         }
 
         new BukkitRunnable() {
             public void run() {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(new MessageManager("trusting.bypass.enabled").string()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(new MessageManager("locking.bypass.enabled").string()));
                 if (!check(player)) {
                     cancel();
                 }
@@ -44,7 +44,7 @@ public class BypassManager {
         bypass.remove(player.getUniqueId().toString());
         Main.bypass.set("bypass", bypass);
         ConfigManager.saveData("bypass.yml", Main.bypass);
-        new MessageManager("trusting.bypass.disabled").send(player);
+        new MessageManager("locking.bypass.disabled").send(player);
     }
 
     public static boolean check(Player player) {

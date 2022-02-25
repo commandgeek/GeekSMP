@@ -51,7 +51,7 @@ public class ChatManager {
             String[] words = message.split(" ");
             StringBuilder result = new StringBuilder();
             for (String word : words) {
-                if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+                if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                     for (char ignored : word.toCharArray()) {
                         result.append("\\\\*");
                     }
@@ -76,7 +76,7 @@ public class ChatManager {
         String[] words = messageColor.split(" ");
         StringBuilder result = new StringBuilder();
         for (String word : words) {
-            if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+            if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                 if (direct) {
                     result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message.color")).append(" ");
                 } else if (Main.config.contains("groups." + group + ".chat-color")) {
