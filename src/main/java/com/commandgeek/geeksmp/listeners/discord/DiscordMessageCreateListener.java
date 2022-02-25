@@ -357,7 +357,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         boolean linked = LinkManager.isLinked(String.valueOf(user.getId()));
 
         if (user.isRegularUser()) {
-            if (linked) {
+            if (linked && TeamManager.isAliveOffline(Bukkit.getOfflinePlayer(LinkManager.getPlayerUUID(String.valueOf(user.getId()))))) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(LinkManager.getPlayerUUID(String.valueOf(user.getId())));
                 if (player != null && Main.messages.getString("chat.discord") != null) {
                     String group = TeamManager.getOfflinePlayerTeam(player).getName().replaceAll("^[0-9]+_", "");
@@ -368,7 +368,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                     .replace("%prefix%", TeamManager.getOfflinePlayerTeam(player).getPrefix())
                                     .replace("%player%", player.getName())
                                     .replace("%chatcolor%", chatcolor)
-                                    .replace("%message%", ChatManager.censor(message.getContent(), false, TeamManager.getOfflinePlayerTeam(player).getName()))
+                                    .replace("%message%", ChatManager.censor(message.getContent(), false, TeamManager.getOfflinePlayerTeam(player).getName()).replaceAll("\\n", ""))
                     );
                     return true;
                 }

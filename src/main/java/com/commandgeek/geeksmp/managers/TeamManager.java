@@ -83,6 +83,10 @@ public class TeamManager {
         return (Main.alive.getStringList("alive").contains(player.getUniqueId().toString()));
     }
 
+    public static boolean isAliveOffline(OfflinePlayer player) {
+        return (Main.alive.getStringList("alive").contains(player.getUniqueId().toString()));
+    }
+
     public static boolean isRevived(Player player) {
         String name = Main.config.getString("groups." + getLast() + ".revive-group");
         Team team = TeamManager.getPlayerTeam(player);
