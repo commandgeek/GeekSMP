@@ -5,7 +5,6 @@ import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.*;
 
-import org.bukkit.ChatColor;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageAuthor;
@@ -14,6 +13,7 @@ import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -23,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+
 
 @SuppressWarnings("ConstantConditions")
 public class DiscordMessageCreateListener implements MessageCreateListener {
@@ -41,7 +42,11 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         }
 
         // Run SMP Chat message
-        if (smpChatMessage(message)) return;
+        try {
+            if (smpChatMessage(message)) return;
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Check Linking
         if (DiscordManager.linkChannels.contains(event.getChannel())) {
@@ -344,7 +349,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         return false;
     }
 
-    public static boolean smpChatMessage(Message message) {
+    public static boolean smpChatMessage(Message message) throws ExecutionException, InterruptedException {
         if (message.getChannel() != DiscordManager.smpChatChannel) return false;
         if (message.getAuthor().asUser().isEmpty()) return false;
 
@@ -367,6 +372,11 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                     );
                     return true;
                 }
+            } else if (user.asUser().isPresent() && !Main.messages.getString("discord.chat-fail").isBlank()) {
+                user.asUser().get().openPrivateChannel().get().sendMessage(Main.messages.getString("discord.chat-fail")
+                        .replace("%user%", "<@" + user.getId() + ">")
+                );
+                return false;
             }
         }
         return false;

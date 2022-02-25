@@ -25,6 +25,7 @@ links:
 
 
 discord:
+  # Set to "" to disable
   # %user% - Pings the user that sent the message
   chat-fail: ":warning: %user%, failed to send message, make sure you're linked!"
 
