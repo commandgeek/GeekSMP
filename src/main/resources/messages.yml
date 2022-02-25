@@ -111,6 +111,10 @@ locking:
     success: "&5Unlocked &d%block%&5."
     fail: "&4%block% &cwas locked by &4%player%&c."
     invalid: "&cThis block isn't locked."
+  bypass:
+    enabled: "&5Lock bypass &denabled"
+    disabled: "&5Lock bypass &ddisabled"
+    interact: "&d%block% &5is locked by &d%player%&5."
 
 
 # %player% - Trusted player name
@@ -125,9 +129,6 @@ trusting:
   untrust:
     success: "&5No longer trusting &d%player%&5."
     fail: "&c%player% isn't trusted."
-  bypass:
-    enabled: "&5Lock bypass &denabled"
-    disabled: "&5Lock bypass &ddisabled"
 
 
   # %player% - Command sender

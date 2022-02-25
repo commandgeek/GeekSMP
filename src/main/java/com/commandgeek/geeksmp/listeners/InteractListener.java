@@ -45,13 +45,19 @@ public class InteractListener implements Listener {
         }
 
         // Check if locked
-        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
-            if (block != null && LockManager.isLockedForPlayer(block, player)) {
-                String owner = Main.locked.getString(LockManager.getId(block) + ".locked");
-                if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
+        if (block != null && LockManager.isLockedForPlayer(block, player)) {
+            String owner = Main.locked.getString(LockManager.getId(block) + ".locked");
+            if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
+                boolean bypass = (TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player));
+                if (!bypass) {
                     event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
                     new MessageManager("locking.block-locked")
+                            .replace("%block%", LockManager.getName(block))
+                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(block)))).getName())
+                            .send(player);
+                } else {
+                    new MessageManager("locking.bypass.interact")
                             .replace("%block%", LockManager.getName(block))
                             .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(block)))).getName())
                             .send(player);
@@ -70,7 +76,7 @@ public class InteractListener implements Listener {
 
     @EventHandler
     public void onPlayerEntityInteract(PlayerInteractEntityEvent event) {
-        String old = event.getRightClicked().getCustomName();
+        // Prevent renaming undead morphs
         if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG) {
             for (String key : Main.morphs.getKeys(false)) {
                 String value = Main.morphs.getString(key);
