@@ -25,6 +25,28 @@ public class ListManager {
             result.add(Material.LIGHT_WEIGHTED_PRESSURE_PLATE);
             result.add(Material.POLISHED_BLACKSTONE_PRESSURE_PLATE);
         }
+
+        if (Objects.equals(type, "boat")) {
+            result.add(Material.ACACIA_BOAT);
+            result.add(Material.BIRCH_BOAT);
+            result.add(Material.DARK_OAK_BOAT);
+            result.add(Material.JUNGLE_BOAT);
+            result.add(Material.OAK_BOAT);
+            result.add(Material.SPRUCE_BOAT);
+        }
+
+        if (Objects.equals(type, "door")) {
+            result.add(Material.DARK_OAK_DOOR);
+            result.add(Material.ACACIA_DOOR);
+            result.add(Material.BIRCH_DOOR);
+            result.add(Material.CRIMSON_DOOR);
+            result.add(Material.IRON_DOOR);
+            result.add(Material.JUNGLE_DOOR);
+            result.add(Material.SPRUCE_DOOR);
+            result.add(Material.WARPED_DOOR);
+            result.add(Material.OAK_DOOR);
+        }
+
         return result;
     }
 

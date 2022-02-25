@@ -38,7 +38,7 @@ public class DeathListener implements Listener {
         if (TeamManager.isRevived(player)) {
             TeamManager.unrevive(player);
             MorphManager.unmorph(player,true);
-            new MessageManager("smp-chat.death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
+            new MessageManager("discord.smp-chat.death").replace("%message%", event.getDeathMessage()).sendDiscord(DiscordManager.smpChatChannel);
             Setup.updatePlayerRole(player);
             return;
         }
@@ -50,7 +50,7 @@ public class DeathListener implements Listener {
         }
 
         if (event.getDeathMessage() != null && !event.getDeathMessage().isEmpty()) {
-            new MessageManager("smp-chat.death")
+            new MessageManager("discord.smp-chat.death")
                     .replace("%message%", event.getDeathMessage())
                     .sendDiscord(DiscordManager.smpChatChannel);
         }

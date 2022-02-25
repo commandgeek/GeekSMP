@@ -36,12 +36,12 @@ public class ChatManager {
                 if (Main.config.contains("groups." + group + ".chat-color")) {
                     format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", Main.config.getString("groups." + group + ".chat-color") + "%s"));
                 } else {
-                    format = ChatColor.translateAlternateColorCodes('&', format.replace("%message%", "%s"));
+                    return false;
                 }
 
                 format = format.replace("%player%", "%s");
 
-                event.setMessage(censor(event.getMessage(), false, event.getPlayer(), group));
+                event.setMessage(censor(event.getMessage(), false, group));
                 event.setFormat(format);
             }
         }
@@ -61,7 +61,7 @@ public class ChatManager {
                 }
             }
             //noinspection ConstantConditions
-            new MessageManager("smp-chat.message")
+            new MessageManager("discord.smp-chat.message")
                     .replace("%prefix%", ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".prefix"))))
                     .replace("%player%", player.getName(), true)
                     .replace("%message%", result.toString().trim())
@@ -71,7 +71,7 @@ public class ChatManager {
         return false;
     }
 
-    public static String censor(String message, boolean direct, Player player, String group) {
+    public static String censor(String message, boolean direct, String group) {
         String messageColor = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message));
         String[] words = messageColor.split(" ");
         StringBuilder result = new StringBuilder();
@@ -112,7 +112,7 @@ public class ChatManager {
     }
 
     public static void directMessage(Player sender, Player receiver, String message) {
-        message = censor(message, true, null, null);
+        message = censor(message, true, null);
 
         if (EntityManager.hasScoreboardTag(sender, "ignore-direct-messages")) {
             new MessageManager("direct-message.blocked-sender").send(sender);

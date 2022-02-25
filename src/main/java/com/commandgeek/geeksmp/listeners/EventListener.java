@@ -3,6 +3,8 @@ package com.commandgeek.geeksmp.listeners;
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.managers.*;
 
+import com.destroystokyo.paper.event.inventory.PrepareResultEvent;
+
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -10,7 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
 
 
 public class EventListener implements Listener {
@@ -71,6 +75,14 @@ public class EventListener implements Listener {
         Player player = (Player) event.getEntity();
         if (TeamManager.isUndead(player)) {
             event.setFoodLevel(20);
+        }
+    }
+
+    @EventHandler
+    public void onPrepareResult(PrepareResultEvent event) {
+        // Prevent grindstoning/anviling Lock Tool
+        if ((event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL) && event.getInventory().contains(LockManager.lockTool)) {
+            event.setResult(new ItemStack(Material.AIR));
         }
     }
 

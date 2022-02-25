@@ -92,6 +92,7 @@ public class MorphManager {
         trackedPlayers.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
         player.removePotionEffect(PotionEffectType.SPEED);
+        EntityManager.showPlayerForAll(player);
 
         // Data file
         Main.morphs.set(player.getUniqueId().toString(), null);
