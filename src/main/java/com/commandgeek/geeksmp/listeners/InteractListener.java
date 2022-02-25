@@ -11,13 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -68,63 +65,6 @@ public class InteractListener implements Listener {
         // Cancel if entity interacts with locked blocked
         if (LockManager.isLocked(event.getBlock()) && Main.locked.getString(LockManager.getId(event.getBlock()) + ".locked") != null) {
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onPlaceBlock(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-
-        // Check if Should Log Placer
-        if (LockManager.isLockable(event.getBlock())) {
-            LockManager.place(event.getBlock(), player);
-        }
-
-        // Check Holding Lock Tool
-        if (LockManager.holdingLockTool(player)) {
-            event.setCancelled(true);
-        }
-
-        // Check if Locked double chest or door
-        new BukkitRunnable() {
-            public void run() {
-                LockManager.checkLockDoubleChest(event.getBlock(), player);
-                LockManager.checkLockDoor(event.getBlock(), player);
-            }
-        }.runTaskLater(Main.instance, 1);
-    }
-
-    @EventHandler
-    public void onDestroyBlock(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-        Block block = event.getBlock();
-
-        // Check Holding Lock Tool
-        if (LockManager.holdingLockTool(player)) {
-            event.setCancelled(true);
-            return;
-        }
-
-        // Check Locked Block
-        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
-            if (LockManager.isLocked(block)) {
-                if (LockManager.isLockedForPlayer(block, player)) {
-                    event.setCancelled(true);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
-                    new MessageManager("locking.block-locked")
-                            .replace("%block%", LockManager.getName(block))
-                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
-                            .send(player);
-                    return;
-                } else {
-                    LockManager.attemptUnlock(block, player);
-                }
-            }
-        }
-
-        // Check if Should Remove Placer
-        if (LockManager.isPlaced(block)) {
-            LockManager.unplace(block);
         }
     }
 
