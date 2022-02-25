@@ -212,6 +212,7 @@ public class Setup {
             }
             player.setPlayerListHeader(ChatColor.translateAlternateColorCodes('&', header.toString().replaceAll("\n$", "")));
         }
+
         if (Main.config.contains("tab.footer")) {
             List<String> items = Main.config.getStringList("tab.footer");
             StringBuilder footer = new StringBuilder();
@@ -220,6 +221,16 @@ public class Setup {
                 footer.append(item).append("\n");
             }
             player.setPlayerListFooter(ChatColor.translateAlternateColorCodes('&', footer.toString().replaceAll("\n$", "")));
+        }
+
+        if(Main.config.contains("tab.player")) {
+            String item = Main.config.getString("tab.player");
+            item = item.replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix());
+            item = item.replaceAll("%player%", player.getName());
+            item = item.replaceAll("%player_ping%", String.valueOf(player.getPing()));
+            item = ChatColor.translateAlternateColorCodes('&', item);
+
+            player.setPlayerListName(item);
         }
     }
 
