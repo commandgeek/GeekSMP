@@ -79,12 +79,12 @@ public class ChatManager {
             if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                 if (direct) {
                     result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message.color")).append(" ");
-                } else if (Main.config.contains("groups." + group + ".chat-color")) {
+                } else if (group != null && Main.config.contains("groups." + group + ".chat-color")) {
                         //noinspection ConstantConditions
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
-                    } else {
-                        result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
-                    }
+                } else {
+                    result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
+                }
             } else {
                 result.append(word).append(" ");
             }

@@ -66,12 +66,11 @@ public class LockManager {
         List<Location> locked = new ArrayList<>();
 
         for (String key : Main.locked.getKeys(false)) {
-            String[] c = key.split("=");
-            Location loc = new Location(Bukkit.getWorld(c[0]), Double.parseDouble(c[1]), Double.parseDouble(c[2]), Double.parseDouble(c[3]));
+            String[] split = key.split("=");
+            Location loc = new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
             if (loc.getWorld() == player.getLocation().getWorld() && loc.distance(player.getLocation()) <= radius) {
                 Block block = loc.getBlock();
                 String owner = getLocker(block);
-
                 if (owner != null) {
                     if (owner.equals(player.getUniqueId().toString())) {
                         owned.add(loc);
@@ -83,7 +82,6 @@ public class LockManager {
                 }
             }
         }
-
         return Arrays.asList(owned, trusted, locked);
     }
 

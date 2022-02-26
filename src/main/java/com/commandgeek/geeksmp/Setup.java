@@ -120,13 +120,11 @@ public class Setup {
         User user = DiscordManager.getUserFromPlayer(player);
         ConfigurationSection section = Main.config.getConfigurationSection("groups");
         if (user != null && section != null) {
-            Set<String> keys = section.getKeys(false);
             user.updateNickname(DiscordManager.server, player.getName());
             updateMemberRoles(player.getUniqueId());
 
-            for (String key : keys) {
-                String id = section.getString(key + ".role");
-                if (DiscordManager.userHasRole(user, id)) {
+            for (String key : section.getKeys(false)) {
+                if (DiscordManager.userHasRole(user, section.getString(key + ".role"))) {
                     if (MorphManager.isMorphedPlayer(player)) {
                         new BukkitRunnable() {
                             public void run() {
@@ -142,7 +140,7 @@ public class Setup {
         }
 
         // Check Revived
-        if (TeamManager.isAlive(player)) {
+        if (TeamManager.isAlive(player.getUniqueId().toString())) {
             String name = Main.config.getString("groups." + TeamManager.getLast() + ".revive-group");
             new TeamManager(TeamManager.endsWith(name)).join(player);
             return;
