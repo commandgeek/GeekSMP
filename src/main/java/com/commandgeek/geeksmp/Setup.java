@@ -221,15 +221,17 @@ public class Setup {
             player.setPlayerListFooter(ChatColor.translateAlternateColorCodes('&', footer.toString().replaceAll("\n$", "")));
         }
 
-        if(Main.config.contains("tab.player")) {
-            String item = Main.config.getString("tab.player");
-            item = item.replace("%prefix%", TeamManager.getPlayerTeam(player).getPrefix());
-            item = item.replaceAll("%player%", player.getName());
-            item = item.replaceAll("%player_ping%", String.valueOf(player.getPing()));
-            item = ChatColor.translateAlternateColorCodes('&', item);
-
-            player.setPlayerListName(item);
+        //Find longest playername
+        String longestPlayerName = "";
+        for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if(onlinePlayer.getDisplayName().length() >= longestPlayerName.length()) {
+                longestPlayerName = onlinePlayer.getDisplayName();
+            }
         }
+
+        //Add spaces depending on the longest player name and add ping to tab-list name
+        int charDifference = longestPlayerName.length() - player.getDisplayName().length();
+        player.setPlayerListName(player.getDisplayName() + " ".repeat(++charDifference) + ChatColor.YELLOW + player.getPing());
     }
 
     // Update tab for every online player
