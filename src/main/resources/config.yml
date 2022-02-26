@@ -55,7 +55,6 @@ discord:
 #  - TAB -
 # header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
 # footer: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
-# player: Text to display for each player in the tab-list
 tab:
   header:
     - "&8- &d&lGeekSMP &8-"
@@ -65,7 +64,6 @@ tab:
     - " "
     - "&7TPS: &a%server_tps_1_colored% &7MSPT: &a%server_mspt%"
     - "&7RAM: &a%server_ram_used%&7/&a%server_ram_max%"
-  player: "[&2%player_ping%ms&r] %prefix%%player%"
 
 
 # - GROUPS -
