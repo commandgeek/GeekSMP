@@ -101,11 +101,11 @@ public class JoinListener implements Listener {
         if (remainder != 0) {
             String reason;
             if (remainder > 0) {
-                reason = new MessageManager("punishing.banning.login.-temporary")
+                reason = new MessageManager("punishing.banning.login.temporary")
                         .replace("%duration%", NumberManager.getTimeFrom(remainder))
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             } else {
-                reason = new MessageManager("punishing.banning.login.-permanent")
+                reason = new MessageManager("punishing.banning.login.permanent")
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             }
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, reason);
