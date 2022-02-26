@@ -7,17 +7,27 @@ import com.destroystokyo.paper.event.inventory.PrepareResultEvent;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 
 public class EventListener implements Listener {
+
+    @EventHandler
+    public void onSleep(PlayerBedEnterEvent event) {
+        Player player = event.getPlayer();
+        if (MorphManager.isMorphedPlayer(player) && event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.NOT_SAFE) {
+            event.setUseBed(Event.Result.ALLOW);
+        }
+    }
 
     @EventHandler
     public void onShootBow(EntityShootBowEvent event) {
