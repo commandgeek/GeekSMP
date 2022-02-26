@@ -5,6 +5,7 @@ import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.*;
 
+import org.bukkit.scoreboard.Team;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageAuthor;
@@ -357,19 +358,25 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         boolean linked = LinkManager.isLinked(String.valueOf(user.getId()));
 
         if (user.isRegularUser()) {
-            if (linked && TeamManager.isAliveOffline(Bukkit.getOfflinePlayer(LinkManager.getPlayerUUID(String.valueOf(user.getId()))))) {
+            if (linked && TeamManager.isAlive(Bukkit.getOfflinePlayer(LinkManager.getPlayerUUID(String.valueOf(user.getId()))).getUniqueId().toString())) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(LinkManager.getPlayerUUID(String.valueOf(user.getId())));
                 if (player != null && Main.messages.getString("chat.discord") != null) {
-                    String group = TeamManager.getOfflinePlayerTeam(player).getName().replaceAll("^[0-9]+_", "");
-                    String chatcolor = ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"));
-
-                    Bukkit.broadcastMessage(
-                            ChatColor.translateAlternateColorCodes('&', Main.messages.getString("chat.discord"))
-                                    .replace("%prefix%", TeamManager.getOfflinePlayerTeam(player).getPrefix())
-                                    .replace("%player%", player.getName())
-                                    .replace("%chatcolor%", chatcolor)
-                                    .replace("%message%", ChatManager.censor(message.getContent(), false, TeamManager.getOfflinePlayerTeam(player).getName()).replaceAll("\\n", ""))
-                    );
+                    Team group = TeamManager.getOfflinePlayerTeam(player);
+                    if (group != null) {
+                        Bukkit.broadcastMessage(
+                                ChatColor.translateAlternateColorCodes('&', Main.messages.getString("chat.discord"))
+                                        .replace("%prefix%", group.getPrefix())
+                                        .replace("%player%", player.getName())
+                                        .replace("%message%", ChatManager.censor(message.getContent(), false, group.getName().replaceAll("^[0-9]+_", "")).replaceAll("\\n", ""))
+                        );
+                    } else {
+                        Bukkit.broadcastMessage(
+                                ChatColor.translateAlternateColorCodes('&', Main.messages.getString("chat.discord"))
+                                        .replace("%prefix%", "")
+                                        .replace("%player%", player.getName())
+                                        .replace("%message%", ChatManager.censor(message.getContent(), false, null).replaceAll("\\n", ""))
+                        );
+                    }
                     return true;
                 }
             } else if (user.asUser().isPresent() && !Main.messages.getString("discord.chat-fail").isBlank()) {

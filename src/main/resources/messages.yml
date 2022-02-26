@@ -249,7 +249,7 @@ chat:
   # %message% - Message sent
   format: "%prefix%%player% &8> %message%"
   # %chatcolor% - Player's group chat color
-  discord: "&8[&b&lDISC&8] %prefix%%player% &8> %chatcolor%&b%message%"
+  discord: "&8[&b&lDISC&8] &7%prefix%%player% &8> &b%message%"
 
 
 # %code% - Generated linking code

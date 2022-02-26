@@ -61,7 +61,7 @@ public class TeamManager {
     }
 
     public static boolean isUndead(Player player) {
-        Team team = TeamManager.getPlayerTeam(player);
+        Team team = getPlayerTeam(player);
         if (team != null) {
             return team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(getLast());
         }
@@ -79,17 +79,13 @@ public class TeamManager {
         return last;
     }
 
-    public static boolean isAlive(Player player) {
-        return (Main.alive.getStringList("alive").contains(player.getUniqueId().toString()));
-    }
-
-    public static boolean isAliveOffline(OfflinePlayer player) {
-        return (Main.alive.getStringList("alive").contains(player.getUniqueId().toString()));
+    public static boolean isAlive(String player) {
+        return (Main.alive.getStringList("alive").contains(player));
     }
 
     public static boolean isRevived(Player player) {
         String name = Main.config.getString("groups." + getLast() + ".revive-group");
-        Team team = TeamManager.getPlayerTeam(player);
+        Team team = getPlayerTeam(player);
         if (team != null) {
             return team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(name);
         }
@@ -97,7 +93,7 @@ public class TeamManager {
     }
 
     public static void revive(Player player) {
-        if (!isAlive(player)) {
+        if (!isAlive(player.getUniqueId().toString())) {
             List<String> alive = Main.alive.getStringList("alive");
             alive.add(player.getUniqueId().toString());
             Main.alive.set("alive", alive);
@@ -106,7 +102,7 @@ public class TeamManager {
     }
 
     public static void unrevive(Player player) {
-        if (!isAlive(player)) return;
+        if (!isAlive(player.getUniqueId().toString())) return;
         List<String> alive = Main.alive.getStringList("alive");
         alive.remove(player.getUniqueId().toString());
         Main.alive.set("alive", alive);
@@ -115,7 +111,7 @@ public class TeamManager {
     }
 
     public static boolean isStaff(Player player) {
-        Team team = TeamManager.getPlayerTeam(player);
+        Team team = getPlayerTeam(player);
         if (team == null) return false;
         String name = team.getName().replaceAll("^[0-9]+_", "");
         if (Main.config.contains("groups." + name + ".status")) {
