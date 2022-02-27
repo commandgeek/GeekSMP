@@ -65,15 +65,17 @@ public class JoinListener implements Listener {
             EntityManager.checkHiddenPlayer(online, player);
         }
 
-        // Bypass data file to scoreboard tag conversion
-        if (Main.bypass.getStringList("bypass").contains(player.getUniqueId().toString())) {
-            CommandBypass.enable(player);
+        // Enable bypass
+        if (EntityManager.hasScoreboardTag(player, "bypass")) {
+            CommandBypass.enable(player, true);
 
             // Remove from file
-            List<String> bypass = Main.bypass.getStringList("bypass");
-            bypass.remove(player.getUniqueId().toString());
-            Main.bypass.set("bypass", bypass);
-            ConfigManager.saveData("bypass.yml", Main.bypass);
+            if (Main.bypass.getStringList("bypass").contains(player.getUniqueId().toString())) {
+                List<String> bypass = Main.bypass.getStringList("bypass");
+                bypass.remove(player.getUniqueId().toString());
+                Main.bypass.set("bypass", bypass);
+                ConfigManager.saveData("bypass.yml", Main.bypass);
+            }
         }
 
         // Direct message ignore old to new conversion

@@ -33,14 +33,16 @@ public class CommandBypass implements CommandExecutor {
             player.removeScoreboardTag(tag);
             new MessageManager("locking.bypass.disabled").send(player);
         } else {
-            enable(player);
+            enable(player, false);
         }
         return true;
     }
 
-    public static void enable(Player player) {
-        player.addScoreboardTag(tag);
-        new MessageManager("locking.bypass.enabled").send(player);
+    public static void enable(Player player, boolean join) {
+        if (!join) {
+            player.addScoreboardTag(tag);
+            new MessageManager("locking.bypass.enabled").send(player);
+        }
 
         new BukkitRunnable() {
             public void run() {
