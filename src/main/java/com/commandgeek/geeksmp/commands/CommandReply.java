@@ -23,10 +23,15 @@ public class CommandReply implements CommandExecutor {
             new MessageManager("direct-message.reply-failed").send(player);
             return true;
         }
-        Player receiver = ChatManager.lastMessagedPlayer.get(player);
 
         if (args.length >= 1) {
-            ChatManager.directMessage(player, receiver, ChatManager.joinArguments(args, 0));
+            Player receiver = ChatManager.lastMessagedPlayer.get(player);
+            //noinspection ConstantConditions
+            if (receiver.getPlayer().isOnline()) {
+                ChatManager.directMessage(player, receiver, ChatManager.joinArguments(args, 0));
+            } else {
+                new MessageManager("direct-message.reply-failed").send(player);
+            }
             return true;
         }
 
