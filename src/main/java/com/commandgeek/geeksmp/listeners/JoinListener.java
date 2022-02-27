@@ -2,6 +2,7 @@ package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.Setup;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
@@ -13,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 
 public class JoinListener implements Listener {
@@ -58,14 +61,27 @@ public class JoinListener implements Listener {
             StatsManager.add("unique-joins");
         }
 
-        // Enable lock bypass
-        if (BypassManager.check(player)) {
-            BypassManager.enable(player, false);
-        }
-
         for (Player online : Bukkit.getOnlinePlayers()) {
             EntityManager.checkHiddenPlayer(online, player);
         }
+
+        // Bypass data file to scoreboard tag conversion
+        if (Main.bypass.getStringList("bypass").contains(player.getUniqueId().toString())) {
+            CommandBypass.enable(player);
+
+            // Remove from file
+            List<String> bypass = Main.bypass.getStringList("bypass");
+            bypass.remove(player.getUniqueId().toString());
+            Main.bypass.set("bypass", bypass);
+            ConfigManager.saveData("bypass.yml", Main.bypass);
+        }
+
+        // Direct message ignore old to new conversion
+        if (EntityManager.hasScoreboardTag(player, "ignore-direct-messages")) {
+            player.addScoreboardTag("ignore-msgs");
+            player.removeScoreboardTag("ignore-direct-messages");
+        }
+
 
         //noinspection ConstantConditions
         new MessageManager("discord.smp-chat.join")

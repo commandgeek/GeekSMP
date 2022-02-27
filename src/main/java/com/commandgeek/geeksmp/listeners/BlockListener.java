@@ -1,7 +1,7 @@
 package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
-import com.commandgeek.geeksmp.managers.BypassManager;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 import com.commandgeek.geeksmp.managers.LockManager;
 import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
@@ -61,7 +61,7 @@ public class BlockListener implements Listener {
         }
 
         // Check Locked Block
-        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
+        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || CommandBypass.check(player)))) {
             if (LockManager.isLocked(block)) {
                 if (LockManager.isLockedForPlayer(block, player)) {
                     event.setCancelled(true);
