@@ -7,6 +7,7 @@ import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.locks.Lock;
 
 
 public class BlockListener implements Listener {
@@ -99,14 +101,10 @@ public class BlockListener implements Listener {
     @EventHandler
     public void onHopper(InventoryMoveItemEvent event) {
         if (event.getSource().getLocation() != null && event.getDestination().getLocation() != null && event.getDestination().getType() == InventoryType.HOPPER) {
-            Block source = event.getSource().getLocation().getBlock();
-            Block destination = event.getDestination().getLocation().getBlock();
-            if (LockManager.isLocked(source) || LockManager.isLocked(destination)) {
-                String sourceOwner = LockManager.getLocker(source);
-                String destinationOwner = LockManager.getLocker(destination);
-                if (destinationOwner == null || !destinationOwner.equals(sourceOwner)) {
-                    event.setCancelled(true);
-                }
+            String sourceOwner = LockManager.getLocker(event.getSource().getLocation().getBlock());
+            String destinationOwner = LockManager.getLocker(event.getDestination().getLocation().getBlock());
+            if (destinationOwner != null && !destinationOwner.equals(sourceOwner)) {
+                event.setCancelled(true);
             }
         }
     }
