@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.commands;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.managers.EntityManager;
 import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
@@ -46,7 +47,9 @@ public class CommandBypass implements CommandExecutor {
 
         new BukkitRunnable() {
             public void run() {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(new MessageManager("locking.bypass.enabled").string()));
+                if (!Setup.isVanished(player)) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(new MessageManager("locking.bypass.enabled").string()));
+                }
                 if (!check(player)) {
                     cancel();
                 }

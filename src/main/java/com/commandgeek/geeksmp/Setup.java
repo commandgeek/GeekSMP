@@ -5,6 +5,7 @@ import com.commandgeek.geeksmp.menus.JoinMenu;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 
+import org.bukkit.metadata.MetadataValue;
 import org.javacord.api.entity.user.User;
 
 import org.bukkit.*;
@@ -270,5 +271,13 @@ public class Setup {
                 }
             }
         }.runTaskTimer(Main.instance, 100, 100);
+    }
+
+    // Check if player is vanished
+    public static boolean isVanished(Player player) {
+        for (MetadataValue meta : player.getMetadata("vanished")) {
+            if (meta.asBoolean()) return true;
+        }
+        return false;
     }
 }

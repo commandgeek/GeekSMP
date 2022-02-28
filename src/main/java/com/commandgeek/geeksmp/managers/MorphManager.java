@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.Setup;
 import com.commandgeek.geeksmp.commands.CommandBypass;
 
 import net.md_5.bungee.api.ChatMessageType;
@@ -280,7 +281,7 @@ public class MorphManager {
                     .replace("%distance%", "Different World")
                     .string();
         }
-        if (!CommandBypass.check(player)) {
+        if (!CommandBypass.check(player) && !Setup.isVanished(player)) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
         }
     }
