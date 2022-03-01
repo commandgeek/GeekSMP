@@ -223,15 +223,20 @@ public class Setup {
 
         //Find longest playername
         int longestPlayerName = 0;
-        for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if(onlinePlayer.getPlayerListName().length() >= longestPlayerName) {
-                longestPlayerName = onlinePlayer.getPlayerListName().length();
+        for(Player online : Bukkit.getOnlinePlayers()) {
+            Bukkit.getLogger().info("Player name without: " + online.getPlayerListName());
+            String onlineName = online.getPlayerListName().replaceAll("/[0-9]+/", ""); //Remove ping from playername
+            Bukkit.getLogger().info("Player name with: " + onlineName);
+            if(onlineName.length() >= longestPlayerName) {
+                longestPlayerName = onlineName.length();
             }
         }
+        Bukkit.getLogger().info("Longest name: " + longestPlayerName);
 
         //Add spaces depending on the longest player name and add ping to tab-list name
-        int charDifference = longestPlayerName - player.getPlayerListName().length();
-        player.setPlayerListName(player.getPlayerListName() + " ".repeat(++charDifference) + ChatColor.YELLOW + player.getPing());
+        String playerName = player.getPlayerListName().replaceAll("/[0-9]+/", ""); //Remove ping from playername
+        int charDifference = longestPlayerName - playerName.length();
+        player.setPlayerListName(playerName + " ".repeat(++charDifference) + ChatColor.YELLOW + player.getPing());
     }
 
     // Update tab for every online player
