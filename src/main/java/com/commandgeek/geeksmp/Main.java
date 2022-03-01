@@ -113,6 +113,7 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("day", new CommandDay(), new TabWorld());
         Setup.registerCommand("night", new CommandNight(), new TabWorld());
         Setup.registerCommand("enderchest", new CommandEnderChest(), new TabPlayer());
+        Setup.registerCommand("uptime", new CommandUptime(), new TabEmpty());
 
         // Create files
         ConfigManager.createDefaultConfig("config.yml");

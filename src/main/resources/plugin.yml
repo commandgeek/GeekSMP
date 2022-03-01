@@ -117,6 +117,8 @@ commands:
     aliases: [midnight, sunset, moon]
   enderchest:
     aliases: [echest]
+  uptime:
+    aliases: [ut]
 
 
 permissions:
@@ -228,3 +230,5 @@ permissions:
     default: op
   geeksmp.command.enderchest:
     default: op
+  geeksmp.command.uptime:
+    default: true
