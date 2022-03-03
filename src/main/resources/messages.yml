@@ -7,6 +7,13 @@ plugin:
   # %world% - The world the time was set in
   time: "&5Time set to &d%time% &5in &d%world%&5."
 
+  # %days%
+  # %hours%
+  # %minutes%
+  # %seconds%
+  # %milliseconds%
+  uptime: "&5Server's uptime: &d%days%d %hours%h %minutes%m %seconds%s %milliseconds%ms"
+
 
 broadcast:
   # %message% - Message to be broadcasted (do not include space before)

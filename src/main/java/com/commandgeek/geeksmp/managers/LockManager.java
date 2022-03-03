@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 
 import java.util.*;
+
 
 public class LockManager {
 
@@ -134,7 +136,7 @@ public class LockManager {
 
         // Check If Player Placed Block
         String placer = getPlacer(block);
-        if (!(placer == null && (Main.config.getBoolean("settings.allow-unplaced-locking") || EntityManager.hasScoreboardTag(player, "bypass-placed-locking")))) {
+        if (!(placer == null && (Main.config.getBoolean("settings.allow-unplaced-locking") || CommandBypass.check(player)))) {
             if (placer == null || !placer.equals(player.getUniqueId().toString())) {
                 player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
                 new MessageManager("locking.lock.fail")
@@ -221,17 +223,7 @@ public class LockManager {
                 Location left = doubleChest.getLeftSide().getLocation();
                 Location[] locations = {right, left};
                 for (Location loc : locations) {
-                    Block locBlock = loc.getBlock();
-                    if (isLocked(locBlock)) {
-                        String owner = getLocker(locBlock);
-                        Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
-                        Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
-                        Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
-                        Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
-                        ConfigManager.saveData("locked.yml", Main.locked);
-                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
-                        return;
-                    }
+                    location(player, right, left);
                 }
             }
         }
@@ -239,9 +231,10 @@ public class LockManager {
 
     public static void checkLockDoor(Block block, Player player) {
         if (block.getType().toString().contains("_DOOR")) {
+            //noinspection DuplicatedCode
             Door door = (Door) block.getState().getBlockData();
-            Location bottom = block.getLocation();
             Location top = block.getLocation();
+            Location bottom = block.getLocation();
 
             if (door.getHalf() == Bisected.Half.TOP) {
                 bottom = block.getLocation().subtract(0, 1, 0);
@@ -251,19 +244,23 @@ public class LockManager {
                 top = block.getLocation().add(0, 1, 0);
             }
 
-            Location[] locations = {top, bottom};
-            for (Location loc : locations) {
-                Block locBlock = loc.getBlock();
-                if (isLocked(locBlock)) {
-                    String owner = getLocker(locBlock);
-                    Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
-                    Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
-                    Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
-                    Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
-                    ConfigManager.saveData("locked.yml", Main.locked);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
-                    return;
-                }
+            location(player, top, bottom);
+        }
+    }
+
+    private static void location(Player player, Location one, Location two) {
+        Location[] locations = {one, two};
+        for (Location loc : locations) {
+            Block locBlock = loc.getBlock();
+            if (isLocked(locBlock)) {
+                String owner = getLocker(locBlock);
+                Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
+                Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
+                Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
+                Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
+                ConfigManager.saveData("locked.yml", Main.locked);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
+                return;
             }
         }
     }
@@ -319,6 +316,7 @@ public class LockManager {
 
     public static boolean attemptUnlockDoor(Block block, Player player) {
         if (block.getType().toString().contains("_DOOR")) {
+            //noinspection DuplicatedCode
             Door door = (Door) block.getState().getBlockData();
             Location top = block.getLocation();
             Location bottom = block.getLocation();

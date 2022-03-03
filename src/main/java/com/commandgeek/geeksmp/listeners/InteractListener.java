@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
@@ -48,7 +49,7 @@ public class InteractListener implements Listener {
         if (block != null && LockManager.isLockedForPlayer(block, player)) {
             String owner = Main.locked.getString(LockManager.getId(block) + ".locked");
             if (owner != null && !LockManager.isTrustedBy(player, Bukkit.getOfflinePlayer(UUID.fromString(owner)))) {
-                boolean bypass = (TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player));
+                boolean bypass = (TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || CommandBypass.check(player));
                 if (!bypass) {
                     event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);

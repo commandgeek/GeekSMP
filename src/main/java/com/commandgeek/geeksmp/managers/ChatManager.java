@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.commands.CommandSpy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -150,7 +151,7 @@ public class ChatManager {
                 .string();
         Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + ChatColor.stripColor(spy));
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (EntityManager.hasScoreboardTag(online, "spy-direct-messages") && online != sender && online != receiver) {
+            if (CommandSpy.check(online) && online != sender && online != receiver) {
                 online.sendMessage(spy);
             }
         }

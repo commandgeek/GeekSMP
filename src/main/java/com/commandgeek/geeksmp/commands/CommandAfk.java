@@ -24,9 +24,9 @@ public class CommandAfk implements CommandExecutor {
         }
 
         int cooldownTime = 5; // Get number of seconds from wherever you want
-        if(cooldowns.containsKey(sender.getName())) {
-            long secondsLeft = ((cooldowns.get(sender.getName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
-            if(secondsLeft>0) {
+        if (cooldowns.containsKey(sender.getName())) {
+            long secondsLeft = ((cooldowns.get(sender.getName()) / 1000) + cooldownTime) - (System.currentTimeMillis() / 1000);
+            if (secondsLeft > 0) {
                 // Still cooling down
                 new MessageManager("errors.cooldown")
                         .replace("%remaining%", String.valueOf(secondsLeft))
@@ -39,5 +39,5 @@ public class CommandAfk implements CommandExecutor {
 
         AfkManager.toggle(player);
         return true;
-        }
+    }
 }

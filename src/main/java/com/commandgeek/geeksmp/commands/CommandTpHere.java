@@ -2,12 +2,13 @@ package com.commandgeek.geeksmp.commands;
 
 import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
+import com.commandgeek.geeksmp.managers.TpManager;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class CommandTpHere implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -21,17 +22,7 @@ public class CommandTpHere implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 1) {
-            Player target = Bukkit.getPlayer(args[0]);
-            if (target == null) {
-                new MessageManager("errors.invalid-player")
-                        .replace("%player%", args[0])
-                        .send(player);
-                return true;
-            }
-            target.teleport(player);
-            return true;
-        }
+        if (TpManager.teleport(player, args)) return true;
 
         new MessageManager("errors.invalid-arguments").send(player);
         return true;

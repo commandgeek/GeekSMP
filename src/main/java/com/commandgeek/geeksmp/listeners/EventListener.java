@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 
+@SuppressWarnings("CommentedOutCode")
 public class EventListener implements Listener {
 
     @EventHandler

@@ -102,12 +102,13 @@ public class TeamManager {
     }
 
     public static void unrevive(Player player) {
-        if (!isAlive(player.getUniqueId().toString())) return;
-        List<String> alive = Main.alive.getStringList("alive");
-        alive.remove(player.getUniqueId().toString());
-        Main.alive.set("alive", alive);
-        ConfigManager.saveData("alive.yml", Main.alive);
-        Setup.updatePlayerRole(player);
+        if (isAlive(player.getUniqueId().toString())) {
+            List<String> alive = Main.alive.getStringList("alive");
+            alive.remove(player.getUniqueId().toString());
+            Main.alive.set("alive", alive);
+            ConfigManager.saveData("alive.yml", Main.alive);
+            Setup.updatePlayerRole(player);
+        }
     }
 
     public static boolean isStaff(Player player) {

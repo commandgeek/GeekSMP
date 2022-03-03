@@ -1,7 +1,7 @@
 package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
-import com.commandgeek.geeksmp.managers.BypassManager;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 import com.commandgeek.geeksmp.managers.LockManager;
 import com.commandgeek.geeksmp.managers.MessageManager;
 import com.commandgeek.geeksmp.managers.TeamManager;
@@ -61,7 +61,7 @@ public class BlockListener implements Listener {
         }
 
         // Check Locked Block
-        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || BypassManager.check(player)))) {
+        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || CommandBypass.check(player)))) {
             if (LockManager.isLocked(block)) {
                 if (LockManager.isLockedForPlayer(block, player)) {
                     event.setCancelled(true);
@@ -99,14 +99,10 @@ public class BlockListener implements Listener {
     @EventHandler
     public void onHopper(InventoryMoveItemEvent event) {
         if (event.getSource().getLocation() != null && event.getDestination().getLocation() != null && event.getDestination().getType() == InventoryType.HOPPER) {
-            Block source = event.getSource().getLocation().getBlock();
-            Block destination = event.getDestination().getLocation().getBlock();
-            if (LockManager.isLocked(source) || LockManager.isLocked(destination)) {
-                String sourceOwner = LockManager.getLocker(source);
-                String destinationOwner = LockManager.getLocker(destination);
-                if (destinationOwner == null || !destinationOwner.equals(sourceOwner)) {
-                    event.setCancelled(true);
-                }
+            String sourceOwner = LockManager.getLocker(event.getSource().getLocation().getBlock());
+            String destinationOwner = LockManager.getLocker(event.getDestination().getLocation().getBlock());
+            if (sourceOwner != null && destinationOwner == null || sourceOwner != null && !destinationOwner.equals(sourceOwner)) {
+                event.setCancelled(true);
             }
         }
     }

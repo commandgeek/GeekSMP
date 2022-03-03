@@ -43,8 +43,9 @@ public class Main extends JavaPlugin {
     public static FileConfiguration linked;
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
-    public static FileConfiguration bypass;
     public static FileConfiguration pets;
+    // DEPRACTED:
+    public static FileConfiguration bypass;
 
     @Override
     public void onEnable() {
@@ -112,6 +113,7 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("day", new CommandDay(), new TabWorld());
         Setup.registerCommand("night", new CommandNight(), new TabWorld());
         Setup.registerCommand("enderchest", new CommandEnderChest(), new TabPlayer());
+        Setup.registerCommand("uptime", new CommandUptime(), new TabEmpty());
 
         // Create files
         ConfigManager.createDefaultConfig("config.yml");
@@ -127,23 +129,10 @@ public class Main extends JavaPlugin {
         ConfigManager.createData("linked.yml");
         ConfigManager.createData("locked.yml");
         ConfigManager.createData("trusted.yml");
-        ConfigManager.createData("bypass.yml");
 
-        // Load files
-        Main.config = ConfigManager.loadConfig("config.yml");
-        Main.lists = ConfigManager.loadConfig("lists.yml");
-        Main.messages = ConfigManager.loadConfig("messages.yml");
-        Main.info = ConfigManager.loadConfig("info.yml");
-        Main.stats = ConfigManager.loadData("stats.yml");
-        Main.morphs = ConfigManager.loadData("morphs.yml");
-        Main.morphed = ConfigManager.loadData("morphed.yml");
-        Main.alive = ConfigManager.loadData("alive.yml");
-        Main.muted = ConfigManager.loadData("muted.yml");
-        Main.banned = ConfigManager.loadData("banned.yml");
-        Main.linked = ConfigManager.loadData("linked.yml");
-        Main.locked = ConfigManager.loadData("locked.yml");
-        Main.trusted = ConfigManager.loadData("trusted.yml");
-        Main.bypass = ConfigManager.loadConfig("bypass.yml");
+        // Load files and register commands
+        Setup.loadFiles();
+        registerRecipes();
 
         // Pet stuff
         if (MorphManager.pets()) {
@@ -167,9 +156,6 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new CommandListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ItemListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new BlockListener(), this);
-
-        // Register recipes
-        registerRecipes();
 
         // Discord
         botPrefix = config.getString("discord.prefix");
@@ -218,7 +204,7 @@ public class Main extends JavaPlugin {
         // Delete all Morphs
         for (Player online : Bukkit.getOnlinePlayers()) {
             MorphManager.unmorph(online, false);
-            online.kickPlayer("Server stopping/restarting!");
+            online.kickPlayer(ChatColor.RED + "Server stopping/restarting!");
         }
 
 //        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
