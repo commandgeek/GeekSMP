@@ -87,11 +87,11 @@ join-leave:
 # %receiver% - Player receiver name
 # %message% - Direct message content
 direct-message:
-  color: "&b"
-  send: "&6You &8to &3%receiver% &8> %color%%message%"
-  receive: "&3%sender% &8to &6You &8> %color%%message%"
-  blocked-receiver: "&c%receiver% has disabled direct messages."
-  blocked-sender: "&cYou have disabled direct messages. Use &4/msgtoggle &c to enable them."
+  color: "&d"
+  send: "&6You &8to &5%receiver% &8> %color%%message%"
+  receive: "&5%sender% &8to &6You &8> %color%%message%"
+  blocked-receiver: "&c%receiver% &4has disabled direct messages."
+  blocked-sender: "&cYou have disabled direct messages. Use &4/msgtoggle &cto enable them."
   enabled: "&5Direct messages &denabled&5."
   disabled: "&5Direct messages &ddisabled&5."
   reply-failed: "&cThere is no one to reply to."
