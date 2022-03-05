@@ -23,7 +23,7 @@ public class CommandTp implements CommandExecutor {
             return true;
         }
 
-        if (TpManager.teleport(player, args)) return true;
+        if (TpManager.teleport(player, args, false)) return true;
 
         if (args.length == 3) {
             double x = 0;

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 
 public class TpManager {
-    public static boolean teleport(Player sender, String[] args) {
+    public static boolean teleport(Player sender, String[] args, boolean here) {
         if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null) {
@@ -14,13 +14,16 @@ public class TpManager {
                         .send(sender);
                 return false;
             }
-            if (target != sender) {
-                sender.teleport(target);
-            } else {
+
+            if (here) {
                 target.teleport(sender);
+            } else {
+                sender.teleport(target);
             }
             return true;
         }
+
+        new MessageManager("errors.invalid-arguments").send(sender);
         return false;
     }
 }
