@@ -213,25 +213,40 @@ public class Main extends JavaPlugin {
 
     private void registerRecipes() {
         // Lock Tool
-        new RecipeManager("lock_tool", LockManager.lockTool)
-                .shape("  B", " A ", "A  ")
-                .set('A', Material.STICK)
-                .set('B', Material.AMETHYST_SHARD)
-                .register();
+        if (config.getBoolean("recipes.lock-tool")) {
+            new RecipeManager("lock_tool", LockManager.lockTool)
+                    .shape(
+                            "  A",
+                            " S ",
+                            "S  ")
+                    .set('S', Material.STICK)
+                    .set('A', Material.AMETHYST_SHARD)
+                    .register();
+        }
 
         // Glow Berries
-        new RecipeManager("glow_berries", new ItemStack(Material.GLOW_BERRIES))
-                .shape(" A ", "ABA", " A ")
-                .set('A', Material.GLOWSTONE_DUST)
-                .set('B', Material.SWEET_BERRIES)
-                .register();
+        if (config.getBoolean("recipes.glow-berries")) {
+            new RecipeManager("glow_berries", new ItemStack(Material.GLOW_BERRIES))
+                    .shape(
+                            " G ",
+                            "GBG",
+                            " G ")
+                    .set('G', Material.GLOWSTONE_DUST)
+                    .set('B', Material.SWEET_BERRIES)
+                    .register();
+        }
 
         // Heart of the Sea
-        new RecipeManager("heart_of_the_sea", new ItemStack(Material.HEART_OF_THE_SEA))
-                .shape("ABA", "BCB", "ABA")
-                .set('A', Material.SEA_LANTERN)
-                .set('B', Material.PRISMARINE_CRYSTALS)
-                .set('C', Material.NETHER_STAR)
-                .register();
+        if (config.getBoolean("recipes.heart-of-the-sea")) {
+            new RecipeManager("heart_of_the_sea", new ItemStack(Material.HEART_OF_THE_SEA))
+                    .shape(
+                            "LCL",
+                            "CSC",
+                            "LCL")
+                    .set('L', Material.SEA_LANTERN)
+                    .set('C', Material.PRISMARINE_CRYSTALS)
+                    .set('S', Material.NETHER_STAR)
+                    .register();
+        }
     }
 }
