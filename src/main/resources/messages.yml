@@ -56,6 +56,7 @@ discord:
 afk:
   enabled: "&7&o%player% is now AFK."
   disabled: "&7&o%player% is no longer AFK."
+  suffix: " &8[&7AFK&8]"
 
 
 # %player% - Invalid player name
