@@ -85,11 +85,13 @@ public class JoinListener implements Listener {
         }
 
 
-        //noinspection ConstantConditions
-        new MessageManager("discord.smp-chat.join")
-                .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
-                .replace("%player%", player.getName(), true)
-                .sendDiscord(DiscordManager.smpChatChannel);
+        if (!Setup.isVanished(player)) {
+            //noinspection ConstantConditions
+            new MessageManager("discord.smp-chat.join")
+                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                    .replace("%player%", player.getName(), true)
+                    .sendDiscord(DiscordManager.smpChatChannel);
+        }
 
         if (TeamManager.getPlayerTeam(player) != null) {
             //noinspection ConstantConditions
