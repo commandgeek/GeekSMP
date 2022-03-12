@@ -23,7 +23,10 @@ public class CommandTp implements CommandExecutor {
             return true;
         }
 
-        if (TpManager.teleport(player, args, false)) return true;
+        if (args.length == 1) {
+            TpManager.teleport(player, args, false);
+            return true;
+        }
 
         if (args.length == 3) {
             double x = 0;
@@ -42,11 +45,13 @@ public class CommandTp implements CommandExecutor {
                 player.teleport(new Location(player.getWorld(), x, y, z, player.getLocation().getYaw(), player.getLocation().getPitch()));
                 return true;
             } catch (NumberFormatException ignored) {
+                sender.sendMessage("INVALID 1");
                 new MessageManager("errors.invalid-arguments").send(player);
                 return true;
             }
         }
 
+        sender.sendMessage("INVALID 2");
         new MessageManager("errors.invalid-arguments").send(player);
         return true;
     }

@@ -22,8 +22,12 @@ public class CommandTpHere implements CommandExecutor {
             return true;
         }
 
-        TpManager.teleport(player, args, true);
+        if (args.length == 1) {
+            TpManager.teleport(player, args, true);
+            return true;
+        }
 
+        new MessageManager("errors.invalid-arguments").send(player);
         return true;
     }
 }
