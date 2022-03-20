@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
     public static FileConfiguration pets;
-    // DEPRACTED:
+    // DEPRECATED:
     public static FileConfiguration bypass;
 
     @Override
@@ -154,7 +154,6 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new CommandListener(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ItemListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new BlockListener(), this);
 
         // Discord

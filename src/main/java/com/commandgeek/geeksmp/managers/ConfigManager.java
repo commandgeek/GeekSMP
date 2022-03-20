@@ -20,8 +20,7 @@ public class ConfigManager {
         if (!dataFolder.exists())
             //noinspection ResultOfMethodCallIgnored
             dataFolder.mkdir();
-        File file = new File(dataFolder, name);
-        if (file.exists())
+        if (new File(dataFolder, name).exists())
             return;
         Main.instance.saveResource(name, false);
     }

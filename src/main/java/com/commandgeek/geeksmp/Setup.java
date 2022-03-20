@@ -64,7 +64,7 @@ public class Setup {
         Main.linked = ConfigManager.loadData("linked.yml");
         Main.locked = ConfigManager.loadData("locked.yml");
         Main.trusted = ConfigManager.loadData("trusted.yml");
-        // DEPRACTED:
+        // DEPRECATED:
         Main.bypass = ConfigManager.loadData("bypass.yml");
 
         // Load pets file if pets are enabled

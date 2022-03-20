@@ -67,7 +67,7 @@ public class MoveListener implements Listener {
     }
 
     @EventHandler
-    public void onToggle(EntityToggleGlideEvent event) {
+    public void onGlide(EntityToggleGlideEvent event) {
         if (event.getEntity() instanceof Player player && TeamManager.isUndead(player)) {
             event.setCancelled(true);
         }

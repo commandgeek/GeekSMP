@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
 
+
 public class MessageManager {
     private String message;
 

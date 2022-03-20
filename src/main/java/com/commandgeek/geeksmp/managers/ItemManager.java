@@ -1,6 +1,5 @@
 package com.commandgeek.geeksmp.managers;
 
-
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
@@ -15,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 public class ItemManager {
 

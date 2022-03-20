@@ -18,7 +18,7 @@ settings:
   allow-unplaced-locking: false
 
 
-# - RECIPIES -
+# - RECIPES -
 # lock-tool: Whether the custom recipe for Lock Tool should be enabled. If disabled, the only way to get lock tools would be through /locktool.
 # |  A| A = Amethyst Shard
 # | S | S = Stick

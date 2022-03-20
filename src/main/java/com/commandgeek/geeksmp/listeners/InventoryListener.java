@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -114,6 +115,15 @@ public class InventoryListener implements Listener {
                     JoinMenu.open(player);
                 }
             }.runTaskLater(Main.instance, 0);
+        }
+    }
+
+    @EventHandler
+    public void onPickUpItem(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
+                event.setCancelled(true);
+            }
         }
     }
 }
