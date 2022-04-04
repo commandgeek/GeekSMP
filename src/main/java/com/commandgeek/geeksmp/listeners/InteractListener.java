@@ -29,7 +29,7 @@ public class InteractListener implements Listener {
         
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             // Animate Morphed Entity if Exists
-            if (MorphManager.getEntity(player) != null && event.getItem() != null && event.getMaterial() == Material.BOW)) {
+            if (MorphManager.getEntity(player) != null && event.getItem() != null && event.getMaterial() == Material.BOW) {
                 new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
             }
             
