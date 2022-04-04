@@ -11,13 +11,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -85,7 +89,19 @@ public class InventoryListener implements Listener {
             }
         }
     }
+    @EventHandler
+    public void onPlayerClicks(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Action action = event.getAction();
 
+        if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
+            if(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == "bad_oman_potion") {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 1000000, 1));
+                player.setItemInHand(null);
+            }
+        }
+
+    }
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
