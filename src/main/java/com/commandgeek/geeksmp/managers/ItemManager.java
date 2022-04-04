@@ -6,6 +6,7 @@ import com.mojang.authlib.properties.Property;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,6 +32,19 @@ public class ItemManager {
             item.setItemMeta(meta);
         }
         return this;
+    }
+
+    public static ItemStack bad_omen; {
+        ItemStack item = new ItemStack(Material.POTION, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("Bad Omen Potion");
+        List<String> lore = new ArrayList<>();
+        lore.add("Right-click to get bad omen");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        bad_omen = item;
     }
 
     public ItemManager lore(String lore) {
