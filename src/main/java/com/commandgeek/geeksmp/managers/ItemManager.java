@@ -35,21 +35,18 @@ public class ItemManager {
     }
     public static ItemStack bad_omen;
 
-    public static void init() {
-        create_potion();
+    private static void create_potion() {
+        ItemStack item = new ItemStack(Material.POTION, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("Bad Omen potion");
+        List<String> lore = new ArrayList<>();
+        lore.add("Right click to get bad omen");
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(meta);
+        bad_omen = item;
     }
-        private static void create_potion() {
-            ItemStack item = new ItemStack(Material.POTION, 1);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName("Bad Omen potion");
-            List<String> lore = new ArrayList<>();
-            lore.add("Right click to get bad omen");
-            meta.setLore(lore);
-            meta.addEnchant(Enchantment.LUCK, 1, false);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            item.setItemMeta(meta);
-            bad_omen = item;
-        }
 
 
     public ItemManager lore(String lore) {
