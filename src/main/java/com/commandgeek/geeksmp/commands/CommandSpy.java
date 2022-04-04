@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandSpy implements CommandExecutor {
-    static String tag = "spy-msgs";
+    static final String tag = "spy-msgs";
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 

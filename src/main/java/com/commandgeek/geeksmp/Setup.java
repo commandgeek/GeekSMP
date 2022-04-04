@@ -274,6 +274,7 @@ public class Setup {
     }
 
     // Check if player is vanished
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isVanished(Player player) {
         for (MetadataValue meta : player.getMetadata("vanished")) {
             if (meta.asBoolean()) return true;
