@@ -248,7 +248,7 @@ public class Main extends JavaPlugin {
                     .register();
         }
         if (config.getBoolean("recipes.bad_omen_potion")) {
-            new RecipeManager("Bad_Omen_Potion", new ItemStack(ItemManager.bad_omen))
+            new RecipeManager("bad_omen_potion", new ItemStack(ItemManager.bad_omen))
                     .shape(
                             "L L",
                             " S ",
