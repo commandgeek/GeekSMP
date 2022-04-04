@@ -89,19 +89,7 @@ public class InventoryListener implements Listener {
             }
         }
     }
-    @EventHandler
-    public void onPlayerClicks(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        Action action = event.getAction();
-
-        if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
-            if(player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == "bad_oman_potion") {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 1000000, 1));
-                player.setItemInHand(null);
-            }
-        }
-
-    }
+    
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
