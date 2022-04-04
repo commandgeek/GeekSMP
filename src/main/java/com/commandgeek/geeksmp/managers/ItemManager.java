@@ -33,9 +33,8 @@ public class ItemManager {
         }
         return this;
     }
-    public static ItemStack bad_omen;
 
-    public static void create_potion() {
+    public static ItemStack bad_omen; {
         ItemStack item = new ItemStack(Material.POTION, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName("Bad Omen Potion");
