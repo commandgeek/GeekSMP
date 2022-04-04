@@ -213,10 +213,8 @@ public class LockManager {
     }
 
     public static void checkLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                location(player, doubleChest.getRightSide().getLocation(), doubleChest.getLeftSide().getLocation());
-            }
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            location(player, doubleChest.getRightSide().getLocation(), doubleChest.getLeftSide().getLocation());
         }
     }
 

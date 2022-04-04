@@ -160,30 +160,28 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
             }
         }
 
-        if (args[0].equalsIgnoreCase(Main.botPrefix + "unmute") && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
-            if (message.getMentionedUsers().size() == 1) {
-                User user = message.getMentionedUsers().get(0);
-                TextChannel channel = message.getChannel();
+        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "unmute") && manageMessages) {
+            User user = message.getMentionedUsers().get(0);
+            TextChannel channel = message.getChannel();
 
-                OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
-                if (player == null && args.length == 2) {
-                    new MessageManager("punishing.muting.discord.unmute.fail")
-                            .replace("%user%", user.getName())
-                            .sendDiscord(channel);
-                    DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
-                    return true;
-                }
+            OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
+            if (player == null && args.length == 2) {
+                new MessageManager("punishing.muting.discord.unmute.fail")
+                        .replace("%user%", user.getName())
+                        .sendDiscord(channel);
+                DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
+                return true;
+            }
 
-                CommandSender sender = Bukkit.getConsoleSender();
-                if (args.length == 2) {
-                    MuteManager.unmute(player.getName(), sender);
-                    new MessageManager("punishing.muting.discord.unmute.success")
-                            .replace("%user%", user.getMentionTag() )
-                            .replace("%player%", player.getName(), true)
-                            .replace("%uuid%", player.getUniqueId().toString())
-                            .sendDiscord(channel);
-                    return true;
-                }
+            CommandSender sender = Bukkit.getConsoleSender();
+            if (args.length == 2) {
+                MuteManager.unmute(player.getName(), sender);
+                new MessageManager("punishing.muting.discord.unmute.success")
+                        .replace("%user%", user.getMentionTag() )
+                        .replace("%player%", player.getName(), true)
+                        .replace("%uuid%", player.getUniqueId().toString())
+                        .sendDiscord(channel);
+                return true;
             }
         }
 
