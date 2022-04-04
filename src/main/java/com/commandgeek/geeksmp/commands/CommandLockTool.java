@@ -27,7 +27,7 @@ public class CommandLockTool implements CommandExecutor {
         if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target != null) {
-                target.getInventory().addItem(LockManager.getLockTool());
+                target.getInventory().addItem(LockManager.lockTool());
                 new MessageManager("trusting.lock-tool.get").replace("%player%", player.getName()).send(target);
                 new MessageManager("trusting.lock-tool.give").replace("%target%", args[0]).send(sender);
                 return true;
@@ -35,7 +35,7 @@ public class CommandLockTool implements CommandExecutor {
         }
 
         // Give lock tool to sender
-        player.getInventory().addItem(LockManager.getLockTool());
+        player.getInventory().addItem(LockManager.lockTool());
         new MessageManager("trusting.lock-tool.get").replace("%player%", player.getName()).send(sender);
         return true;
     }

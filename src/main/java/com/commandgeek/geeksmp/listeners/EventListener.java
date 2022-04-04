@@ -92,7 +92,7 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPrepareResult(PrepareResultEvent event) {
         // Prevent grindstoning/anviling Lock Tool
-        if ((event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL) && event.getInventory().contains(LockManager.lockTool)) {
+        if ((event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL) && event.getInventory().contains(LockManager.lockTool())) {
             event.setResult(new ItemStack(Material.AIR));
         }
     }

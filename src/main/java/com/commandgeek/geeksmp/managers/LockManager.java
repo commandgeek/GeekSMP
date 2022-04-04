@@ -20,8 +20,6 @@ import java.util.*;
 
 public class LockManager {
 
-    public static final ItemStack lockTool = getLockTool();
-
     public static boolean isLocked(Block block) {
         return Main.locked.contains(getId(block) + ".locked");
     }
@@ -404,7 +402,7 @@ public class LockManager {
         return WordUtils.capitalizeFully(block.getType().name().toLowerCase().replaceAll("_", " "));
     }
 
-    public static ItemStack getLockTool() {
+    public static ItemStack lockTool() {
         return new ItemManager(Material.AMETHYST_SHARD)
                 .name("&dLock Tool")
                 .lore("&7Left Click &8= &7Lock")
@@ -415,7 +413,7 @@ public class LockManager {
     }
 
     public static boolean holdingLockTool(Player player) {
-        return player.getInventory().getItemInMainHand().isSimilar(lockTool);
+        return player.getInventory().getItemInMainHand().isSimilar(lockTool());
     }
 
     public static void check() {
