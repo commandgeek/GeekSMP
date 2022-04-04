@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 
         instance = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
-
+        ItemManager.init();
         // Startup message
         getServer().getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "==================");
         getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " GeekSMP Plugin");
@@ -245,6 +245,16 @@ public class Main extends JavaPlugin {
                     .set('L', Material.SEA_LANTERN)
                     .set('C', Material.PRISMARINE_CRYSTALS)
                     .set('S', Material.NETHER_STAR)
+                    .register();
+        }
+        if (config.getBoolean("Bad_Omen_Potion")) {
+            new RecipeManager("Bad_Omen_Potion", new ItemStack(ItemManager.bad_omen))
+                    .shape(
+                            "L L",
+                            " S ",
+                            "L L")
+                    .set('L', Material.EMERALD_BLOCK)
+                    .set('S', Material.GOLD_INGOT)
                     .register();
         }
     }
