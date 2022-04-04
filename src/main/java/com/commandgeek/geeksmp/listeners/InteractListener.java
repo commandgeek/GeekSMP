@@ -26,11 +26,17 @@ public class InteractListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-
-        // Animate Morphed Entity if Exists
-        if (MorphManager.getEntity(player) != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getMaterial() == Material.BOW)) {
+        
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            // Animate Morphed Entity if Exists
+            if (MorphManager.getEntity(player) != null && event.getItem() != null && event.getMaterial() == Material.BOW)) {
                 new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
+            }
+            
+            // Bad Omen Potion stuff
+            if (player.getInventory().getItemInMainHand().isSimilar(Main.badOmenPotion())) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 1000000, 1));
+                player.setItemInHand(null);
             }
         }
 
@@ -64,6 +70,10 @@ public class InteractListener implements Listener {
                             .send(player);
                 }
             }
+        }
+        
+        if ((action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) && ) {
+            
         }
     }
 
