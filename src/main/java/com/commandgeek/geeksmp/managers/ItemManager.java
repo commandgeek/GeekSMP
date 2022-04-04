@@ -38,9 +38,9 @@ public class ItemManager {
     private static void create_potion() {
         ItemStack item = new ItemStack(Material.POTION, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("Bad Omen potion");
+        meta.setDisplayName("Bad Omen Potion");
         List<String> lore = new ArrayList<>();
-        lore.add("Right click to get bad omen");
+        lore.add("Right-click to get bad omen");
         meta.setLore(lore);
         meta.addEnchant(Enchantment.LUCK, 1, false);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
