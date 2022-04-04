@@ -28,10 +28,9 @@ public class InteractListener implements Listener {
         Block block = event.getClickedBlock();
 
         // Animate Morphed Entity if Exists
-        if (MorphManager.getEntity(player) != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getMaterial() == Material.BOW)) {
-                new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
-            }
+        boolean action = (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK);
+        if (MorphManager.getEntity(player) != null && !(action && event.getItem() != null && event.getMaterial() == Material.BOW)) {
+            new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
         }
 
         // If Holding Lock Tool

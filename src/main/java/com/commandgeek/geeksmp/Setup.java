@@ -99,10 +99,8 @@ public class Setup {
     public static void updateTasks() {
         for (String key : Main.morphs.getKeys(false)) {
             Player player = Bukkit.getPlayer(UUID.fromString(key));
-            if (player != null) {
-                if (Main.morphs.getString(key) != null) {
-                    MorphManager.universalMorphTask(player, null);
-                }
+            if (player != null && Main.morphs.getString(key) != null) {
+                MorphManager.universalMorphTask(player, null);
             }
         }
     }
@@ -115,10 +113,8 @@ public class Setup {
             String name = team.getName().replaceAll("^[0-9]+_", "");
             if (Main.config.contains("groups." + name + ".status")) {
                 String change = Main.config.getString("groups." + name + ".status");
-                if (change != null) {
-                    if (change.equalsIgnoreCase("owner")) {
-                        return;
-                    }
+                if (change != null && change.equalsIgnoreCase("owner")) {
+                    return;
                 }
             }
         }

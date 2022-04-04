@@ -41,16 +41,14 @@ public class CommandChangeLog implements TabExecutor {
                 return true;
             }
         }
-        if (args.length >= 2) {
-            if (args[0].equalsIgnoreCase("add")) {
-                StringBuilder string = new StringBuilder();
-                for (int i = 1; i < args.length; i++) {
-                    string.append(args[i]).append(" ");
-                }
-                ChangeLogManager.addItem(sender, string.toString().trim());
-                ChangeLogManager.send(sender);
-                return true;
+        if (args.length >= 2 && args[0].equalsIgnoreCase("add")) {
+            StringBuilder string = new StringBuilder();
+            for (int i = 1; i < args.length; i++) {
+                string.append(args[i]).append(" ");
             }
+            ChangeLogManager.addItem(sender, string.toString().trim());
+            ChangeLogManager.send(sender);
+            return true;
         }
         new MessageManager("errors.invalid-arguments").send(sender);
         return true;
