@@ -35,7 +35,7 @@ public class ItemManager {
     }
     public static ItemStack bad_omen;
 
-    private static void create_potion() {
+    public static void create_potion() {
         ItemStack item = new ItemStack(Material.POTION, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName("Bad Omen Potion");
@@ -47,7 +47,6 @@ public class ItemManager {
         item.setItemMeta(meta);
         bad_omen = item;
     }
-
 
     public ItemManager lore(String lore) {
         ItemMeta meta = item.getItemMeta();

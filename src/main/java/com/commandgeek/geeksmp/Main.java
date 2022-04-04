@@ -52,7 +52,6 @@ public class Main extends JavaPlugin {
 
         instance = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
-        ItemManager.init();
         // Startup message
         getServer().getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "==================");
         getServer().getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + " GeekSMP Plugin");
