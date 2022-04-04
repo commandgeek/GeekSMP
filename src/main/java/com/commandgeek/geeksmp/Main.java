@@ -250,11 +250,11 @@ public class Main extends JavaPlugin {
         if (config.getBoolean("recipes.bad_omen_potion")) {
             new RecipeManager("bad_omen_potion", new ItemStack(ItemManager.bad_omen))
                     .shape(
-                            "L L",
-                            " S ",
-                            "L L")
-                    .set('L', Material.EMERALD_BLOCK)
-                    .set('S', Material.GOLD_INGOT)
+                            "E E",
+                            " G ",
+                            "E E")
+                    .set('E', Material.EMERALD_BLOCK)
+                    .set('G', Material.GOLD_INGOT)
                     .register();
         }
     }
