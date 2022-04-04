@@ -251,7 +251,7 @@ public class Main extends JavaPlugin {
         }
 
         // Bad Omen Potion
-        if (config.getBoolean("recipes.bad_omen_potion")) {
+        if (config.getBoolean("recipes.bad-omen-potion")) {
             new RecipeManager("bad_omen_potion", badOmenPotion())
                     .shape(
                             "E E",
