@@ -267,7 +267,7 @@ public class Main extends JavaPlugin {
     public static ItemStack badOmenPotion() {
         return new ItemManager(Material.POTION)
                 .name("&dBad Omen Potion")
-                .lore("Right-click to get bad omen")
+                .lore("&7Right-click to get Bad Omen")
                 .enchant(Enchantment.MENDING, 1)
                 .flag(ItemFlag.HIDE_ENCHANTS)
                 .get();
