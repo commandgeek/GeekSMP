@@ -247,7 +247,7 @@ public class Main extends JavaPlugin {
                     .set('S', Material.NETHER_STAR)
                     .register();
         }
-        if (config.getBoolean("Bad_Omen_Potion")) {
+        if (config.getBoolean("recipes.bad_omen_potion")) {
             new RecipeManager("Bad_Omen_Potion", new ItemStack(ItemManager.bad_omen))
                     .shape(
                             "L L",
