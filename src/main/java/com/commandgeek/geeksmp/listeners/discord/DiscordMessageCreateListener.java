@@ -259,64 +259,62 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
             return true;
         }
 
-        if (args[0].equalsIgnoreCase(Main.botPrefix + "reason") && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
-            if (message.getMentionedUsers().size() == 1) {
-                User user = message.getMentionedUsers().get(0);
-                TextChannel channel = message.getChannel();
+        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "reason") && manageMessages) {
+            User user = message.getMentionedUsers().get(0);
+            TextChannel channel = message.getChannel();
 
-                UUID uuid = LinkManager.getPlayerUUID(user.getIdAsString());
-                if (uuid == null) {
-                    new MessageManager("punishing.reason.discord.missing")
-                            .replace("%user%", user.getDiscriminatedName())
-                            .sendDiscord(channel);
-                    return true;
-                }
-                OfflinePlayer target = Bukkit.getOfflinePlayer(uuid);
-                long muteTime = MuteManager.checkMuted(target.getUniqueId().toString());
-                long banTime = BanManager.checkBanned(target.getUniqueId().toString());
+            UUID uuid = LinkManager.getPlayerUUID(user.getIdAsString());
+            if (uuid == null) {
+                new MessageManager("punishing.reason.discord.missing")
+                        .replace("%user%", user.getDiscriminatedName())
+                        .sendDiscord(channel);
+                return true;
+            }
 
-                if (!MuteManager.isMuted(target.getUniqueId()) && !BanManager.isBanned(target.getUniqueId())) {
-                    new MessageManager("punishing.reason.discord.fail")
-                            .replace("%user%", user.getDiscriminatedName())
-                            .replace("%player%", target.getName(), true)
-                            .replace("%uuid%", target.getUniqueId().toString())
-                            .sendDiscord(channel);
-                } else {
-                    if (MuteManager.isMuted(target.getUniqueId())) {
-                        if (muteTime == -1) {
-                            new MessageManager("punishing.reason.discord.mute.permanent")
-                                    .replace("%user%", user.getDiscriminatedName())
-                                    .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
-                                    .replace("%player%", target.getName(), true)
-                                    .replace("%uuid%", target.getUniqueId().toString())
-                                    .sendDiscord(channel);
-                        } else {
-                            new MessageManager("punishing.reason.discord.mute.temporary")
-                                    .replace("%user%", user.getDiscriminatedName())
-                                    .replace("%duration%", NumberManager.getTimeFrom(muteTime))
-                                    .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
-                                    .replace("%player%", target.getName(), true)
-                                    .replace("%uuid%", target.getUniqueId().toString())
-                                    .sendDiscord(channel);
-                        }
+            OfflinePlayer target = Bukkit.getOfflinePlayer(uuid);
+            long muteTime = MuteManager.checkMuted(target.getUniqueId().toString());
+            long banTime = BanManager.checkBanned(target.getUniqueId().toString());
+            if (!MuteManager.isMuted(target.getUniqueId()) && !BanManager.isBanned(target.getUniqueId())) {
+                new MessageManager("punishing.reason.discord.fail")
+                        .replace("%user%", user.getDiscriminatedName())
+                        .replace("%player%", target.getName(), true)
+                        .replace("%uuid%", target.getUniqueId().toString())
+                        .sendDiscord(channel);
+            } else {
+                if (MuteManager.isMuted(target.getUniqueId())) {
+                    if (muteTime == -1) {
+                        new MessageManager("punishing.reason.discord.mute.permanent")
+                                .replace("%user%", user.getDiscriminatedName())
+                                .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
+                                .replace("%player%", target.getName(), true)
+                                .replace("%uuid%", target.getUniqueId().toString())
+                                .sendDiscord(channel);
+                    } else {
+                        new MessageManager("punishing.reason.discord.mute.temporary")
+                                .replace("%user%", user.getDiscriminatedName())
+                                .replace("%duration%", NumberManager.getTimeFrom(muteTime))
+                                .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
+                                .replace("%player%", target.getName(), true)
+                                .replace("%uuid%", target.getUniqueId().toString())
+                                .sendDiscord(channel);
                     }
-                    if (BanManager.isBanned(target.getUniqueId())) {
-                        if (banTime == -1) {
-                            new MessageManager("punishing.reason.discord.ban.permanent")
-                                    .replace("%user%", user.getDiscriminatedName())
-                                    .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
-                                    .replace("%player%", target.getName(), true)
-                                    .replace("%uuid%", target.getUniqueId().toString())
-                                    .sendDiscord(channel);
-                        } else {
-                            new MessageManager("punishing.reason.discord.ban.temporary")
-                                    .replace("%user%", user.getDiscriminatedName())
-                                    .replace("%duration%", NumberManager.getTimeFrom(banTime))
-                                    .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
-                                    .replace("%player%", target.getName(), true)
-                                    .replace("%uuid%", target.getUniqueId().toString())
-                                    .sendDiscord(channel);
-                        }
+                }
+                if (BanManager.isBanned(target.getUniqueId())) {
+                    if (banTime == -1) {
+                        new MessageManager("punishing.reason.discord.ban.permanent")
+                                .replace("%user%", user.getDiscriminatedName())
+                                .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
+                                .replace("%player%", target.getName(), true)
+                                .replace("%uuid%", target.getUniqueId().toString())
+                                .sendDiscord(channel);
+                    } else {
+                        new MessageManager("punishing.reason.discord.ban.temporary")
+                                .replace("%user%", user.getDiscriminatedName())
+                                .replace("%duration%", NumberManager.getTimeFrom(banTime))
+                                .replace("%reason%", MuteManager.getReason(target.getUniqueId()))
+                                .replace("%player%", target.getName(), true)
+                                .replace("%uuid%", target.getUniqueId().toString())
+                                .sendDiscord(channel);
                     }
                 }
                 return true;

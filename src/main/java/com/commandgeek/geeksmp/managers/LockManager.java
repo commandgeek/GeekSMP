@@ -289,16 +289,14 @@ public class LockManager {
     }
 
     public static boolean attemptUnlockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    unlock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                unlock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
