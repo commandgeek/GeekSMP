@@ -170,18 +170,16 @@ public class LockManager {
     }
 
     public static boolean attemptLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    Main.locked.set(getId(locationBlock), null);
-                    place(locationBlock, player);
-                    lock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                Main.locked.set(getId(locationBlock), null);
+                place(locationBlock, player);
+                lock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
@@ -215,15 +213,8 @@ public class LockManager {
     }
 
     public static void checkLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                Location[] locations = {right, left};
-                for (Location loc : locations) {
-                    location(player, right, left);
-                }
-            }
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            location(player, doubleChest.getRightSide().getLocation(), doubleChest.getLeftSide().getLocation());
         }
     }
 

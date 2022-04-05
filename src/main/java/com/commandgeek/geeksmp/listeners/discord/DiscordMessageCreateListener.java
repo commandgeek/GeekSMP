@@ -38,9 +38,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
         if (command(message)) return;
 
         // Run SMP Chat Command
-        if (message.getContent().startsWith("/")) {
-            if (smpChatCommand(message)) return;
-        }
+        if (message.getContent().startsWith("/") && smpChatCommand(message)) return;
 
         // Run SMP Chat message
         try {
@@ -78,30 +76,50 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
 
     public static boolean command(Message message) {
         String[] args = message.getContent().split(" ");
-        if (args[0].equalsIgnoreCase(Main.botPrefix + "send-info-message") && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.ADMINISTRATOR)) {
-            if (args.length == 2 && Main.info.contains(args[1])) {
-                message.delete();
-                DiscordManager.sendInfo(args[1], message.getChannel());
-                return true;
-            }
+
+        boolean administrator = DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.ADMINISTRATOR);
+        if (args.length == 2 && Main.info.contains(args[1]) && args[0].equalsIgnoreCase(Main.botPrefix + "send-info-message") && administrator) {
+            message.delete();
+            DiscordManager.sendInfo(args[1], message.getChannel());
+            return true;
         }
 
-        if (args[0].equalsIgnoreCase(Main.botPrefix + "mute") && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
-            if (message.getMentionedUsers().size() == 1) {
-                User user = message.getMentionedUsers().get(0);
-                TextChannel channel = message.getChannel();
+        boolean manageMessages = DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES);
+        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "mute") && manageMessages) {
+            User user = message.getMentionedUsers().get(0);
+            TextChannel channel = message.getChannel();
 
-                OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
-                if (player == null && (args.length == 2 || args.length == 3)) {
-                    new MessageManager("punishing.muting.discord.mute.fail")
+            OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
+            if (player == null && (args.length == 2 || args.length == 3)) {
+                new MessageManager("punishing.muting.discord.mute.fail")
+                        .replace("%user%", user.getName())
+                        .sendDiscord(channel);
+                DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
+                return true;
+            }
+
+            CommandSender sender = Bukkit.getConsoleSender();
+            if (args.length == 2) {
+                MuteManager.mute(player.getName(), null, null, sender);
+                new MessageManager("punishing.muting.discord.mute.permanent")
+                        .replace("%user%", user.getMentionTag())
+                        .replace("%player%", player.getName(), true)
+                        .replace("%uuid%", player.getUniqueId().toString())
+                        .sendDiscord(channel);
+                return true;
+            }
+            if (args.length == 3) {
+                if (NumberManager.stringIsDuration(args[2])) {
+                    MuteManager.mute(player.getName(), args[2], null, sender);
+                    new MessageManager("punishing.muting.discord.mute.temporary")
                             .replace("%user%", user.getName())
+                            .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
+                            .replace("%player%", player.getName(), true)
+                            .replace("%uuid%", player.getUniqueId().toString())
                             .sendDiscord(channel);
-                    DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
                     return true;
                 }
-
-                CommandSender sender = Bukkit.getConsoleSender();
-                if (args.length == 2) {
+                if (args[2].equalsIgnoreCase("p")) {
                     MuteManager.mute(player.getName(), null, null, sender);
                     new MessageManager("punishing.muting.discord.mute.permanent")
                             .replace("%user%", user.getMentionTag())
@@ -110,84 +128,60 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                             .sendDiscord(channel);
                     return true;
                 }
-                if (args.length == 3) {
-                    if (NumberManager.stringIsDuration(args[2])) {
-                        MuteManager.mute(player.getName(), args[2], null, sender);
-                        new MessageManager("punishing.muting.discord.mute.temporary")
-                                .replace("%user%", user.getName())
-                                .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
-                                .replace("%player%", player.getName(), true)
-                                .replace("%uuid%", player.getUniqueId().toString())
-                                .sendDiscord(channel);
-                        return true;
-                    }
-                    if (args[2].equalsIgnoreCase("p")) {
-                        MuteManager.mute(player.getName(), null, null, sender);
-                        new MessageManager("punishing.muting.discord.mute.permanent")
-                                .replace("%user%", user.getMentionTag())
-                                .replace("%player%", player.getName(), true)
-                                .replace("%uuid%", player.getUniqueId().toString())
-                                .sendDiscord(channel);
-                        return true;
-                    }
-                    new MessageManager("punishing.muting.discord.invalid-duration").sendDiscord(channel);
-                    return true;
-                }
-                if (args.length == 4) {
-                    StringBuilder reason = new StringBuilder();
-                    for (int i = 3; i < args.length; i++) {
-                        reason.append(args[i]).append(" ");
-                    }
-
-                    if (NumberManager.stringIsDuration(args[2])) {
-                        MuteManager.mute(args[1], args[2], reason.toString().trim(), sender);
-                        new MessageManager("punishing.muting.discord.mute.temporary")
-                                .replace("%user%", user.getName())
-                                .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
-                                .replace("%player%", player.getName(), true)
-                                .replace("%uuid%", player.getUniqueId().toString())
-                                .sendDiscord(channel);
-                        return true;
-                    }
-                    if (args[2].equalsIgnoreCase("p")) {
-                        MuteManager.mute(args[1], null, reason.toString().trim(), sender);
-                        new MessageManager("punishing.muting.discord.mute.permanent")
-                                .replace("%user%", user.getMentionTag())
-                                .replace("%player%", player.getName(), true)
-                                .replace("%uuid%", player.getUniqueId().toString())
-                                .sendDiscord(channel);
-                        return true;
-                    }
-                    new MessageManager("errors.invalid-duration").send(sender);
-                    return true;
-                }
+                new MessageManager("punishing.muting.discord.invalid-duration").sendDiscord(channel);
+                return true;
             }
-        }
-
-        if (args[0].equalsIgnoreCase(Main.botPrefix + "unmute") && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
-            if (message.getMentionedUsers().size() == 1) {
-                User user = message.getMentionedUsers().get(0);
-                TextChannel channel = message.getChannel();
-
-                OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
-                if (player == null && args.length == 2) {
-                    new MessageManager("punishing.muting.discord.unmute.fail")
-                            .replace("%user%", user.getName())
-                            .sendDiscord(channel);
-                    DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
-                    return true;
+            if (args.length == 4) {
+                StringBuilder reason = new StringBuilder();
+                for (int i = 3; i < args.length; i++) {
+                    reason.append(args[i]).append(" ");
                 }
-
-                CommandSender sender = Bukkit.getConsoleSender();
-                if (args.length == 2) {
-                    MuteManager.unmute(player.getName(), sender);
-                    new MessageManager("punishing.muting.discord.unmute.success")
-                            .replace("%user%", user.getMentionTag() )
+                if (NumberManager.stringIsDuration(args[2])) {
+                    MuteManager.mute(args[1], args[2], reason.toString().trim(), sender);
+                    new MessageManager("punishing.muting.discord.mute.temporary")
+                            .replace("%user%", user.getName())
+                            .replace("%duration%", NumberManager.getTimeFrom(MuteManager.checkMuted(player.getUniqueId().toString())))
                             .replace("%player%", player.getName(), true)
                             .replace("%uuid%", player.getUniqueId().toString())
                             .sendDiscord(channel);
                     return true;
                 }
+                if (args[2].equalsIgnoreCase("p")) {
+                    MuteManager.mute(args[1], null, reason.toString().trim(), sender);
+                    new MessageManager("punishing.muting.discord.mute.permanent")
+                            .replace("%user%", user.getMentionTag())
+                            .replace("%player%", player.getName(), true)
+                            .replace("%uuid%", player.getUniqueId().toString())
+                            .sendDiscord(channel);
+                    return true;
+                }
+                new MessageManager("errors.invalid-duration").send(sender);
+                return true;
+            }
+        }
+
+        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "unmute") && manageMessages) {
+            User user = message.getMentionedUsers().get(0);
+            TextChannel channel = message.getChannel();
+
+            OfflinePlayer player = DiscordManager.getPlayerFromUser(user);
+            if (player == null && args.length == 2) {
+                new MessageManager("punishing.muting.discord.unmute.fail")
+                        .replace("%user%", user.getName())
+                        .sendDiscord(channel);
+                DiscordManager.server.addRoleToUser(user, DiscordManager.mutedRole);
+                return true;
+            }
+
+            CommandSender sender = Bukkit.getConsoleSender();
+            if (args.length == 2) {
+                MuteManager.unmute(player.getName(), sender);
+                new MessageManager("punishing.muting.discord.unmute.success")
+                        .replace("%user%", user.getMentionTag() )
+                        .replace("%player%", player.getName(), true)
+                        .replace("%uuid%", player.getUniqueId().toString())
+                        .sendDiscord(channel);
+                return true;
             }
         }
 
