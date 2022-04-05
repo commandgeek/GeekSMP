@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -92,8 +93,16 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPrepareResult(PrepareResultEvent event) {
         // Prevent grindstoning/anviling Lock Tool
-        if ((event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL) && event.getInventory().contains(LockManager.lockTool())) {
+        boolean type = (event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL);
+        if (type && (event.getInventory().contains(LockManager.lockTool()) || event.getInventory().contains(Main.badOmenPotion()))) {
             event.setResult(new ItemStack(Material.AIR));
+        }
+    }
+
+    @EventHandler
+    public void onBew(BrewEvent event) {
+        if (event.getContents().contains(Main.badOmenPotion())) {
+            event.setCancelled(true);
         }
     }
 
