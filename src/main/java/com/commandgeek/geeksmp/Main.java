@@ -254,11 +254,12 @@ public class Main extends JavaPlugin {
         if (config.getBoolean("recipes.bad-omen-potion")) {
             new RecipeManager("bad_omen_potion", badOmenPotion())
                     .shape(
-                            "E E",
-                            " G ",
-                            "E E")
+                            "EGE",
+                            "GBG",
+                            "EGE")
                     .set('E', Material.EMERALD_BLOCK)
                     .set('G', Material.GOLD_INGOT)
+                    .set('B', Material.GLASS_BOTTLE)
                     .register();
         }
     }
