@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 
 public class CommandUptime implements CommandExecutor {
-    public final HashMap<String, Long> cooldowns = new HashMap<>();
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player && !player.hasPermission("geeksmp.command.uptime")) {
             new MessageManager("errors.no-permission").send(player);

@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 
 public class CommandBypass implements CommandExecutor {
-    static String tag = "bypass";
+    static final String tag = "bypass";
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 

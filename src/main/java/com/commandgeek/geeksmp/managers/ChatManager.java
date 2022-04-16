@@ -79,7 +79,12 @@ public class ChatManager {
         for (String word : words) {
             if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                 if (direct) {
-                    result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message.color")).append(" ");
+                    String color =  "&r";
+                    if (Main.messages.contains("direct-message.color")) {
+                        color = Main.messages.getString("direct-message.color");
+                    }
+                    //noinspection ConstantConditions
+                    result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', color)).append(" ");
                 } else if (group != null && Main.config.contains("groups." + group + ".chat-color")) {
                         //noinspection ConstantConditions
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
