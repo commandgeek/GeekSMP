@@ -30,14 +30,14 @@ settings:
 # | G |
 #
 # heart-of-the-sea: Whether the custom recipe for Heart of the Sea should be enabled.
-# |LCL| # L = Sea Lantern
-# |CSC| # S = Nether Star
-# |LCL| # C = Prismarine Crystals
+# |LCL| L = Sea Lantern
+# |CSC| S = Nether Star
+# |LCL| C = Prismarine Crystals
 #
 # bad-omen-potion: Whether the custom recipe for Bad Omen Potion should be enabled.
-# |E E|
-# | G |
-# |E E|
+# |EGE| E = Emerald Block
+# |GBG| B = Glass Bottle
+# |EGE| G = Gold Ingot
 #
 # There will soon be a way to make your own custom recipes through this file
 # REQUIRES RESTART
