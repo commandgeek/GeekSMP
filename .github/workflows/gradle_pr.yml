@@ -12,10 +12,10 @@ on:
     paths:
       - 'gradle/**'
       - 'src/**'
-      - 'build.gradle'
+      - 'build.gradle.kts'
       - 'gradlew'
       - 'gradlew.bat'
-      - 'settings.gradle'
+      - 'settings.gradle.kts'
   workflow_dispatch:
 
 jobs:

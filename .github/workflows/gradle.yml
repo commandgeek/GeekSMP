@@ -8,10 +8,10 @@ on:
     paths:
       - 'gradle/**'
       - 'src/**'
-      - 'build.gradle'
+      - 'build.gradle.kts'
       - 'gradlew'
       - 'gradlew.bat'
-      - 'settings.gradle'
+      - 'settings.gradle.kts'
 #  pull_request:
 #    paths:
 #      - 'src/**'
