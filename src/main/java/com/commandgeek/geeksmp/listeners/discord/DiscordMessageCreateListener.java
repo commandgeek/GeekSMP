@@ -359,7 +359,7 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                                 ChatColor.translateAlternateColorCodes('&', Main.messages.getString("chat.discord"))
                                         .replace("%prefix%", group.getPrefix())
                                         .replace("%player%", player.getName())
-                                        .replace("%message%", ChatManager.censor(message.getContent(), false, group.getName().replaceAll("^[0-9]+_", "")).replaceAll("\\n", ""))
+                                        .replace("%message%", ChatManager.censor(message.getContent(), false, group.getName().replaceAll("^\\d+_", "")).replaceAll("\\n", ""))
                         );
                     } else {
                         Bukkit.broadcastMessage(

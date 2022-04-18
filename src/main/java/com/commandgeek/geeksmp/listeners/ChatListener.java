@@ -32,7 +32,7 @@ public class ChatListener implements Listener {
         }
 
         Team team = TeamManager.getPlayerTeam(player);
-        if (team != null && !ChatManager.setChatMessageFromFormat(event, team.getName().replaceAll("^[0-9]+_", ""))) {
+        if (team != null && !ChatManager.setChatMessageFromFormat(event, team.getName().replaceAll("^\\d+_", ""))) {
             event.setCancelled(true);
             new MessageManager("chat.forbidden").send(player);
         }

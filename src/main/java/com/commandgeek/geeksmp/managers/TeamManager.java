@@ -43,7 +43,7 @@ public class TeamManager {
         if (Bukkit.getScoreboardManager() != null) {
             Set<Team> teams = Bukkit.getScoreboardManager().getMainScoreboard().getTeams();
             for (Team team : teams) {
-                if (team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(name)) {
+                if (team.getName().replaceAll("^\\d+_", "").equalsIgnoreCase(name)) {
                     return team.getName();
                 }
             }
@@ -63,7 +63,7 @@ public class TeamManager {
     public static boolean isUndead(Player player) {
         Team team = getPlayerTeam(player);
         if (team != null) {
-            return team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(getLast());
+            return team.getName().replaceAll("^\\d+_", "").equalsIgnoreCase(getLast());
         }
         return false;
     }
@@ -87,7 +87,7 @@ public class TeamManager {
         String name = Main.config.getString("groups." + getLast() + ".revive-group");
         Team team = getPlayerTeam(player);
         if (team != null) {
-            return team.getName().replaceAll("^[0-9]+_", "").equalsIgnoreCase(name);
+            return team.getName().replaceAll("^\\d+_", "").equalsIgnoreCase(name);
         }
         return false;
     }
@@ -114,7 +114,7 @@ public class TeamManager {
     public static boolean isStaff(Player player) {
         Team team = getPlayerTeam(player);
         if (team == null) return false;
-        String name = team.getName().replaceAll("^[0-9]+_", "");
+        String name = team.getName().replaceAll("^\\d+_", "");
         if (Main.config.contains("groups." + name + ".status")) {
             String status = Main.config.getString("groups." + name + ".status");
             return status != null && status.equalsIgnoreCase("staff");

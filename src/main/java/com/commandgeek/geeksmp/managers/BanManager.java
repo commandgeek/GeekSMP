@@ -34,7 +34,7 @@ public class BanManager {
             new MessageManager("punishing.banning.ban.permanent").replace("%player%", name).send(sender);
             return;
         }
-        long dur = Integer.parseInt(duration.replaceAll("(^[0-9]+)(.*)", "$1"));
+        long dur = Integer.parseInt(duration.replaceAll("(^\\d+)(.*)", "$1"));
         if (duration.endsWith("m")) {
             Main.banned.set(id + ".until", dur * 60 * 1000 + time);
             ConfigManager.saveData("banned.yml", Main.banned);

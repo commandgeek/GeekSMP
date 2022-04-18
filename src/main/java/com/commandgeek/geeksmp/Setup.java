@@ -110,7 +110,7 @@ public class Setup {
         // Check Should Change
         Team team = TeamManager.getPlayerTeam(player);
         if (team != null) {
-            String name = team.getName().replaceAll("^[0-9]+_", "");
+            String name = team.getName().replaceAll("^\\d+_", "");
             if (Main.config.contains("groups." + name + ".status")) {
                 String change = Main.config.getString("groups." + name + ".status");
                 if (change != null && change.equalsIgnoreCase("owner")) {
