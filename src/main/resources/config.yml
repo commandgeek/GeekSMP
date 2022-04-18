@@ -5,7 +5,7 @@
 # burn: Whether morphed players should burn in daylight (only applies to entities which naturally burn).
 # allow-end: Whether players are able to enter an end portal.
 # afk-invulnerable: Whether AFK players should be invulnerable to other players.
-# pets: Pets allow undead due to certain things if an alive player (their owner) does /pet <undead> and they are near their owner
+# pets: Pets allow undead due to certain things if an alive player (their owner) does /pet <undead> and they are near their owner.
 # allow-unplaced-locking: Whether players can lock blocks which do not have any placed data.
 settings:
   spawn-radius: 10
@@ -16,6 +16,36 @@ settings:
   afk-invulnerable: true
   pets: false # REQUIRES RESTART
   allow-unplaced-locking: false
+
+
+# - RECIPES -
+# lock-tool: Whether the custom recipe for Lock Tool should be enabled. If disabled, the only way to get lock tools would be through /locktool.
+# |  A| A = Amethyst Shard
+# | S | S = Stick
+# |S  |
+#
+# glow-berries: Whether the custom recipe for Glow Berries should be enabled.
+# | G | G = Glowstone Dust
+# |GBG| B = Sweet Berries
+# | G |
+#
+# heart-of-the-sea: Whether the custom recipe for Heart of the Sea should be enabled.
+# |LCL| L = Sea Lantern
+# |CSC| S = Nether Star
+# |LCL| C = Prismarine Crystals
+#
+# bad-omen-potion: Whether the custom recipe for Bad Omen Potion should be enabled.
+# |EGE| E = Emerald Block
+# |GBG| B = Glass Bottle
+# |EGE| G = Gold Ingot
+#
+# There will soon be a way to make your own custom recipes through this file
+# REQUIRES RESTART
+recipes:
+  lock-tool: true
+  glow-berries: true
+  heart-of-the-sea: true
+  bad-omen-potion: true
 
 
 # - UNDEAD SPAWN -
@@ -53,8 +83,9 @@ discord:
 
 
 #  - TAB -
-# header: Text to display above player tab-list. Use placeholders %tps%, %online% and %max%.
-# footer: Text to display below player tab-list. Use placeholders %tps%, %online% and %max%.
+# PlaceholderAPI supported!
+# header: Text to display above player tab-list.
+# footer: Text to display below player tab-list.
 tab:
   header:
     - "&8- &d&lGeekSMP &8-"
@@ -75,12 +106,11 @@ tab:
 #     <option>:
 #
 # - Options -
-# color: Main color of the group. Member's names will be changed. (GOLD, AQUA, DARK_RED...)
-# prefix: Group prefix for name and tab-list. ("Owner", "&eStaff"...)
-# suffix: Group suffix for name and tab-list. ("Tier 1", "&6Level 2"..)
+# color: Main color of the group. Member's names will be changed. (GOLD, AQUA, DARK_RED, etc...).
+# prefix: Group prefix for name and tab-list. ("Owner", "&eStaff", etc...).
+# suffix: Group suffix for name and tab-list. ("Tier 1", "&6Level 2", etc...).
 # chat-color: Color of chat for the group. If none is defined the group won't be able to chat.
 # translate: Whether messages from group members should translate color codes. (true, false)
-# change: If "false", members will never be moved to a different group by the plugin. If "op" members will never be moved as long as they are oped. (true, false, op)
 # role: Discord role id a member must have to be moved to this group. Does not apply if a member is in a non-changing group.
 # revive-group: Name of the group a member should be moved to when they revive. Only applies to lowest (undead) group.
 #

@@ -15,7 +15,7 @@ on:
       - 'build.gradle'
       - 'gradlew'
       - 'gradlew.bat'
-      - 'settings.gradle'
+      - 'settings.gradle.kts'
   workflow_dispatch:
 
 jobs:

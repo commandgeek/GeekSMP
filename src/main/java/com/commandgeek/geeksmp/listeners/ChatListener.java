@@ -1,6 +1,5 @@
 package com.commandgeek.geeksmp.listeners;
 
-import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.entity.Player;
@@ -33,15 +32,7 @@ public class ChatListener implements Listener {
         }
 
         Team team = TeamManager.getPlayerTeam(player);
-        if (team != null) {
-            String name = team.getName().replaceAll("^[0-9]+_", "");
-            if (ChatManager.setChatMessageFromFormat(event, name)) return;
-        }
-
-        if (EntityManager.hasScoreboardTag(player, "bypass-chat-allowed")) {
-            String name = Main.config.getString("groups." + TeamManager.getLast() + ".revive-group");
-            ChatManager.setChatMessageFromFormat(event, name);
-        } else {
+        if (team != null && !ChatManager.setChatMessageFromFormat(event, team.getName().replaceAll("^\\d+_", ""))) {
             event.setCancelled(true);
             new MessageManager("chat.forbidden").send(player);
         }

@@ -7,17 +7,29 @@ import com.destroystokyo.paper.event.inventory.PrepareResultEvent;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 
+@SuppressWarnings("CommentedOutCode")
 public class EventListener implements Listener {
+
+    @EventHandler
+    public void onSleep(PlayerBedEnterEvent event) {
+        Player player = event.getPlayer();
+        if (MorphManager.isMorphedPlayer(player) && event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.NOT_SAFE) {
+            event.setUseBed(Event.Result.ALLOW);
+        }
+    }
 
     @EventHandler
     public void onShootBow(EntityShootBowEvent event) {
@@ -81,8 +93,16 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPrepareResult(PrepareResultEvent event) {
         // Prevent grindstoning/anviling Lock Tool
-        if ((event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL) && event.getInventory().contains(LockManager.lockTool)) {
+        boolean type = (event.getInventory().getType() == InventoryType.GRINDSTONE || event.getInventory().getType() == InventoryType.ANVIL);
+        if (type && (event.getInventory().contains(LockManager.lockTool()) || event.getInventory().contains(Main.badOmenPotion()))) {
             event.setResult(new ItemStack(Material.AIR));
+        }
+    }
+
+    @EventHandler
+    public void onBew(BrewEvent event) {
+        if (event.getContents().contains(Main.badOmenPotion())) {
+            event.setCancelled(true);
         }
     }
 

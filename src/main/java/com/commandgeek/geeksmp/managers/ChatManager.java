@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.commands.CommandSpy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -51,7 +52,7 @@ public class ChatManager {
             String[] words = message.split(" ");
             StringBuilder result = new StringBuilder();
             for (String word : words) {
-                if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+                if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                     for (char ignored : word.toCharArray()) {
                         result.append("\\\\*");
                     }
@@ -76,15 +77,20 @@ public class ChatManager {
         String[] words = messageColor.split(" ");
         StringBuilder result = new StringBuilder();
         for (String word : words) {
-            if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[ -@\\[-`{-¨]", ""))) {
+            if (Main.lists.getStringList("banned-words").contains(word.toLowerCase().replaceAll("[\\n -@\\[-`{-¨]", ""))) {
                 if (direct) {
-                    result.append(ChatColor.MAGIC).append(word).append(Main.messages.getString("direct-message.color")).append(" ");
-                } else if (Main.config.contains("groups." + group + ".chat-color")) {
+                    String color =  "&r";
+                    if (Main.messages.contains("direct-message.color")) {
+                        color = Main.messages.getString("direct-message.color");
+                    }
+                    //noinspection ConstantConditions
+                    result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', color)).append(" ");
+                } else if (group != null && Main.config.contains("groups." + group + ".chat-color")) {
                         //noinspection ConstantConditions
                         result.append(ChatColor.MAGIC).append(word).append(ChatColor.translateAlternateColorCodes('&', Main.config.getString("groups." + group + ".chat-color"))).append(" ");
-                    } else {
-                        result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
-                    }
+                } else {
+                    result.append(ChatColor.MAGIC).append(word).append(ChatColor.RESET).append(" ");
+                }
             } else {
                 result.append(word).append(" ");
             }
@@ -112,7 +118,7 @@ public class ChatManager {
     }
 
     public static void directMessage(Player sender, Player receiver, String message) {
-        message = censor(message, true, null);
+        String censoredMessage = censor(message, true, null);
 
         if (EntityManager.hasScoreboardTag(sender, "ignore-direct-messages")) {
             new MessageManager("direct-message.blocked-sender").send(sender);
@@ -131,14 +137,14 @@ public class ChatManager {
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .send(sender);
         //noinspection ConstantConditions
         new MessageManager("direct-message.receive")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .send(receiver);
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);
@@ -146,11 +152,11 @@ public class ChatManager {
         String spy = new MessageManager("direct-message.spy.message")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .string();
         Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + ChatColor.stripColor(spy));
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (EntityManager.hasScoreboardTag(online, "spy-direct-messages") && online != sender && online != receiver) {
+            if (CommandSpy.check(online) && online != sender && online != receiver) {
                 online.sendMessage(spy);
             }
         }

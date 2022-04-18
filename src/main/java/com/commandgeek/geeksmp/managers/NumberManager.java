@@ -23,9 +23,8 @@ public class NumberManager {
     }
 
     public static boolean stringIsDuration(String string) {
-        string = string.replaceAll("(^[0-9]+)(.*)", "$1");
         try {
-            Integer.parseInt(string);
+            Integer.parseInt(string.replaceAll("(^\\d+)(.*)", "$1"));
             return true;
         } catch (NumberFormatException ignored) {
             return false;

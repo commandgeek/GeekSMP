@@ -1,6 +1,8 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.Setup;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -64,7 +66,7 @@ public class MorphManager {
         }
 
         if (entity.getType() == EntityType.SKELETON) {
-            //noinspection ConstantConditions
+            //noinspection ConstantConditions,DuplicatedCode
             if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
                 inventory.addItem(inventory.getItem(0));
             }
@@ -88,12 +90,6 @@ public class MorphManager {
         PlayerInventory inventory = player.getInventory();
         Entity entity = getEntity(player);
 
-        // Universal stuff
-        trackedPlayers.remove(player);
-        player.setGameMode(GameMode.SURVIVAL);
-        player.removePotionEffect(PotionEffectType.SPEED);
-        EntityManager.showPlayerForAll(player);
-
         // Data file
         Main.morphs.set(player.getUniqueId().toString(), null);
         ConfigManager.saveData("morphs.yml", Main.morphs);
@@ -113,10 +109,14 @@ public class MorphManager {
         // Entity stuff
         if (entity != null) {
             entity.remove();
+            trackedPlayers.remove(player);
+            player.setGameMode(GameMode.SURVIVAL);
+            player.removePotionEffect(PotionEffectType.SPEED);
+            EntityManager.showPlayerForAll(player);
 
             // Skeleton stuff
             if (entity.getType() == EntityType.SKELETON) {
-                //noinspection ConstantConditions
+                //noinspection ConstantConditions,DuplicatedCode
                 if (inventory.getItem(0) != null && !inventory.getItem(0).isSimilar(skeletonBow())) {
                     inventory.addItem(inventory.getItem(0));
                 }
@@ -281,7 +281,7 @@ public class MorphManager {
                     .replace("%distance%", "Different World")
                     .string();
         }
-        if (!BypassManager.check(player)) {
+        if (!CommandBypass.check(player) && !Setup.isVanished(player)) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
         }
     }
@@ -322,6 +322,7 @@ public class MorphManager {
         return Main.config.getBoolean("settings.pets");
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isPettedBy(OfflinePlayer player, OfflinePlayer owner) {
         List<String> owners = Main.pets.getStringList(player.getUniqueId().toString());
         return owners.contains(owner.getUniqueId().toString());

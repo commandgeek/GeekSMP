@@ -8,6 +8,8 @@ import com.commandgeek.geeksmp.managers.*;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
@@ -43,8 +45,9 @@ public class Main extends JavaPlugin {
     public static FileConfiguration linked;
     public static FileConfiguration locked;
     public static FileConfiguration trusted;
-    public static FileConfiguration bypass;
     public static FileConfiguration pets;
+    // DEPRECATED:
+    public static FileConfiguration bypass;
 
     @Override
     public void onEnable() {
@@ -112,6 +115,7 @@ public class Main extends JavaPlugin {
         Setup.registerCommand("day", new CommandDay(), new TabWorld());
         Setup.registerCommand("night", new CommandNight(), new TabWorld());
         Setup.registerCommand("enderchest", new CommandEnderChest(), new TabPlayer());
+        Setup.registerCommand("uptime", new CommandUptime(), new TabEmpty());
 
         // Create files
         ConfigManager.createDefaultConfig("config.yml");
@@ -127,23 +131,10 @@ public class Main extends JavaPlugin {
         ConfigManager.createData("linked.yml");
         ConfigManager.createData("locked.yml");
         ConfigManager.createData("trusted.yml");
-        ConfigManager.createData("bypass.yml");
 
-        // Load files
-        Main.config = ConfigManager.loadConfig("config.yml");
-        Main.lists = ConfigManager.loadConfig("lists.yml");
-        Main.messages = ConfigManager.loadConfig("messages.yml");
-        Main.info = ConfigManager.loadConfig("info.yml");
-        Main.stats = ConfigManager.loadData("stats.yml");
-        Main.morphs = ConfigManager.loadData("morphs.yml");
-        Main.morphed = ConfigManager.loadData("morphed.yml");
-        Main.alive = ConfigManager.loadData("alive.yml");
-        Main.muted = ConfigManager.loadData("muted.yml");
-        Main.banned = ConfigManager.loadData("banned.yml");
-        Main.linked = ConfigManager.loadData("linked.yml");
-        Main.locked = ConfigManager.loadData("locked.yml");
-        Main.trusted = ConfigManager.loadData("trusted.yml");
-        Main.bypass = ConfigManager.loadConfig("bypass.yml");
+        // Load files and register commands
+        Setup.loadFiles();
+        registerRecipes();
 
         // Pet stuff
         if (MorphManager.pets()) {
@@ -165,11 +156,7 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new CommandListener(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ItemListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new BlockListener(), this);
-
-        // Register recipes
-        registerRecipes();
 
         // Discord
         botPrefix = config.getString("discord.prefix");
@@ -219,31 +206,69 @@ public class Main extends JavaPlugin {
         // Delete all Morphs
         for (Player online : Bukkit.getOnlinePlayers()) {
             MorphManager.unmorph(online, false);
-            online.kickPlayer("Server stopping/restarting!");
+            online.kickPlayer(ChatColor.RED + "Server stopping/restarting!");
         }
     }
 
     private void registerRecipes() {
         // Lock Tool
-        new RecipeManager("lock_tool", LockManager.lockTool)
-                .shape("  B", " A ", "A  ")
-                .set('A', Material.STICK)
-                .set('B', Material.AMETHYST_SHARD)
-                .register();
+        if (config.getBoolean("recipes.lock-tool")) {
+            new RecipeManager("lock_tool", LockManager.lockTool())
+                    .shape(
+                            "  A",
+                            " S ",
+                            "S  ")
+                    .set('S', Material.STICK)
+                    .set('A', Material.AMETHYST_SHARD)
+                    .register();
+        }
 
         // Glow Berries
-        new RecipeManager("glow_berries", new ItemStack(Material.GLOW_BERRIES))
-                .shape(" A ", "ABA", " A ")
-                .set('A', Material.GLOWSTONE_DUST)
-                .set('B', Material.SWEET_BERRIES)
-                .register();
+        if (config.getBoolean("recipes.glow-berries")) {
+            new RecipeManager("glow_berries", new ItemStack(Material.GLOW_BERRIES))
+                    .shape(
+                            " G ",
+                            "GBG",
+                            " G ")
+                    .set('G', Material.GLOWSTONE_DUST)
+                    .set('B', Material.SWEET_BERRIES)
+                    .register();
+        }
 
         // Heart of the Sea
-        new RecipeManager("heart_of_the_sea", new ItemStack(Material.HEART_OF_THE_SEA))
-                .shape("ABA", "BCB", "ABA")
-                .set('A', Material.SEA_LANTERN)
-                .set('B', Material.PRISMARINE_CRYSTALS)
-                .set('C', Material.NETHER_STAR)
-                .register();
+        if (config.getBoolean("recipes.heart-of-the-sea")) {
+            new RecipeManager("heart_of_the_sea", new ItemStack(Material.HEART_OF_THE_SEA))
+                    .shape(
+                            "LCL",
+                            "CSC",
+                            "LCL")
+                    .set('L', Material.SEA_LANTERN)
+                    .set('C', Material.PRISMARINE_CRYSTALS)
+                    .set('S', Material.NETHER_STAR)
+                    .register();
+        }
+
+        // Bad Omen Potion
+        if (config.getBoolean("recipes.bad-omen-potion")) {
+            new RecipeManager("bad_omen_potion", badOmenPotion())
+                    .shape(
+                            "EGE",
+                            "GBG",
+                            "EGE")
+                    .set('E', Material.EMERALD_BLOCK)
+                    .set('G', Material.GOLD_INGOT)
+                    .set('B', Material.GLASS_BOTTLE)
+                    .register();
+        }
+    }
+
+    // Bad Omen Potion ItemStack
+    public static ItemStack badOmenPotion() {
+        return new ItemManager(Material.POTION)
+                .name("&dBad Omen Potion")
+                .lore("&7Right-click to get Bad Omen")
+                .enchant(Enchantment.MENDING, 1)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .get();
     }
 }

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -71,13 +72,11 @@ public class InventoryListener implements Listener {
                 if (value != null) {
                     UUID uuid = UUID.fromString(value);
                     Entity entity = Bukkit.getEntity(uuid);
-                    if (entity instanceof Skeleton) {
-                        if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
-                            boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
-                            boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
-                            if (skeletonBow || skeletonArrow) {
-                                event.setCancelled(true);
-                            }
+                    if (entity instanceof Skeleton && event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
+                        boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
+                        boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
+                        if (skeletonBow || skeletonArrow) {
+                            event.setCancelled(true);
                         }
                     }
                 }
@@ -114,6 +113,13 @@ public class InventoryListener implements Listener {
                     JoinMenu.open(player);
                 }
             }.runTaskLater(Main.instance, 0);
+        }
+    }
+
+    @EventHandler
+    public void onPickUpItem(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player player && TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
+            event.setCancelled(true);
         }
     }
 }

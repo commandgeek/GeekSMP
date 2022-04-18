@@ -10,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandSpy implements CommandExecutor {
+    static final String tag = "spy-msgs";
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
@@ -21,14 +23,17 @@ public class CommandSpy implements CommandExecutor {
             return true;
         }
 
-        String tag = "spy-direct-messages";
         if (EntityManager.hasScoreboardTag(player, tag)) {
             player.removeScoreboardTag(tag);
-            new MessageManager("direct-message.spy.").send(player);
+            new MessageManager("direct-message.spy.disabled").send(player);
         } else {
             player.addScoreboardTag(tag);
-            new MessageManager("direct-message.spy.").send(player);
+            new MessageManager("direct-message.spy.enabled").send(player);
         }
         return true;
+    }
+
+    public static boolean check(Player player) {
+        return (EntityManager.hasScoreboardTag(player, tag));
     }
 }

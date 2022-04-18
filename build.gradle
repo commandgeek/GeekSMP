@@ -1,10 +1,12 @@
+//file:noinspection VulnerableLibrariesLocal
+
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.commandgeek'
-version = '1.2.0'
+version = '1.2.3'
 description = 'GeekSMP'
 
 repositories {

@@ -2,6 +2,7 @@ package com.commandgeek.geeksmp.listeners;
 
 import com.commandgeek.geeksmp.Main;
 import com.commandgeek.geeksmp.Setup;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 import com.commandgeek.geeksmp.managers.*;
 
 import org.bukkit.Bukkit;
@@ -13,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 
 public class JoinListener implements Listener {
@@ -58,20 +61,37 @@ public class JoinListener implements Listener {
             StatsManager.add("unique-joins");
         }
 
-        // Enable lock bypass
-        if (BypassManager.check(player)) {
-            BypassManager.enable(player, false);
-        }
-
         for (Player online : Bukkit.getOnlinePlayers()) {
             EntityManager.checkHiddenPlayer(online, player);
         }
 
-        //noinspection ConstantConditions
-        new MessageManager("discord.smp-chat.join")
-                .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
-                .replace("%player%", player.getName(), true)
-                .sendDiscord(DiscordManager.smpChatChannel);
+        // Enable bypass
+        if (EntityManager.hasScoreboardTag(player, "bypass")) {
+            CommandBypass.enable(player, true);
+
+            // Remove from file
+            if (Main.bypass.getStringList("bypass").contains(player.getUniqueId().toString())) {
+                List<String> bypass = Main.bypass.getStringList("bypass");
+                bypass.remove(player.getUniqueId().toString());
+                Main.bypass.set("bypass", bypass);
+                ConfigManager.saveData("bypass.yml", Main.bypass);
+            }
+        }
+
+        // Direct message ignore old to new conversion
+        if (EntityManager.hasScoreboardTag(player, "ignore-direct-messages")) {
+            player.addScoreboardTag("ignore-msgs");
+            player.removeScoreboardTag("ignore-direct-messages");
+        }
+
+
+        if (!Setup.isVanished(player)) {
+            //noinspection ConstantConditions
+            new MessageManager("discord.smp-chat.join")
+                    .replace("%prefix%", ChatColor.stripColor(TeamManager.getPlayerTeam(player).getPrefix()))
+                    .replace("%player%", player.getName(), true)
+                    .sendDiscord(DiscordManager.smpChatChannel);
+        }
 
         if (TeamManager.getPlayerTeam(player) != null) {
             //noinspection ConstantConditions
@@ -101,11 +121,11 @@ public class JoinListener implements Listener {
         if (remainder != 0) {
             String reason;
             if (remainder > 0) {
-                reason = new MessageManager("punishing.banning.login.-temporary")
+                reason = new MessageManager("punishing.banning.login.temporary")
                         .replace("%duration%", NumberManager.getTimeFrom(remainder))
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             } else {
-                reason = new MessageManager("punishing.banning.login.-permanent")
+                reason = new MessageManager("punishing.banning.login.permanent")
                         .replace("%reason%", BanManager.getReason(player.getUniqueId())).string();
             }
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, reason);

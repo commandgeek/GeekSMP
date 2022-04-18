@@ -1,6 +1,7 @@
 package com.commandgeek.geeksmp.managers;
 
 import com.commandgeek.geeksmp.Main;
+import com.commandgeek.geeksmp.commands.CommandBypass;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -16,9 +17,8 @@ import org.bukkit.inventory.*;
 
 import java.util.*;
 
-public class LockManager {
 
-    public static final ItemStack lockTool = getLockTool();
+public class LockManager {
 
     public static boolean isLocked(Block block) {
         return Main.locked.contains(getId(block) + ".locked");
@@ -66,12 +66,11 @@ public class LockManager {
         List<Location> locked = new ArrayList<>();
 
         for (String key : Main.locked.getKeys(false)) {
-            String[] c = key.split("=");
-            Location loc = new Location(Bukkit.getWorld(c[0]), Double.parseDouble(c[1]), Double.parseDouble(c[2]), Double.parseDouble(c[3]));
+            String[] split = key.split("=");
+            Location loc = new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
             if (loc.getWorld() == player.getLocation().getWorld() && loc.distance(player.getLocation()) <= radius) {
                 Block block = loc.getBlock();
                 String owner = getLocker(block);
-
                 if (owner != null) {
                     if (owner.equals(player.getUniqueId().toString())) {
                         owned.add(loc);
@@ -83,7 +82,6 @@ public class LockManager {
                 }
             }
         }
-
         return Arrays.asList(owned, trusted, locked);
     }
 
@@ -136,7 +134,7 @@ public class LockManager {
 
         // Check If Player Placed Block
         String placer = getPlacer(block);
-        if (!(placer == null && (Main.config.getBoolean("settings.allow-unplaced-locking") || EntityManager.hasScoreboardTag(player, "bypass-placed-locking")))) {
+        if (!(placer == null && (Main.config.getBoolean("settings.allow-unplaced-locking") || CommandBypass.check(player)))) {
             if (placer == null || !placer.equals(player.getUniqueId().toString())) {
                 player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
                 new MessageManager("locking.lock.fail")
@@ -172,18 +170,16 @@ public class LockManager {
     }
 
     public static boolean attemptLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    Main.locked.set(getId(locationBlock), null);
-                    place(locationBlock, player);
-                    lock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                Main.locked.set(getId(locationBlock), null);
+                place(locationBlock, player);
+                lock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
@@ -217,33 +213,17 @@ public class LockManager {
     }
 
     public static void checkLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                Location[] locations = {right, left};
-                for (Location loc : locations) {
-                    Block locBlock = loc.getBlock();
-                    if (isLocked(locBlock)) {
-                        String owner = getLocker(locBlock);
-                        Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
-                        Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
-                        Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
-                        Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
-                        ConfigManager.saveData("locked.yml", Main.locked);
-                        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
-                        return;
-                    }
-                }
-            }
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            location(player, doubleChest.getRightSide().getLocation(), doubleChest.getLeftSide().getLocation());
         }
     }
 
     public static void checkLockDoor(Block block, Player player) {
         if (block.getType().toString().contains("_DOOR")) {
+            //noinspection DuplicatedCode
             Door door = (Door) block.getState().getBlockData();
-            Location bottom = block.getLocation();
             Location top = block.getLocation();
+            Location bottom = block.getLocation();
 
             if (door.getHalf() == Bisected.Half.TOP) {
                 bottom = block.getLocation().subtract(0, 1, 0);
@@ -253,19 +233,23 @@ public class LockManager {
                 top = block.getLocation().add(0, 1, 0);
             }
 
-            Location[] locations = {top, bottom};
-            for (Location loc : locations) {
-                Block locBlock = loc.getBlock();
-                if (isLocked(locBlock)) {
-                    String owner = getLocker(locBlock);
-                    Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
-                    Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
-                    Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
-                    Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
-                    ConfigManager.saveData("locked.yml", Main.locked);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
-                    return;
-                }
+            location(player, top, bottom);
+        }
+    }
+
+    private static void location(Player player, Location one, Location two) {
+        Location[] locations = {one, two};
+        for (Location loc : locations) {
+            Block locBlock = loc.getBlock();
+            if (isLocked(locBlock)) {
+                String owner = getLocker(locBlock);
+                Main.locked.set(getId(locations[0].getBlock()) + ".locked", owner);
+                Main.locked.set(getId(locations[1].getBlock()) + ".locked", owner);
+                Main.locked.set(getId(locations[0].getBlock()) + ".place", owner);
+                Main.locked.set(getId(locations[1].getBlock()) + ".place", owner);
+                ConfigManager.saveData("locked.yml", Main.locked);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 2);
+                return;
             }
         }
     }
@@ -305,22 +289,21 @@ public class LockManager {
     }
 
     public static boolean attemptUnlockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    unlock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                unlock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
 
     public static boolean attemptUnlockDoor(Block block, Player player) {
         if (block.getType().toString().contains("_DOOR")) {
+            //noinspection DuplicatedCode
             Door door = (Door) block.getState().getBlockData();
             Location top = block.getLocation();
             Location bottom = block.getLocation();
@@ -408,7 +391,7 @@ public class LockManager {
         return WordUtils.capitalizeFully(block.getType().name().toLowerCase().replaceAll("_", " "));
     }
 
-    public static ItemStack getLockTool() {
+    public static ItemStack lockTool() {
         return new ItemManager(Material.AMETHYST_SHARD)
                 .name("&dLock Tool")
                 .lore("&7Left Click &8= &7Lock")
@@ -419,7 +402,7 @@ public class LockManager {
     }
 
     public static boolean holdingLockTool(Player player) {
-        return player.getInventory().getItemInMainHand().isSimilar(lockTool);
+        return player.getInventory().getItemInMainHand().isSimilar(lockTool());
     }
 
     public static void check() {

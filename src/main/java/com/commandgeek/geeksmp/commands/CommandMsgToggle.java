@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
 public class CommandMsgToggle implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -20,7 +21,7 @@ public class CommandMsgToggle implements CommandExecutor {
             return true;
         }
 
-        String tag = "ignore-direct-messages";
+        String tag = "ignore-msgs";
         if (EntityManager.hasScoreboardTag(player, tag)) {
             player.removeScoreboardTag(tag);
             new MessageManager("direct-message.enabled").send(player);

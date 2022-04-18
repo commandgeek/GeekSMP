@@ -30,7 +30,7 @@ public class MuteManager {
             new MessageManager("punishing.muting.mute.permanent").replace("%player%", name).send(sender);
             return;
         }
-        long dur = Integer.parseInt(duration.replaceAll("(^[0-9]+)(.*)", "$1"));
+        long dur = Integer.parseInt(duration.replaceAll("(^\\d+)(.*)", "$1"));
         if (duration.endsWith("m")) {
             Main.muted.set(id + ".until", dur * 60 * 1000 + time);
             ConfigManager.saveData("muted.yml", Main.muted);

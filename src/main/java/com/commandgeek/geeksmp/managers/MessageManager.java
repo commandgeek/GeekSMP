@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
 
+
 public class MessageManager {
     private String message;
 
@@ -27,12 +28,10 @@ public class MessageManager {
 
     public MessageManager replace(String regex, String replacement, boolean escapeMarkdown) {
         if (escapeMarkdown) {
-            String mdRegex = "[*_`~>|]";
-            replacement = replacement.replaceAll(mdRegex, Matcher.quoteReplacement("\\")+"$0");
+            message = message.replaceAll(regex, Matcher.quoteReplacement(replacement.replaceAll("[*_`~>|]", Matcher.quoteReplacement("\\")+"$0")));
+            return this;
         }
-
-        message = message.replaceAll(regex, Matcher.quoteReplacement(replacement));
-        return this;
+        return null;
     }
 
     public void send(CommandSender sender) {

@@ -5,6 +5,7 @@ import com.commandgeek.geeksmp.menus.JoinMenu;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 
+import org.bukkit.metadata.MetadataValue;
 import org.javacord.api.entity.user.User;
 
 import org.bukkit.*;
@@ -21,25 +22,6 @@ import java.util.*;
 
 public class Setup {
     public static void reload() {
-        // Load files
-        Main.config = ConfigManager.loadConfig("config.yml");
-        Main.lists = ConfigManager.loadConfig("lists.yml");
-        Main.messages = ConfigManager.loadConfig("messages.yml");
-        Main.info = ConfigManager.loadConfig("info.yml");
-        Main.stats = ConfigManager.loadData("stats.yml");
-        Main.morphs = ConfigManager.loadData("morphs.yml");
-        Main.morphed = ConfigManager.loadData("morphed.yml");
-        Main.alive = ConfigManager.loadData("alive.yml");
-        Main.muted = ConfigManager.loadData("muted.yml");
-        Main.banned = ConfigManager.loadData("banned.yml");
-        Main.linked = ConfigManager.loadData("linked.yml");
-        Main.locked = ConfigManager.loadData("locked.yml");
-        Main.trusted = ConfigManager.loadData("trusted.yml");
-        Main.bypass = ConfigManager.loadData("bypass.yml");
-        if (MorphManager.pets()) {
-            Main.pets = ConfigManager.loadData("pets.yml");
-        }
-
         // Discord roles
         DiscordManager.mutedRole = DiscordManager.roleFromConfig(Main.config, "discord.muted-role");
         DiscordManager.linkedRole = DiscordManager.roleFromConfig(Main.config, "discord.linked-role");
@@ -55,6 +37,7 @@ public class Setup {
         Bukkit.setSpawnRadius(Main.config.getInt("settings.spawn-protection"));
 
         // One-time updates
+        loadFiles();
         updateTasks();
         updateTabMetaForAll();
         updateTeams();
@@ -66,6 +49,30 @@ public class Setup {
         updateSetupTimer();
         initializeMovementCheck();
     }
+
+    static void loadFiles() {
+        Main.config = ConfigManager.loadConfig("config.yml");
+        Main.lists = ConfigManager.loadConfig("lists.yml");
+        Main.messages = ConfigManager.loadConfig("messages.yml");
+        Main.info = ConfigManager.loadConfig("info.yml");
+        Main.stats = ConfigManager.loadData("stats.yml");
+        Main.morphs = ConfigManager.loadData("morphs.yml");
+        Main.morphed = ConfigManager.loadData("morphed.yml");
+        Main.alive = ConfigManager.loadData("alive.yml");
+        Main.muted = ConfigManager.loadData("muted.yml");
+        Main.banned = ConfigManager.loadData("banned.yml");
+        Main.linked = ConfigManager.loadData("linked.yml");
+        Main.locked = ConfigManager.loadData("locked.yml");
+        Main.trusted = ConfigManager.loadData("trusted.yml");
+        // DEPRECATED:
+        Main.bypass = ConfigManager.loadData("bypass.yml");
+
+        // Load pets file if pets are enabled
+        if (MorphManager.pets()) {
+            Main.pets = ConfigManager.loadData("pets.yml");
+        }
+    }
+
 
     public static void updateTeams() {
         ConfigurationSection section = Main.config.getConfigurationSection("groups");
@@ -92,10 +99,8 @@ public class Setup {
     public static void updateTasks() {
         for (String key : Main.morphs.getKeys(false)) {
             Player player = Bukkit.getPlayer(UUID.fromString(key));
-            if (player != null) {
-                if (Main.morphs.getString(key) != null) {
-                    MorphManager.universalMorphTask(player, null);
-                }
+            if (player != null && Main.morphs.getString(key) != null) {
+                MorphManager.universalMorphTask(player, null);
             }
         }
     }
@@ -105,13 +110,11 @@ public class Setup {
         // Check Should Change
         Team team = TeamManager.getPlayerTeam(player);
         if (team != null) {
-            String name = team.getName().replaceAll("^[0-9]+_", "");
+            String name = team.getName().replaceAll("^\\d+_", "");
             if (Main.config.contains("groups." + name + ".status")) {
                 String change = Main.config.getString("groups." + name + ".status");
-                if (change != null) {
-                    if (change.equalsIgnoreCase("owner")) {
-                        return;
-                    }
+                if (change != null && change.equalsIgnoreCase("owner")) {
+                    return;
                 }
             }
         }
@@ -120,13 +123,11 @@ public class Setup {
         User user = DiscordManager.getUserFromPlayer(player);
         ConfigurationSection section = Main.config.getConfigurationSection("groups");
         if (user != null && section != null) {
-            Set<String> keys = section.getKeys(false);
             user.updateNickname(DiscordManager.server, player.getName());
             updateMemberRoles(player.getUniqueId());
 
-            for (String key : keys) {
-                String id = section.getString(key + ".role");
-                if (DiscordManager.userHasRole(user, id)) {
+            for (String key : section.getKeys(false)) {
+                if (DiscordManager.userHasRole(user, section.getString(key + ".role"))) {
                     if (MorphManager.isMorphedPlayer(player)) {
                         new BukkitRunnable() {
                             public void run() {
@@ -142,7 +143,7 @@ public class Setup {
         }
 
         // Check Revived
-        if (TeamManager.isAlive(player)) {
+        if (TeamManager.isAlive(player.getUniqueId().toString())) {
             String name = Main.config.getString("groups." + TeamManager.getLast() + ".revive-group");
             new TeamManager(TeamManager.endsWith(name)).join(player);
             return;
@@ -284,5 +285,14 @@ public class Setup {
                 }
             }
         }.runTaskTimer(Main.instance, 100, 100);
+    }
+
+    // Check if player is vanished
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    public static boolean isVanished(Player player) {
+        for (MetadataValue meta : player.getMetadata("vanished")) {
+            if (meta.asBoolean()) return true;
+        }
+        return false;
     }
 }

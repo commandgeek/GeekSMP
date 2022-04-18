@@ -70,15 +70,13 @@ public class DamageListener implements Listener {
         }
 
         // Prevent undeads from destroying item frames or armor stands
-        if ((victim instanceof ItemFrame || victim instanceof ArmorStand) && damager instanceof Player player) {
-            if (TeamManager.isUndead(player)) {
-                if (MorphManager.pets()) {
-                    if (!MorphManager.isPetNearOwner(player)) {
-                        event.setCancelled(true);
-                    }
-                } else {
+        if ((victim instanceof ItemFrame || victim instanceof ArmorStand) && damager instanceof Player player && TeamManager.isUndead(player)) {
+            if (MorphManager.pets()) {
+                if (!MorphManager.isPetNearOwner(player)) {
                     event.setCancelled(true);
                 }
+            } else {
+                event.setCancelled(true);
             }
         }
     }

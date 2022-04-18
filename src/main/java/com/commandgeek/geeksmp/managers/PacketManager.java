@@ -63,7 +63,7 @@ public class PacketManager {
 
         Team team = TeamManager.getPlayerTeam(player);
         if (team != null) {
-            String teamName = team.getName().replaceAll("^[0-9]+_", "");
+            String teamName = team.getName().replaceAll("^\\d+_", "");
             String color = Main.config.getString("groups." + teamName + ".color");
 
             playerDisplayName = WrappedChatComponent.fromText(ChatColor.valueOf(color) + player.getName());

@@ -29,6 +29,7 @@ public class CommandFeed implements CommandExecutor {
                 return true;
             }
             target.setFoodLevel(20);
+            target.setSaturation(20);
             return true;
         }
 

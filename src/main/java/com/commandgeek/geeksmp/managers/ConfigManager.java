@@ -15,27 +15,28 @@ public class ConfigManager {
 
     private static final File dataFolder = Main.instance.getDataFolder();
     private static final File dataStorage = new File(dataFolder, "data");
-    @SuppressWarnings("EmptyMethod")
-    private static void ignore(boolean b) {}
 
     public static void createDefaultConfig(String name) {
         if (!dataFolder.exists())
-            ignore(dataFolder.mkdir());
-        File file = new File(dataFolder, name);
-        if (file.exists())
+            //noinspection ResultOfMethodCallIgnored
+            dataFolder.mkdir();
+        if (new File(dataFolder, name).exists())
             return;
         Main.instance.saveResource(name, false);
     }
 
     public static void createData(String name) {
         if (!dataFolder.exists())
-            ignore(dataFolder.mkdir());
+            //noinspection ResultOfMethodCallIgnored
+            dataFolder.mkdir();
         if (!dataStorage.exists())
-            ignore(dataStorage.mkdir());
+            //noinspection ResultOfMethodCallIgnored
+            dataStorage.mkdir();
         File file = new File(dataStorage, name);
         if (!file.exists()) {
             try {
-                ignore(file.createNewFile());
+                //noinspection ResultOfMethodCallIgnored
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }

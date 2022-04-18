@@ -54,7 +54,7 @@ public class MoveListener implements Listener {
     public void onSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
 
-        if (!player.isSneaking() && player.getInventory().getItemInMainHand().isSimilar(LockManager.lockTool)) {
+        if (!player.isSneaking() && player.getInventory().getItemInMainHand().isSimilar(LockManager.lockTool())) {
             new BukkitRunnable() {
                 public void run() {
                     LockManager.showLockedLocations(player);
@@ -67,7 +67,7 @@ public class MoveListener implements Listener {
     }
 
     @EventHandler
-    public void onToggle(EntityToggleGlideEvent event) {
+    public void onGlide(EntityToggleGlideEvent event) {
         if (event.getEntity() instanceof Player player && TeamManager.isUndead(player)) {
             event.setCancelled(true);
         }
