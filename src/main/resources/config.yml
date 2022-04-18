@@ -34,11 +34,18 @@ settings:
 # |CSC| # S = Nether Star
 # |LCL| # C = Prismarine Crystals
 #
+# bad-omen-potion: Whether the custom recipe for Bad Omen Potion should be enabled.
+# |E E|
+# | G |
+# |E E|
+#
 # There will soon be a way to make your own custom recipes through this file
+# REQUIRES RESTART
 recipes:
   lock-tool: true
   glow-berries: true
   heart-of-the-sea: true
+  bad-omen-potion: true
 
 
 # - UNDEAD SPAWN -

@@ -16,6 +16,10 @@ import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -25,12 +29,26 @@ public class InteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        PlayerInventory inventory = player.getInventory();
+        ItemStack mainHand = inventory.getItemInMainHand();
+        ItemStack offHand = inventory.getItemInOffHand();
         Block block = event.getClickedBlock();
-
-        // Animate Morphed Entity if Exists
-        if (MorphManager.getEntity(player) != null) {
-            if (!((event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem() != null && event.getMaterial() == Material.BOW)) {
+        
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            // Animate Morphed Entity if Exists
+            if (MorphManager.getEntity(player) != null && event.getItem() != null && event.getMaterial() == Material.BOW) {
                 new PacketManager().animateEntity(MorphManager.getEntity(player), 0);
+            }
+            
+            // Bad Omen Potion stuff
+            if (mainHand.isSimilar(Main.badOmenPotion()) || offHand.isSimilar(Main.badOmenPotion())) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN, 1000000, 0));
+                if (mainHand.isSimilar(Main.badOmenPotion())) {
+                    inventory.setItemInMainHand(new ItemStack(Material.GLASS_BOTTLE));
+                }
+                if (offHand.isSimilar(Main.badOmenPotion())) {
+                    inventory.setItemInOffHand(new ItemStack(Material.GLASS_BOTTLE));
+                }
             }
         }
 

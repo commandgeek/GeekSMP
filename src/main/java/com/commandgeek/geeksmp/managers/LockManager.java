@@ -20,8 +20,6 @@ import java.util.*;
 
 public class LockManager {
 
-    public static final ItemStack lockTool = getLockTool();
-
     public static boolean isLocked(Block block) {
         return Main.locked.contains(getId(block) + ".locked");
     }
@@ -172,18 +170,16 @@ public class LockManager {
     }
 
     public static boolean attemptLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    Main.locked.set(getId(locationBlock), null);
-                    place(locationBlock, player);
-                    lock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                Main.locked.set(getId(locationBlock), null);
+                place(locationBlock, player);
+                lock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
@@ -217,15 +213,8 @@ public class LockManager {
     }
 
     public static void checkLockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                Location[] locations = {right, left};
-                for (Location loc : locations) {
-                    location(player, right, left);
-                }
-            }
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            location(player, doubleChest.getRightSide().getLocation(), doubleChest.getLeftSide().getLocation());
         }
     }
 
@@ -300,16 +289,14 @@ public class LockManager {
     }
 
     public static boolean attemptUnlockDoubleChest(Block block, Player player) {
-        if (block.getState() instanceof Chest chest) {
-            if (chest.getInventory() instanceof DoubleChestInventory doubleChest) {
-                Location right = doubleChest.getRightSide().getLocation();
-                Location left = doubleChest.getLeftSide().getLocation();
-                for (Location location : new Location[]{right, left}) {
-                    Block locationBlock = location.getBlock();
-                    unlock(locationBlock, player);
-                }
-                return true;
+        if (block.getState() instanceof Chest chest && chest.getInventory() instanceof DoubleChestInventory doubleChest) {
+            Location right = doubleChest.getRightSide().getLocation();
+            Location left = doubleChest.getLeftSide().getLocation();
+            for (Location location : new Location[]{right, left}) {
+                Block locationBlock = location.getBlock();
+                unlock(locationBlock, player);
             }
+            return true;
         }
         return false;
     }
@@ -404,7 +391,7 @@ public class LockManager {
         return WordUtils.capitalizeFully(block.getType().name().toLowerCase().replaceAll("_", " "));
     }
 
-    public static ItemStack getLockTool() {
+    public static ItemStack lockTool() {
         return new ItemManager(Material.AMETHYST_SHARD)
                 .name("&dLock Tool")
                 .lore("&7Left Click &8= &7Lock")
@@ -415,7 +402,7 @@ public class LockManager {
     }
 
     public static boolean holdingLockTool(Player player) {
-        return player.getInventory().getItemInMainHand().isSimilar(lockTool);
+        return player.getInventory().getItemInMainHand().isSimilar(lockTool());
     }
 
     public static void check() {

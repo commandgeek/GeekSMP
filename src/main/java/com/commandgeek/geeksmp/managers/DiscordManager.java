@@ -85,10 +85,8 @@ public class DiscordManager {
     public static TextChannel channelFromConfig(FileConfiguration config, String key) {
         if (config.contains(key)) {
             String id = config.getString(key);
-            if (id != null) {
-                if (Main.discordAPI.getTextChannelById(id).isPresent()) {
-                    return Main.discordAPI.getTextChannelById(id).get();
-                }
+            if (id != null && Main.discordAPI.getTextChannelById(id).isPresent()) {
+                return Main.discordAPI.getTextChannelById(id).get();
             }
         }
         return null;
@@ -109,10 +107,8 @@ public class DiscordManager {
     public static Role roleFromConfig(FileConfiguration config, String key) {
         if (config.contains(key)) {
             String id = config.getString(key);
-            if (id != null) {
-                if (Main.discordAPI.getRoleById(id).isPresent()) {
-                    return Main.discordAPI.getRoleById(id).get();
-                }
+            if (id != null && Main.discordAPI.getRoleById(id).isPresent()) {
+                return Main.discordAPI.getRoleById(id).get();
             }
         }
         return null;

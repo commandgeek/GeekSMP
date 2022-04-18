@@ -118,7 +118,7 @@ public class ChatManager {
     }
 
     public static void directMessage(Player sender, Player receiver, String message) {
-        message = censor(message, true, null);
+        String censoredMessage = censor(message, true, null);
 
         if (EntityManager.hasScoreboardTag(sender, "ignore-direct-messages")) {
             new MessageManager("direct-message.blocked-sender").send(sender);
@@ -137,14 +137,14 @@ public class ChatManager {
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .send(sender);
         //noinspection ConstantConditions
         new MessageManager("direct-message.receive")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
                 .replace("%color%", ChatColor.translateAlternateColorCodes('&', Main.messages.getString("direct-message.color")))
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .send(receiver);
         lastMessagedPlayer.put(sender, receiver);
         lastMessagedPlayer.put(receiver, sender);
@@ -152,7 +152,7 @@ public class ChatManager {
         String spy = new MessageManager("direct-message.spy.message")
                 .replace("%sender%", sender.getName())
                 .replace("%receiver%", receiver.getName())
-                .replace("%message%", message)
+                .replace("%message%", censoredMessage)
                 .string();
         Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + ChatColor.stripColor(spy));
         for (Player online : Bukkit.getOnlinePlayers()) {

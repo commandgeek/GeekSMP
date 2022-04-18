@@ -61,19 +61,17 @@ public class BlockListener implements Listener {
         }
 
         // Check Locked Block
-        if (!((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || CommandBypass.check(player)))) {
-            if (LockManager.isLocked(block)) {
-                if (LockManager.isLockedForPlayer(block, player)) {
-                    event.setCancelled(true);
-                    player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
-                    new MessageManager("locking.block-locked")
-                            .replace("%block%", LockManager.getName(block))
-                            .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
-                            .send(player);
-                    return;
-                } else {
-                    LockManager.attemptUnlock(block, player);
-                }
+        if (LockManager.isLocked(block) && !((TeamManager.isStaff(player) || player.isOp()) && (player.isSneaking() || CommandBypass.check(player)))) {
+            if (LockManager.isLockedForPlayer(block, player)) {
+                event.setCancelled(true);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1, 1);
+                new MessageManager("locking.block-locked")
+                        .replace("%block%", LockManager.getName(block))
+                        .replace("%player%", Bukkit.getOfflinePlayer(UUID.fromString(Objects.requireNonNull(LockManager.getLocker(event.getBlock())))).getName())
+                        .send(player);
+                return;
+            } else {
+                LockManager.attemptUnlock(block, player);
             }
         }
 

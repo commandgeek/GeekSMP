@@ -72,13 +72,11 @@ public class InventoryListener implements Listener {
                 if (value != null) {
                     UUID uuid = UUID.fromString(value);
                     Entity entity = Bukkit.getEntity(uuid);
-                    if (entity instanceof Skeleton) {
-                        if (event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
-                            boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
-                            boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
-                            if (skeletonBow || skeletonArrow) {
-                                event.setCancelled(true);
-                            }
+                    if (entity instanceof Skeleton && event.getOffHandItem() != null && event.getOffHandItem().getItemMeta() != null) {
+                        boolean skeletonBow = event.getOffHandItem().isSimilar(MorphManager.skeletonBow());
+                        boolean skeletonArrow = event.getOffHandItem().isSimilar(MorphManager.skeletonArrow());
+                        if (skeletonBow || skeletonArrow) {
+                            event.setCancelled(true);
                         }
                     }
                 }
@@ -120,10 +118,8 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onPickUpItem(EntityPickupItemEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
-                event.setCancelled(true);
-            }
+        if (event.getEntity() instanceof Player player && TeamManager.isUndead(player) && !MorphManager.isMorphedPlayer(player)) {
+            event.setCancelled(true);
         }
     }
 }

@@ -8,6 +8,8 @@ import com.commandgeek.geeksmp.managers.*;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
@@ -213,7 +215,7 @@ public class Main extends JavaPlugin {
     private void registerRecipes() {
         // Lock Tool
         if (config.getBoolean("recipes.lock-tool")) {
-            new RecipeManager("lock_tool", LockManager.lockTool)
+            new RecipeManager("lock_tool", LockManager.lockTool())
                     .shape(
                             "  A",
                             " S ",
@@ -247,5 +249,28 @@ public class Main extends JavaPlugin {
                     .set('S', Material.NETHER_STAR)
                     .register();
         }
+
+        // Bad Omen Potion
+        if (config.getBoolean("recipes.bad-omen-potion")) {
+            new RecipeManager("bad_omen_potion", badOmenPotion())
+                    .shape(
+                            "EGE",
+                            "GBG",
+                            "EGE")
+                    .set('E', Material.EMERALD_BLOCK)
+                    .set('G', Material.GOLD_INGOT)
+                    .set('B', Material.GLASS_BOTTLE)
+                    .register();
+        }
+    }
+
+    // Bad Omen Potion ItemStack
+    public static ItemStack badOmenPotion() {
+        return new ItemManager(Material.POTION)
+                .name("&dBad Omen Potion")
+                .lore("&7Right-click to get Bad Omen")
+                .enchant(Enchantment.MENDING, 1)
+                .flag(ItemFlag.HIDE_ENCHANTS)
+                .get();
     }
 }
