@@ -45,13 +45,11 @@ public class CommandTp implements CommandExecutor {
                 player.teleport(new Location(player.getWorld(), x, y, z, player.getLocation().getYaw(), player.getLocation().getPitch()));
                 return true;
             } catch (NumberFormatException ignored) {
-                sender.sendMessage("INVALID 1");
                 new MessageManager("errors.invalid-arguments").send(player);
                 return true;
             }
         }
 
-        sender.sendMessage("INVALID 2");
         new MessageManager("errors.invalid-arguments").send(player);
         return true;
     }
