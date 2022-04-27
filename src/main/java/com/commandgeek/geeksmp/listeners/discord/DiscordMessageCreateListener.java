@@ -77,15 +77,15 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
     public static boolean command(Message message) {
         String[] args = message.getContent().split(" ");
 
-        boolean administrator = DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.ADMINISTRATOR);
-        if (args.length == 2 && Main.info.contains(args[1]) && args[0].equalsIgnoreCase(Main.botPrefix + "send-info-message") && administrator) {
+        boolean info = args.length == 2 && Main.info.contains(args[1]) && args[0].equalsIgnoreCase(Main.botPrefix + "send-info-message");
+        if (info && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.ADMINISTRATOR)) {
             message.delete();
             DiscordManager.sendInfo(args[1], message.getChannel());
             return true;
         }
 
-        boolean manageMessages = DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES);
-        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "mute") && manageMessages) {
+        boolean mute = message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "mute");
+        if (mute && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
             User user = message.getMentionedUsers().get(0);
             TextChannel channel = message.getChannel();
 
@@ -160,7 +160,8 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
             }
         }
 
-        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "unmute") && manageMessages) {
+        boolean unmute = message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "unmute");
+        if (unmute && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
             User user = message.getMentionedUsers().get(0);
             TextChannel channel = message.getChannel();
 
@@ -259,7 +260,8 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
             return true;
         }
 
-        if (message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "reason") && manageMessages) {
+        boolean reason = message.getMentionedUsers().size() == 1 && args[0].equalsIgnoreCase(Main.botPrefix + "reason");
+        if (reason && DiscordManager.server.hasPermission(DiscordManager.getUserFromMessage(message), PermissionType.MANAGE_MESSAGES)) {
             User user = message.getMentionedUsers().get(0);
             TextChannel channel = message.getChannel();
 
@@ -320,7 +322,6 @@ public class DiscordMessageCreateListener implements MessageCreateListener {
                 return true;
             }
         }
-
 
         return false;
     }

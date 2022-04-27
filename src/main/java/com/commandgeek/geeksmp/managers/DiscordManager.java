@@ -115,7 +115,9 @@ public class DiscordManager {
     }
 
     public static User getUserFromMessage(Message message) {
-        return message.getAuthor().asUser().isPresent() ? message.getAuthor().asUser().get() : null;
+        if (message.getAuthor().asUser().isPresent()) {
+            return message.getAuthor().asUser().get();
+        } else return null;
     }
 
     public static void sendInfo(String info, TextChannel channel) {
