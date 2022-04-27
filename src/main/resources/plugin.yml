@@ -119,6 +119,8 @@ commands:
     aliases: [echest]
   uptime:
     aliases: [ut]
+  countdown:
+    aliases: [timer]
 
 
 permissions:
