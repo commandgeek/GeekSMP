@@ -90,7 +90,6 @@ tab:
   header:
     - "&8- &d&lGeekSMP &8-"
     - "&7Players: &5%server_online%&8/&5%server_max_players%"
-    - "&7Ping: &5%player_ping%"
     - " "
   footer:
     - " "

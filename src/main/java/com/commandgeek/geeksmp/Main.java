@@ -200,6 +200,7 @@ public class Main extends JavaPlugin {
         // Unregister Discord Bot
         if (discordAPI != null) {
             new MessageManager("discord.smp-chat.stop").sendDiscord(DiscordManager.smpChatChannel);
+            discordAPI.disconnect();
             discordAPI = null;
         }
 
@@ -208,9 +209,6 @@ public class Main extends JavaPlugin {
             MorphManager.unmorph(online, false);
             online.kickPlayer(ChatColor.RED + "Server stopping/restarting!");
         }
-
-//        Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_PURPLE + "GeekSMP shutting down...");
-        getServer().shutdown();
     }
 
     private void registerRecipes() {

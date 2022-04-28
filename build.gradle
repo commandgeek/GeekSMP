@@ -54,6 +54,7 @@ shadowJar {
         exclude(dependency('com.mojang:authlib:1.5.21'))
         exclude(dependency('me.clip:placeholderapi:2.11.1'))
         exclude(dependency('com.comphenix.protocol:ProtocolLib:4.7.0'))
+
     }
 }
 
